@@ -1,1 +1,38 @@
 /* You can add global styles to this file, and also import other style files */
+
+html {
+    /* Reset */
+    box-sizing: border-box;
+    font-family: 'Noto Sans', sans-serif;
+
+    /* Properties */
+    --osm-color-primary: #9c1033;
+    --osm-color-accent: #e3b771;
+    --osm-color-alt: #1d1e2c;
+
+    --osm-font-color: var(--osm-color-alt);
+    --osm-font-color-alt: white;
+    --osm-font-size: 16px;
+    --osm-font-lg: 20px;
+}
+
+body {
+    margin: 0;
+
+    /* Font */
+    color: var(--osm-font-color);
+    font-size: var(--osm-font-size);
+
+    background-color: var(--osm-color-primary);
+}
+
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+    color: var(--osm-color-alt);
+}
