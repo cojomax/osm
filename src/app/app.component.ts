@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { FirebaseService } from './firebase.service';
 
 @Component({
   selector: 'app-root',
@@ -9,5 +10,13 @@ import { RouterOutlet } from '@angular/router';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'osm';
+
+  title="osm";
+
+  constructor(
+    private firebaseSvc: FirebaseService,
+
+  ) {
+    this.firebaseSvc.initializeApp();
+  }
 }

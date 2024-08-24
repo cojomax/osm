@@ -7,6 +7,10 @@
     background-color: #0f0f0f;
 }
 
+.banner-top a {
+    color: white;
+}
+
 nav.banner-nav {
     display: flex;
     flex-direction: column;
