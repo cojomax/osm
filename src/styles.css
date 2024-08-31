@@ -1,19 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
+@import './theme/osm-theme.css';
 
-html {
+* {
     /* Reset */
     box-sizing: border-box;
-    font-family: 'Noto Sans', sans-serif;
-
-    /* Properties */
-    --osm-color-primary: #9c1033;
-    --osm-color-accent: #e3b771;
-    --osm-color-alt: #1d1e2c;
-
-    --osm-font-color: var(--osm-color-alt);
-    --osm-font-color-alt: white;
-    --osm-font-size: 16px;
-    --osm-font-lg: 20px;
 }
 
 body {
@@ -22,8 +12,16 @@ body {
     /* Font */
     color: var(--osm-font-color);
     font-size: var(--osm-font-size);
+    /* font-family: Roboto, "Helvetica Neue", sans-serif; */
+    font-family: 'Noto Sans', sans-serif;
 
-    background-color: var(--osm-color-primary);
+    /* background-color: var(--osm-color-primary); */
+
+}
+
+html,
+body {
+    height: 100%;
 }
 
 ul {

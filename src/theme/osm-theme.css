@@ -1,0 +1,18 @@
+* {
+  /* Color */
+  --osm-color-primary: #9c1033;
+  --osm-color-accent: #e3b771;
+  --osm-color-alt: #1d1e2c;
+
+  /* Font */
+  --osm-font-color: var(--osm-color-alt);
+  --osm-font-color-alt: white;
+  --osm-font-size: 16px;
+  --osm-font-size: 20px;
+
+  /* SPacing */
+  --osm-space-xs: 4px;
+  --osm-space-sm: 8px;
+  --osm-space-md: 16px;
+  --osm-space-lg: 32px;
+}
