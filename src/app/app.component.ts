@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { FirebaseService } from './firebase.service';
+import { FirebaseService } from './services/firebase/firebase.service';
 
 @Component({
-  selector: 'app-root',
+  selector: 'osm-root',
   standalone: true,
   imports: [RouterOutlet],
   templateUrl: './app.component.html',

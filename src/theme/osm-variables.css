@@ -1,0 +1,22 @@
+* {
+  /* Color */
+  --color-primary: #9c1033;
+  --color-accent: #e3b771;
+  --color-alt: #1d1e2c;
+
+  /* Font */
+  --font-color: var(--color-alt);
+  --font-color-alt: white;
+  --font-size-sm: 12px;
+  --font-size: 16px;
+
+  /* Spacing */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 32px;
+  --space-xl: 40px;
+
+  /* Constants */
+  --page-offset-vertical: 176px;
+}
