@@ -21,10 +21,10 @@ import { FirebaseAuthService } from '../../services/firebase/firebase.auth.servi
     ReactiveFormsModule,
     ReactiveFormsModule,
   ],
-  templateUrl: './register.component.html',
-  styleUrl: './register.component.css',
+  templateUrl: './register.page.html',
+  styleUrl: './register.page.css',
 })
-export class RegisterComponent {
+export class RegisterPageComponent {
   protected registerForm!: FormGroup<any>;
 
   protected get email() {

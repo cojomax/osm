@@ -1,0 +1,16 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 176px);
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-lg);
+}
+
+img {
+  width: 400px;
+}
+
+h2 {
+  color: var(--font-color-alt);
+}
