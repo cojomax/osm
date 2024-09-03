@@ -1,1 +1,104 @@
 <h1>Match Report</h1>
+
+<div class="container">
+  <form [formGroup]="matchForm" (ngSubmit)="onSubmit()">
+    <div formGroupName="matchDetails">
+      <label for="date">Date</label>
+      <input id="date" formControlName="date" type="date" />
+      <div
+        *ngIf="matchForm.get('matchDetails.date')?.invalid && matchForm.get('matchDetails.date')?.touched"
+      >
+        Date is required
+      </div>
+
+      <label for="kickoff">Kickoff</label>
+      <input id="kickoff" formControlName="kickoff" type="text" />
+      <div
+        *ngIf="matchForm.get('matchDetails.kickoff')?.invalid && matchForm.get('matchDetails.kickoff')?.touched"
+      >
+        Kickoff is required
+      </div>
+
+      <label for="location">Location</label>
+      <input id="location" formControlName="location" type="text" />
+      <div
+        *ngIf="matchForm.get('matchDetails.location')?.invalid && matchForm.get('matchDetails.location')?.touched"
+      >
+        Location is required
+      </div>
+    </div>
+
+    <div formGroupName="opposition">
+      <label for="name">Opposition Name</label>
+      <input id="name" formControlName="name" type="text" />
+      <div
+        *ngIf="matchForm.get('opposition.name')?.invalid && matchForm.get('opposition.name')?.touched"
+      >
+        Name is required
+      </div>
+
+      <label for="goals">Goals</label>
+      <input id="goals" formControlName="goals" type="number" />
+      <div
+        *ngIf="matchForm.get('opposition.goals')?.invalid && matchForm.get('opposition.goals')?.touched"
+      >
+        Goals are required
+      </div>
+    </div>
+
+    <div formGroupName="osm">
+      <label for="kit">Kit</label>
+      <select id="kit" formControlName="kit">
+        <option value="Home">Home</option>
+        <option value="Away">Away</option>
+      </select>
+      <div
+        *ngIf="matchForm.get('osm.kit')?.invalid && matchForm.get('osm.kit')?.touched"
+      >
+        Kit is required
+      </div>
+
+      <label for="goals">Goals</label>
+      <input id="goals" formControlName="goals" type="number" />
+      <div
+        *ngIf="matchForm.get('osm.goals')?.invalid && matchForm.get('osm.goals')?.touched"
+      >
+        Goals are required
+      </div>
+
+      <div formArrayName="scorers">
+        <label>Scorers</label>
+        <button type="button" (click)="addScorer()">Add Scorer</button>
+        <div *ngFor="let scorer of scorers.controls; let i = index">
+          <input [formControlName]="i" type="text" />
+        </div>
+      </div>
+
+      <div formArrayName="assists">
+        <label>Assists</label>
+        <button type="button" (click)="addAssist()">Add Assist</button>
+        <div *ngFor="let assist of assists.controls; let i = index">
+          <input [formControlName]="i" type="text" />
+        </div>
+      </div>
+
+      <label for="motm">Man of the Match</label>
+      <input id="motm" formControlName="motm" type="text" />
+      <div
+        *ngIf="matchForm.get('osm.motm')?.invalid && matchForm.get('osm.motm')?.touched"
+      >
+        Man of the Match is required
+      </div>
+
+      <label for="dotd">Donkey of the Day</label>
+      <input id="dotd" formControlName="dotd" type="text" />
+      <div
+        *ngIf="matchForm.get('osm.dotd')?.invalid && matchForm.get('osm.dotd')?.touched"
+      >
+        Donkey of the Day is required
+      </div>
+    </div>
+
+    <button type="submit">Submit</button>
+  </form>
+</div>

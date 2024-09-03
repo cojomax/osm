@@ -19,4 +19,5 @@
 
   /* Constants */
   --page-offset-vertical: 176px;
+  --page-height: calc(100vh - var(--page-offset-vertical));
 }
