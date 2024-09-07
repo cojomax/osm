@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { MatchReport } from '../../models/match-report.model';
-import { FirebaseDbService } from '../firebase/firebase.db.service';
+import { FirebaseDbService } from '../../services/firebase/firebase.db.service';
 
 const COLLECTION_NAME = 'matches';
 

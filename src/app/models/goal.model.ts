@@ -1,13 +1,15 @@
-import { Player } from './player.model';
-
 export class Goal {
   constructor(init: Partial<Goal>) {
     Object.assign(this, init);
   }
 
-  /** The player that scored the goal. */
-  scorer: Player | null = null;
+  goalId = '';
 
-  /** The player that assisted the goal, if any. */
-  assist: Player | null = null;
+  matchId = '';
+
+  /** The ID of the player that scored the goal. */
+  playerId = '';
+
+  /** The ID of the player that assisted the goal, if any. */
+  assistId = '';
 }

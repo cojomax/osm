@@ -3,6 +3,8 @@ export class Match {
     Object.assign(this, init);
   }
 
+  matchId = '';
+
   /** The date the match is played on. */
   date: Date | null = null;
 

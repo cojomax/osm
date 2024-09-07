@@ -7,12 +7,9 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Goal } from '../../models/goal.model';
+import { MatchService } from '../../domain/match/match.service';
+import { Player } from '../../domain/player/player.model';
 import { MatchReport } from '../../models/match-report.model';
-import { Match } from '../../models/match.model';
-import { Opposition } from '../../models/opposition.model';
-import { Player } from '../../models/player.model';
-import { MatchService } from '../../services/domain/match.service';
 
 @Component({
   standalone: true,
@@ -77,28 +74,22 @@ export class MatchReportPageComponent implements OnInit {
     });
 
     const matchReport = new MatchReport({
-      match: new Match({ date: new Date(), venue: 'Happy Valley' }),
-      opposition: new Opposition({ name: 'Legal Head' }),
-      goals: [
-        new Goal({ scorer: player }),
-        new Goal({ scorer: player }),
-        new Goal({ scorer: player }),
-      ],
-      isHome: true,
-      manOfTheMatch: player,
-      dickOfTheDay: player,
+      matchId: 'match-1',
+      // opposition: new Opposition({ name: 'Legal Head' }),
+      // goals: [
+      //   new Goal({ matchId: 'match-1', playerId: 'player-1' }),
+      //   new Goal({ matchId: 'match-1', playerId: 'player-1' }),
+      //   new Goal({ matchId: 'match-1', playerId: 'player-1' }),
+      // ],
+      // isHome: true,
+      manOfTheMatch: 'player-1',
+      dickOfTheDay: 'player-1',
     });
 
     // removeUndefinedPropertiesRecursive(matchReport);
 
     // if (this.matchForm.valid) {
-    this._matchSvc.saveMatchReport({
-      match: {
-        date: new Date(),
-        venue: 'Happy Valley',
-        opposition: 'Legal Head',
-      } as any,
-    } as any);
+    this._matchSvc.saveMatchReport(matchReport);
     // }
   }
   // #endregion Generated
