@@ -1,0 +1,7 @@
+.osm-container {
+    padding: var(--space-lg);
+}
+
+nz-layout {
+    background: white;
+}

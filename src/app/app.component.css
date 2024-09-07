@@ -17,33 +17,10 @@ nav.banner-nav {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  width: 100%;
   height: 132px;
-  background-color: white;
 }
 
 img {
   width: 100px;
   margin-top: -28px;
-}
-
-ul {
-  display: block;
-}
-
-li {
-  display: inline-block;
-  text-transform: uppercase;
-  font-weight: 500;
-}
-
-a.nav-item {
-  display: inline-block;
-  padding: 0 20px 20px;
-  border-bottom: 3px solid transparent;
-}
-
-a:hover {
-  border-bottom-color: var(--color-alt);
 }

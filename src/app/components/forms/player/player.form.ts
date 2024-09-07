@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
+    FormBuilder,
+    FormGroup,
+    ReactiveFormsModule,
+    Validators,
 } from '@angular/forms';
 import { NzButtonModule } from '@nz/button';
 import { NzFormModule } from '@nz/form';
@@ -13,7 +13,7 @@ import { Player } from '../../../domain/player/player.model';
 import { PlayerService } from '../../../domain/player/player.service';
 
 @Component({
-  selector: 'osm-player-form',
+  selector: 'app-player-form',
   templateUrl: './player.form.html',
   styleUrl: './player.form.css',
   standalone: true,

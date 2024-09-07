@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { AdminPageComponent } from './pages/admin/admin.page';
+import { PlayersPageComponent } from './pages/admin/players/players.component';
 import { HomePageComponent } from './pages/home/home.page';
 import { LoginPageComponent } from './pages/login/login.page';
 import { MatchReportPageComponent } from './pages/match-report/match-report.page';
@@ -12,7 +12,10 @@ export const routes: Routes = [
   { path: 'login', component: LoginPageComponent },
   { path: 'register', component: RegisterPageComponent },
   { path: 'match-report', component: MatchReportPageComponent },
-  { path: 'admin', component: AdminPageComponent },
+  {
+    path: 'admin',
+    children: [{ path: 'players', component: PlayersPageComponent }],
+  },
   { path: 'team', component: TeamPageComponent },
   { path: '**', component: PageNotFoundPageComponent },
 ];

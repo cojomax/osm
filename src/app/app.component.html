@@ -1,25 +1,24 @@
-<header id="osm-banner">
+<header id="app-banner">
   <div class="banner-top">
-    <a href="/match-report">Match Report</a>
+    <a routerLink="match-report">Match Report</a>
     <span>|</span>
-    <a href="/login">Sign In</a>
+    <a routerLink="login">Sign In</a>
     <span>|</span>
-    <a href="/register">Register</a>
+    <a routerLink="register">Register</a>
   </div>
   <nav class="banner-nav">
-    <img src="assets/osm-transparent.png" alt="osm-logo" />
-    <ul>
-      <li>        
-        <a class="nav-item" href="/team">Team</a>
-      </li>
-      <li>
-        <a class="nav-item" href="/fixtures">Fixtures & Results</a>
-      </li>
-      <li>
-        <a class="nav-item" href="/news">News</a>
-      </li>
-    </ul>
+    <a routerLink="www.google.com">
+      <img src="assets/osm-transparent.png" alt="app-logo" />
+    </a>
+    <app-navigation></app-navigation>
   </nav>
 </header>
 
-<router-outlet />
+<nz-layout>
+  <nz-sider><app-admin-nav> </app-admin-nav></nz-sider>
+  <nz-layout>
+    <div class="osm-container">
+      <router-outlet />
+    </div>
+  </nz-layout>
+</nz-layout>

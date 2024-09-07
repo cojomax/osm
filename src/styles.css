@@ -11,12 +11,12 @@ body {
     margin: 0;
 
     /* Font */
-    color: var(--font-color);
-    font-size: var(--font-size);
+    /* color: var(--font-color); */
+    /* font-size: var(--font-size); */
     /* font-family: Roboto, "Helvetica Neue", sans-serif; */
-    font-family: 'Noto Sans', sans-serif;
+    /* font-family: 'Noto Sans', sans-serif; */
 
-    background-color: var(--color-primary);
+    /* background-color: var(--color-primary); */
 
 }
 
