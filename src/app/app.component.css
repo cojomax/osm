@@ -17,10 +17,20 @@ nav.banner-nav {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-between;
   height: 132px;
 }
 
 img {
   width: 100px;
   margin-top: -28px;
+}
+
+.layout {
+  display: flex;
+  height: var(--page-height);
+}
+
+.layout app-admin-nav {
+  flex-basis: 20%;
 }

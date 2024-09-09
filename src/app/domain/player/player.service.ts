@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import {
-    collection,
-    doc,
-    DocumentData,
-    QueryDocumentSnapshot,
-    setDoc,
+  collection,
+  deleteDoc,
+  doc,
+  DocumentData,
+  QueryDocumentSnapshot,
+  setDoc,
 } from 'firebase/firestore/lite';
 import { from } from 'rxjs';
 import { FirebaseDbService } from '../../services/firebase/firebase.db.service';
@@ -54,5 +55,9 @@ export class PlayerService {
       playerConverter,
     );
     return from(setDoc(ref, player));
+  }
+
+  deletePlayer(playerId: string) {
+    return from(deleteDoc(doc(this._svc.db, COLLECTION, playerId)));
   }
 }

@@ -1,7 +1,4 @@
 .osm-container {
+    width: 100%;
     padding: var(--space-lg);
-}
-
-nz-layout {
-    background: white;
 }
