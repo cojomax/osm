@@ -1,26 +1,40 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit } from '@angular/core';
 import {
-    FormBuilder,
-    FormGroup,
-    ReactiveFormsModule,
-    Validators,
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
 } from '@angular/forms';
 import { NzButtonModule } from '@nz/button';
 import { NzFormModule } from '@nz/form';
-import { tap } from 'rxjs';
-import { Player } from '../../../domain/player/player.model';
-import { PlayerService } from '../../../domain/player/player.service';
+import { NzInputModule } from '@nz/input';
+import { Player } from '../../../../domain/player/player.model';
 
 @Component({
   selector: 'app-player-form',
   templateUrl: './player.form.html',
   styleUrl: './player.form.css',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, NzButtonModule, NzFormModule],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    NzButtonModule,
+    NzFormModule,
+    NzInputModule,
+  ],
 })
 export class PlayerFormComponent implements OnInit {
-  protected playerForm!: FormGroup<any>;
+  @Input() data: Player | null = null;
+
+  playerForm!: FormGroup<any>;
+
+  protected submitted = new EventEmitter<FormGroup>();
+
+  protected rowSpan = {
+    colOne: 6,
+    colTwo: 14,
+  };
 
   get isFirstNameValid() {
     return (
@@ -52,29 +66,27 @@ export class PlayerFormComponent implements OnInit {
 
   constructor(
     private _fb: FormBuilder,
-    private _playerSvc: PlayerService,
   ) {}
 
   ngOnInit() {
     this.playerForm = this._fb.group({
-      // playerId: ['', Validators.required],
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      position: ['', Validators.required],
-      squadNumber: [null, Validators.required],
+      playerId: [this.data?.playerId],
+      firstName: [this.data?.firstName ?? '', Validators.required],
+      lastName: [this.data?.lastName ?? '', Validators.required],
+      position: [this.data?.position ?? '', Validators.required],
+      squadNumber: [this.data?.squadNumber ?? null, Validators.required],
     });
   }
 
-  protected players: Player[] = [];
-
   onSubmit() {
-    this._playerSvc
-      .addPlayer(new Player(this.playerForm.value))
-      .pipe(
-        tap((res) => {
-          alert('done');
-        }),
-      )
-      .subscribe();
+    this.submitted.emit(this.playerForm);
+    // this._playerSvc
+    //   .addPlayer(new Player(this.playerForm.value))
+    //   .pipe(
+    //     tap((res) => {
+    //       alert('done');
+    //     }),
+    //   )
+    //   .subscribe();
   }
 }

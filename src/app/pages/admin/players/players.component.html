@@ -1,4 +1,7 @@
-<!-- <app-player-form></app-player-form> -->
+<button nz-button nzType="primary" (click)="onAddClick()">
+  <span nz-icon nzType="user-add"></span>
+  Add
+</button>
 
 <ag-grid-angular
   [rowData]="players"
@@ -6,3 +9,35 @@
   class="ag-theme-quartz-dark"
   style="height: 500px"
 />
+
+<nz-modal
+  nzTitle="Edit Player"
+  (nzOnCancel)="onCancel()"
+  (nzAfterOpen)="onModalOpen()"
+  (nzAfterClose)="onModalClose()"
+  [(nzVisible)]="isModalVisible"
+>
+  <app-player-form *nzModalContent [data]="selectedPlayer"> </app-player-form>
+  <div *nzModalFooter class="spaced">
+    <button
+      nz-button
+      nzDanger
+      nzType="primary"
+      [nzLoading]="isDeleting"
+      (click)="onDelete()"
+    >
+      Delete
+    </button>
+    <span class="space"></span>
+    <button nz-button nzType="default" (click)="onCancel()">Cancel</button>
+    <button
+      nz-button
+      nzType="primary"
+      [nzLoading]="isSaving"
+      [disabled]="isSumbitDisabled"
+      (click)="onSubmit()"
+    >
+      Submit
+    </button>
+  </div>
+</nz-modal>

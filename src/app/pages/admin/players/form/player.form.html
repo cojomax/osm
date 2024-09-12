@@ -1,0 +1,60 @@
+<form nz-form [formGroup]="playerForm">
+  <!-- First name -->
+  <nz-form-item>
+    <nz-form-label [nzSpan]="rowSpan.colOne" nzFor="firstName">
+      First name
+    </nz-form-label>
+    <nz-form-control
+      [nzSpan]="rowSpan.colTwo"
+      nzErrorTip="First name is required"
+    >
+      <input nz-input id="firstName" formControlName="firstName" type="text" />
+    </nz-form-control>
+  </nz-form-item>
+
+  <!-- Last name -->
+  <nz-form-item>
+    <nz-form-label [nzSpan]="rowSpan.colOne" nzFor="lastName">
+      Last name
+    </nz-form-label>
+    <nz-form-control
+      [nzSpan]="rowSpan.colTwo"
+      nzErrorTip="Last name is required"
+    >
+      <input nz-input id="lastName" formControlName="lastName" type="text" />
+    </nz-form-control>
+  </nz-form-item>
+
+  <!-- Position -->
+  <nz-form-item>
+    <nz-form-label [nzSpan]="rowSpan.colOne" nzFor="position">
+      Position
+    </nz-form-label>
+    <nz-form-control
+      [nzSpan]="rowSpan.colTwo"
+      nzErrorTip="Position is required"
+    >
+      <nz-input-group>
+        <input nz-input id="position" formControlName="position" type="text" />
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+
+  <!-- Squad Number -->
+  <nz-form-item>
+    <nz-form-label [nzSpan]="rowSpan.colOne" nzFor="squadNumber">
+      Squad Number
+    </nz-form-label>
+    <nz-form-control
+      [nzSpan]="rowSpan.colTwo"
+      nzErrorTip="Squad number is required"
+    >
+      <input
+        nz-input
+        id="squadNumber"
+        formControlName="squadNumber"
+        type="number"
+      />
+    </nz-form-control>
+  </nz-form-item>
+</form>

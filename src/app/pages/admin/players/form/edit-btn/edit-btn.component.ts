@@ -1,12 +1,14 @@
 import { Component, EventEmitter, Output } from '@angular/core';
+import { NzButtonModule } from '@nz/button';
 import { ICellRendererAngularComp } from 'ag-grid-angular';
 import { ICellRendererParams } from 'ag-grid-community';
 
 @Component({
   standalone: true,
-  template: `<button (click)="buttonClicked()">Delete</button>`,
+  imports: [NzButtonModule],
+  templateUrl: './edit-btn.component.html',
 })
-export class DeleteButtonComponent implements ICellRendererAngularComp {
+export class EditButtonComponent implements ICellRendererAngularComp {
   @Output() clicked = new EventEmitter<void>();
 
   private params: any;
@@ -20,6 +22,6 @@ export class DeleteButtonComponent implements ICellRendererAngularComp {
   }
 
   buttonClicked() {
-    this.params.onDelete(this.params.data.playerId);
+    this.params.onEdit(this.params.data.playerId);
   }
 }

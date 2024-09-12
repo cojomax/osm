@@ -1,4 +1,12 @@
 .osm-container {
-    width: 100%;
-    padding: var(--space-lg);
+  width: 100%;
+  padding: var(--space-lg);
+}
+
+.spaced {
+  display: flex;
+}
+
+.spaced .space {
+  flex-grow: 1;
 }
