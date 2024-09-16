@@ -1,11 +1,8 @@
 import { Injectable } from '@angular/core';
 import {
-  deleteDoc,
-  doc,
   DocumentData,
   QueryDocumentSnapshot
 } from 'firebase/firestore/lite';
-import { from } from 'rxjs';
 import { FirebaseDbService } from '../../services/firebase/firebase.db.service';
 import { FirebaseService } from '../../services/firebase/firebase.service';
 import { FireStoreCollections } from '../../shared/db-collection.enum';
@@ -48,20 +45,24 @@ export class PlayerService {
     return this._dbSvc.getCollection<Player>(COLLECTION, playerConverter);
   }
 
+  getPlayer(playerId: string) {
+    return this._dbSvc.getDocument<Player>(COLLECTION, playerId, playerConverter);
+  }
+
   addPlayer(player: Player) {
-    this._dbSvc.createDocument(player, playerConverter, COLLECTION);
+    return this._dbSvc.createDocument(COLLECTION, player, playerConverter);
   }
 
   updatePlayer(player: Player) {
-    this._dbSvc.updateDocument(
+    return this._dbSvc.updateDocument(
+      COLLECTION,
       player.playerId,
       player,
       playerConverter,
-      COLLECTION,
     );
   }
 
   deletePlayer(playerId: string) {
-    return from(deleteDoc(doc(this._svc.db, COLLECTION, playerId)));
+    return this._dbSvc.deleteDocument(COLLECTION, playerId);
   }
 }

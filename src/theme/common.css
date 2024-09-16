@@ -7,6 +7,10 @@
   display: flex;
 }
 
+.spaced.center {
+  align-items: center;
+}
+
 .spaced .space {
   flex-grow: 1;
 }

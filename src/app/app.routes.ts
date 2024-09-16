@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { PlayerDetailsPageComponent } from './pages/admin/players/details/player-details.component';
 import { PlayersPageComponent } from './pages/admin/players/players.component';
 import { HomePageComponent } from './pages/home/home.page';
 import { LoginPageComponent } from './pages/login/login.page';
@@ -14,7 +15,10 @@ export const routes: Routes = [
   { path: 'match-report', component: MatchReportPageComponent },
   {
     path: 'admin',
-    children: [{ path: 'players', component: PlayersPageComponent }],
+    children: [
+      { path: 'players/:id', component: PlayerDetailsPageComponent },
+      { path: 'players', component: PlayersPageComponent },
+    ],
   },
   { path: 'team', component: TeamPageComponent },
   { path: '**', component: PageNotFoundPageComponent },

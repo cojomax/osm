@@ -9,6 +9,6 @@ export class MatchService {
   constructor(private _fb: FirebaseDbService) {}
 
   async saveMatchReport(match: MatchReport) {
-    return await this._fb.saveToCollection(COLLECTION_NAME, match);
+    // return await this._fb.createDocument(COLLECTION_NAME, match, {});
   }
 }
