@@ -1,5 +1,12 @@
 <header id="app-banner">
   <div class="banner-top">
+    <nz-select [(ngModel)]="role" style="width: 120px">
+      <nz-option [nzValue]="userRole.god" nzLabel="God"></nz-option>
+      <nz-option [nzValue]="userRole.manager" nzLabel="Manager"></nz-option>
+      <nz-option [nzValue]="userRole.player" nzLabel="Player"></nz-option>
+      <nz-option [nzValue]="userRole.undefined" nzLabel="Undefined"></nz-option>
+    </nz-select>
+    <span style="flex-grow: 1"></span>
     <a routerLink="match-report">Match Report</a>
     <span>|</span>
     <a routerLink="login">Sign In</a>
@@ -19,9 +26,10 @@
   <div class="osm-container">
     <router-outlet />
   </div>
-<!-- </div>
+  <!-- </div>
 <nz-layout>
   <nz-sider></nz-sider>
   <nz-layout>
   </nz-layout>
 </nz-layout> -->
+</div>
