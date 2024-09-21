@@ -3,10 +3,10 @@ import { RouterModule } from '@angular/router';
 import { NzMenuModule } from '@nz/menu';
 
 @Component({
-  selector: 'app-navigation',
-  templateUrl: './navigation.component.html',
-  styleUrl: './navigation.component.css',
+  selector: 'app-navigation-main',
+  templateUrl: './navigation-main.component.html',
+  styleUrl: './navigation-main.component.css',
   standalone: true,
   imports: [NzMenuModule, RouterModule],
 })
-export class NavigationComponent {}
+export class NavigationMainComponent {}

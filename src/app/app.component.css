@@ -1,18 +1,3 @@
-.banner-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 var(--space-lg);
-  width: 100%;
-  height: 44px;
-  background-color: #0f0f0f;
-  color: white;
-}
-
-.banner-top a {
-  color: white;
-}
-
 nav.banner-nav {
   display: flex;
   flex-direction: column;
@@ -26,11 +11,3 @@ img {
   margin-top: -28px;
 }
 
-.layout {
-  display: flex;
-  height: var(--page-height);
-}
-
-.layout app-admin-nav {
-  flex-basis: 20%;
-}

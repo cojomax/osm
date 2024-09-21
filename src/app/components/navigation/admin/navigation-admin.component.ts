@@ -3,13 +3,13 @@ import { Router } from '@angular/router';
 import { NzMenuModule } from '@nz/menu';
 
 @Component({
-  selector: 'app-admin-nav',
+  selector: 'app-navigation-admin',
   standalone: true,
   imports: [NzMenuModule],
-  templateUrl: './admin-nav.component.html',
-  styleUrls: ['./admin-nav.component.css'],
+  templateUrl: './navigation-admin.component.html',
+  styleUrls: ['./navigation-admin.component.css'],
 })
-export class AdminNavComponent {
+export class NavigationAdminComponent {
   /**
    *
    */

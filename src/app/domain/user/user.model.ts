@@ -1,8 +1,19 @@
-export class UserModel {
+export class User {
+  constructor(init?: User) {
+    Object.assign(this, init);
+  }
+
   id = '';
+
   name = '';
+
   email = '';
+
   role = UserRole.undefined;
+
+  get isAdmin() {
+    return this.role === UserRole.god || this.role === UserRole.manager;
+  }
 }
 
 export enum UserRole {

@@ -1,0 +1,24 @@
+<div class="banner-top">
+  <span>{{ user?.id }}</span>
+  <span>{{ user?.name }}</span>
+  <span>{{ user?.email }}</span>
+  <!-- Temporary Role Change -->
+  <nz-select
+    (ngModelChange)="onRoleChange()"
+    [(ngModel)]="selectedRole"
+    style="width: 120px"
+  >
+    <nz-option [nzValue]="userRole.god" nzLabel="God"></nz-option>
+    <nz-option [nzValue]="userRole.manager" nzLabel="Manager"></nz-option>
+    <nz-option [nzValue]="userRole.player" nzLabel="Player"></nz-option>
+    <nz-option [nzValue]="userRole.undefined" nzLabel="Undefined"></nz-option>
+  </nz-select>
+  <span style="flex-grow: 1"></span>
+
+  <a *ngIf="hasAdminAccess" routerLink="/admin/players">Admin</a>
+
+  <!-- <span>|</span>
+  <a routerLink="login">Sign In</a>
+  <span>|</span>
+  <a routerLink="register">Register</a> -->
+</div>
