@@ -1,13 +1,59 @@
-<div>
-  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-    Email
-    <input matInput formControlName="email" />
+<div class="banner-login">
+  <a routerLink="/">
+    <img src="assets/osm-transparent.png" alt="app-logo" />
+  </a>
+</div>
 
-    Password
-    <input matInput formControlName="password" />
+<div class="form-container">
+  <form nz-form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <!-- Email -->
+    <nz-form-item>
+      <nz-form-control nzErrorTip="Input your email">
+        <nz-input-group nzPrefixIcon="mail">
+          <input
+            type="text"
+            nz-input
+            formControlName="email"
+            placeholder="Email"
+          />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
 
-    <button mat-button type="submit" [disabled]="!loginForm.valid">
-      Sign In
-    </button>
+    <!-- Password -->
+    <nz-form-item>
+      <nz-form-control nzErrorTip="Input your password">
+        <nz-input-group nzPrefixIcon="lock">
+          <input
+            type="password"
+            nz-input
+            formControlName="password"
+            placeholder="Password"
+          />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+
+    <!-- Login Button -->
+    <button nz-button nzType="primary">Log In</button>
+
+    <!-- Remember Me -->
+    <!-- <div [nzSpan]="12">
+      <label nz-checkbox formControlName="remember">
+        <span>Remember me</span>
+      </label>
+    </div> -->
+
+    <!-- Forgot Password -->
+    <!-- <a>Forgot password</a> -->
+
+    <p>Or</p>
+    <div>
+      <a nz-button nzType="link">
+        <span nz-icon nzType="google"></span>
+        Log in with Google
+      </a>
+      <span class="g-flex-1"></span>
+    </div>
   </form>
 </div>

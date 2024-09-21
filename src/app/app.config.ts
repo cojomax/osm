@@ -9,7 +9,9 @@ import {
 import { FormsModule } from '@angular/forms';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideRouter } from '@angular/router';
+import { NZ_CONFIG } from 'ng-zorro-antd/core/config';
 import { en_US, provideNzI18n } from 'ng-zorro-antd/i18n';
+import { ngZorroConfig } from 'src/theme/ng-zorro.config';
 import { routes } from './app.routes';
 
 registerLocaleData(en);
@@ -23,5 +25,6 @@ export const appConfig: ApplicationConfig = {
     importProvidersFrom(FormsModule),
     provideAnimationsAsync(),
     provideHttpClient(),
+    { provide: NZ_CONFIG, useValue: ngZorroConfig },
   ],
 };

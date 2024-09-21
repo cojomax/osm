@@ -13,6 +13,9 @@ import { NavigationAdminComponent } from './components/navigation/admin/navigati
 import { NavigationMainComponent } from './components/navigation/main/navigation-main.component';
 import { NavigationTopComponent } from './components/navigation/top/navigation-top.component';
 import { FirebaseService } from './services/firebase/firebase.service';
+import { RouteService } from './services/route.service';
+
+type ViewState = 'public' | 'admin' | 'login';
 
 @Component({
   selector: 'app-root',
@@ -32,10 +35,24 @@ import { FirebaseService } from './services/firebase/firebase.service';
   styleUrl: './app.component.css',
 })
 export class AppComponent implements OnInit {
-  protected isAdminRoute = false;
+  protected viewState: ViewState = 'public';
+
+  get isPublicView() {
+    return this.viewState === 'public';
+  }
+
+  get isAdminView() {
+    return this.viewState === 'admin';
+  }
+
+  get isLoginView() {
+    return this.viewState === 'login';
+  }
+
   constructor(
     private firebaseSvc: FirebaseService,
     private router: Router,
+    private routeSvc: RouteService,
   ) {
     this.firebaseSvc.initializeApp();
   }
@@ -43,8 +60,15 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
-        this.isAdminRoute =
-          event.urlAfterRedirects.substring(0, 6) === '/admin';
+        const isAdmin =
+          event.urlAfterRedirects.substring(0, 6) ===
+          `/${this.routeSvc.routes.admin}`;
+        const isLogin =
+          event.urlAfterRedirects.substring(0, 6) ===
+          `/${this.routeSvc.routes.login}`;
+
+        this.viewState =
+          !isAdmin && !isLogin ? 'public' : isAdmin ? 'admin' : 'login';
       }
     });
   }

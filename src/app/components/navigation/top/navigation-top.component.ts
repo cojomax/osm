@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -11,7 +12,7 @@ import { UserState } from 'src/app/services/user.state';
   templateUrl: './navigation-top.component.html',
   styleUrl: './navigation-top.component.css',
   standalone: true,
-  imports: [FormsModule, NzSelectModule, RouterModule],
+  imports: [CommonModule, FormsModule, NzSelectModule, RouterModule],
 })
 export class NavigationTopComponent {
   protected selectedRole = UserRole.undefined;

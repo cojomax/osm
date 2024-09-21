@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
 import { NavigationAdminComponent } from '../../navigation/admin/navigation-admin.component';
 
 @Component({
   selector: 'app-admin-shell',
   standalone: true,
-  imports: [NavigationAdminComponent, RouterOutlet],
+  imports: [NavigationAdminComponent],
   templateUrl: './admin-shell.component.html',
   styleUrl: './admin-shell.component.css',
 })

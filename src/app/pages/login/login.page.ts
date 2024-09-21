@@ -5,11 +5,24 @@ import {
   FormsModule,
   ReactiveFormsModule,
 } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+import { NzFormModule } from '@nz/form';
+import { NzIconModule } from '@nz/icon';
+import { NzInputModule } from '@nz/input';
+import { NzButtonModule } from 'ng-zorro-antd/button';
 import { FirebaseAuthService } from '../../services/firebase/firebase.auth.service';
 
 @Component({
   standalone: true,
-  imports: [ReactiveFormsModule, FormsModule],
+  imports: [
+    FormsModule,
+    NzButtonModule,
+    NzFormModule,
+    NzIconModule,
+    NzInputModule,
+    ReactiveFormsModule,
+    RouterModule,
+  ],
   templateUrl: './login.page.html',
   styleUrl: './login.page.css',
 })

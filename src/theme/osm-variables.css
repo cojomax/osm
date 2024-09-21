@@ -1,11 +1,12 @@
 * {
   /* Color */
-  --color-primary: #9c1033;
-  --color-accent: #e3b771;
-  --color-alt: #1d1e2c;
+  --color-primary: #1d1e2c;
+  --color-secondary: #ddb967;
+  --color-secondary-rgba: 29, 30, 44;
 
-  /* Font */
-  --font-color: var(--color-alt);
+  /* Font */  
+  --font-accent: var(--color-secondary);
+  --font-primary: #1d1e2c;
   --font-color-alt: white;
   --font-size-sm: 12px;
   --font-size: 16px;
