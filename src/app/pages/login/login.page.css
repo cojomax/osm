@@ -1,7 +1,7 @@
 :host {
   display: block;
   background-color: var(--color-primary);
-  height: calc(100vh - 176px);
+  height: calc(100vh - 44px);
   text-align: center;
 }
 
