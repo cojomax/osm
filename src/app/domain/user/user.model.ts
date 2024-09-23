@@ -1,11 +1,11 @@
 export class User {
-  constructor(init?: User) {
+  constructor(init?: Partial<User>) {
     Object.assign(this, init);
   }
 
   id = '';
 
-  name = '';
+  username = '';
 
   email = '';
 

@@ -12,7 +12,6 @@ import { AdminShellComponent } from './components/admin/shell/admin-shell.compon
 import { NavigationAdminComponent } from './components/navigation/admin/navigation-admin.component';
 import { NavigationMainComponent } from './components/navigation/main/navigation-main.component';
 import { NavigationTopComponent } from './components/navigation/top/navigation-top.component';
-import { FirebaseService } from './services/firebase/firebase.service';
 import { RouteService } from './services/route.service';
 
 type ViewState = 'public' | 'admin' | 'login';
@@ -50,12 +49,9 @@ export class AppComponent implements OnInit {
   }
 
   constructor(
-    private firebaseSvc: FirebaseService,
     private router: Router,
     private routeSvc: RouteService,
-  ) {
-    this.firebaseSvc.initializeApp();
-  }
+  ) {}
 
   ngOnInit() {
     this.router.events.subscribe((event) => {

@@ -1,26 +1,49 @@
-import { Injectable } from '@angular/core';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { catchError, from, tap } from 'rxjs';
-import { FirebaseService } from './firebase.service';
+import { Inject, Injectable } from '@angular/core';
+import {
+  createUserWithEmailAndPassword,
+  User as FirebaseUser,
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  signOut,
+} from 'firebase/auth';
+import { BehaviorSubject, from } from 'rxjs';
+import {
+  FIREBASE,
+  Firebase,
+} from '../tokens/firebase-config.token';
 
 @Injectable({ providedIn: 'root' })
 export class FirebaseAuthService {
-  constructor(private _firebaseSvc: FirebaseService) {}
+  private _userChangeSubject = new BehaviorSubject<FirebaseUser | null>(null);
 
-  createWithCredentials(email: string, password: string) {
+  constructor(@Inject(FIREBASE) private _firebase: Firebase) {
+    onAuthStateChanged(this._firebase.auth, (user) => {
+      // See docs for a list of available properties: https://firebase.google.com/docs/reference/js/auth.user
+      this._userChangeSubject.next(user);
+    });
+  }
+
+  onUserChange() {
+    return this._userChangeSubject.asObservable();
+  }
+
+  signInEmailAndPassword(email: string, password: string) {
     return from(
-      createUserWithEmailAndPassword(this._firebaseSvc.auth, email, password),
-    ).pipe(
-      tap((userCredential) => {
-        const user = userCredential.user;
-        console.log('User created:', user);
-      }),
-      catchError((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.error('Error creating user:', errorCode, errorMessage);
-        throw error;
-      }),
+      signInWithEmailAndPassword(this._firebase.auth, email, password),
     );
+  }
+
+  signInGoogle() {
+    throw new Error('Not implemented');
+  }
+
+  createUserEmailPassword(email: string, password: string) {
+    return from(
+      createUserWithEmailAndPassword(this._firebase.auth, email, password),
+    );
+  }
+
+  logout() {
+    return from(signOut(this._firebase.auth));
   }
 }

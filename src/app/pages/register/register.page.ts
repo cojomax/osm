@@ -78,7 +78,7 @@ export class RegisterPageComponent {
 
   protected onSubmit() {
     this._auth
-      .createWithCredentials(
+      .createUserEmailPassword(
         this.registerForm.value.email,
         this.registerForm.value.password,
       )

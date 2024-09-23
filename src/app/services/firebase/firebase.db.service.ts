@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import {
   collection,
   deleteDoc,
@@ -11,22 +11,22 @@ import {
 import { from, map } from 'rxjs';
 import { StoreConverter } from 'src/app/shared/converter.interface';
 import { FireStoreCollections } from 'src/app/shared/db-collection.enum';
-import { FirebaseService } from './firebase.service';
+import { FIREBASE, Firebase } from '../tokens/firebase-config.token';
 
 @Injectable({ providedIn: 'root' })
 export class FirebaseDbService {
-  constructor(private _svc: FirebaseService) {}
+  constructor(@Inject(FIREBASE) private _firebase: Firebase) {}
 
   getCollection<T>(name: string, converter: any) {
     return from(
-      getDocs(collection(this._svc.db, name).withConverter(converter)),
+      getDocs(collection(this._firebase.db, name).withConverter(converter)),
     ).pipe(
       map((querySnapshot) => querySnapshot.docs.map((doc) => doc.data() as T)),
     );
   }
 
   getDocument<T>(collectionName: string, id: string, converter: any) {
-    const docRef = doc(this._svc.db, collectionName, id);
+    const docRef = doc(this._firebase.db, collectionName, id);
     return from(getDoc(docRef.withConverter(converter))).pipe(
       map((d: DocumentSnapshot) => d.data() as T),
     );
@@ -37,9 +37,9 @@ export class FirebaseDbService {
     item: T,
     converter: StoreConverter<T>,
   ) {
-    const ref = doc(collection(this._svc.db, collectionName)).withConverter(
-      converter,
-    );
+    const ref = doc(
+      collection(this._firebase.db, collectionName),
+    ).withConverter(converter);
     return from(setDoc(ref, item));
   }
 
@@ -54,7 +54,7 @@ export class FirebaseDbService {
     }
 
     const ref = doc(
-      collection(this._svc.db, collectionName),
+      collection(this._firebase.db, collectionName),
       id,
     ).withConverter(converter);
 
@@ -62,6 +62,6 @@ export class FirebaseDbService {
   }
 
   deleteDocument(collectionName: FireStoreCollections, id: string) {
-    return from(deleteDoc(doc(this._svc.db, collectionName, id)));
+    return from(deleteDoc(doc(this._firebase.db, collectionName, id)));
   }
 }

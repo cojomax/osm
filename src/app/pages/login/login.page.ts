@@ -4,13 +4,16 @@ import {
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
+  Validators,
 } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { NzFormModule } from '@nz/form';
 import { NzIconModule } from '@nz/icon';
 import { NzInputModule } from '@nz/input';
+import { NzMessageService } from '@nz/message';
 import { NzButtonModule } from 'ng-zorro-antd/button';
-import { FirebaseAuthService } from '../../services/firebase/firebase.auth.service';
+import { catchError, finalize, tap } from 'rxjs';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   standalone: true,
@@ -27,9 +30,15 @@ import { FirebaseAuthService } from '../../services/firebase/firebase.auth.servi
   styleUrl: './login.page.css',
 })
 export class LoginPageComponent implements OnInit {
+  protected isSubmitting = false;
+
   protected loginForm!: FormGroup<any>;
 
-  constructor(private _auth: FirebaseAuthService) {}
+  constructor(
+    private authSvc: AuthService,
+    private messageSvc: NzMessageService,
+    private router: Router,
+  ) {}
 
   ngOnInit() {
     this.initForm();
@@ -37,16 +46,39 @@ export class LoginPageComponent implements OnInit {
 
   private initForm() {
     this.loginForm = new FormGroup({
-      email: new FormControl(''),
-      password: new FormControl(''),
+      email: new FormControl('', [Validators.required, Validators.email]),
+      password: new FormControl('', [Validators.required]),
     });
   }
 
   onSubmit() {
-    console.log('Submitted!', this.loginForm.value);
-    this._auth.createWithCredentials(
-      this.loginForm.value.email,
-      this.loginForm.value.password,
-    );
+    this.isSubmitting = true;
+    this.authSvc
+      .loginWithPassword(
+        this.loginForm.value.email,
+        this.loginForm.value.password,
+      )
+      .pipe(
+        tap(() => {
+          this.showSuccessMsg('Login successful');
+          this.router.navigateByUrl('/');
+        }),
+        catchError((err) => {
+          this.showErrorMsg('Login failed');
+          return err;
+        }),
+        finalize(() => {
+          this.isSubmitting = false;
+        }),
+      )
+      .subscribe();
+  }
+
+  private showSuccessMsg(msg: string) {
+    this.messageSvc.success(msg, { nzDuration: 10000 });
+  }
+
+  private showErrorMsg(msg: string) {
+    this.messageSvc.error(msg, { nzDuration: 10000 });
   }
 }

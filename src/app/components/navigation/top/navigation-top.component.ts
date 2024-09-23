@@ -1,11 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { User, UserRole } from 'src/app/domain/user/user.model';
+import { AuthService } from 'src/app/services/auth.service';
+import { SESSION, Session } from 'src/app/services/tokens/session.token';
 import { UserService } from 'src/app/services/user.service';
-import { UserState } from 'src/app/services/user.state';
 
 @Component({
   selector: 'app-navigation-top',
@@ -22,19 +23,17 @@ export class NavigationTopComponent {
   protected userRole = UserRole;
 
   constructor(
-    protected userState: UserState,
+    @Inject(SESSION) protected session: Session,
+    private authSvc: AuthService,
     private userService: UserService,
   ) {}
 
-  ngOnInit() {
-    this.userState.user$.subscribe((user) => {
-      this.user = user;
-      this.selectedRole = user?.role ?? UserRole.undefined;
-    });
-  }
-
   protected onRoleChange() {
     this.userService.setUserRoleTmp(this.selectedRole);
+  }
+
+  protected onLogout() {
+    this.authSvc.logout().subscribe();
   }
 
   protected get hasAdminAccess() {

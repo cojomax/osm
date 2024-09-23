@@ -1,10 +1,6 @@
 import { Injectable } from '@angular/core';
-import {
-  DocumentData,
-  QueryDocumentSnapshot
-} from 'firebase/firestore/lite';
+import { DocumentData, QueryDocumentSnapshot } from 'firebase/firestore/lite';
 import { FirebaseDbService } from '../../services/firebase/firebase.db.service';
-import { FirebaseService } from '../../services/firebase/firebase.service';
 import { FireStoreCollections } from '../../shared/db-collection.enum';
 import { Player } from './player.model';
 
@@ -36,17 +32,18 @@ const playerConverter = {
 
 @Injectable({ providedIn: 'root' })
 export class PlayerService {
-  constructor(
-    private _svc: FirebaseService,
-    private _dbSvc: FirebaseDbService,
-  ) {}
+  constructor(private _dbSvc: FirebaseDbService) {}
 
   getAllPlayers() {
     return this._dbSvc.getCollection<Player>(COLLECTION, playerConverter);
   }
 
   getPlayer(playerId: string) {
-    return this._dbSvc.getDocument<Player>(COLLECTION, playerId, playerConverter);
+    return this._dbSvc.getDocument<Player>(
+      COLLECTION,
+      playerId,
+      playerConverter,
+    );
   }
 
   addPlayer(player: Player) {

@@ -13,13 +13,14 @@ export const routes: Routes = [
   { path: 'login', component: LoginPageComponent },
   { path: 'register', component: RegisterPageComponent },
   { path: 'match-report', component: MatchReportPageComponent },
+  { path: 'team', component: TeamPageComponent },
   {
     path: 'admin',
+    
     children: [
       { path: 'players/:id', component: PlayerDetailsPageComponent },
       { path: 'players', component: PlayersPageComponent },
     ],
   },
-  { path: 'team', component: TeamPageComponent },
   { path: '**', component: PageNotFoundPageComponent },
 ];

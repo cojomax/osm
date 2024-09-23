@@ -1,7 +1,5 @@
 <div class="banner-top">
-  <span>{{ user?.id }}</span>
-  <span>{{ user?.name }}</span>
-  <span>{{ user?.email }}</span>
+  <span>Logged in as: {{ session.firebaseUser?.email }}</span>
   <!-- Temporary Role Change -->
   <nz-select
     (ngModelChange)="onRoleChange()"
@@ -17,7 +15,14 @@
 
   <a *ngIf="hasAdminAccess" routerLink="/admin/players">Admin</a>
 
-  <a routerLink="/login">Log in</a>
+  <ng-container *ngIf="session.isActive; else login">
+    <a (click)="onLogout()">Log Out</a>
+  </ng-container>
+
+  <ng-template #login>
+    <a routerLink="/login">Log In</a>
+  </ng-template>
+
   <!-- <span>|</span>
   <span>|</span>
   <a routerLink="register">Register</a> -->
