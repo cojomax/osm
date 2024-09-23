@@ -1,8 +1,14 @@
 <ul nz-menu nzMode="horizontal">
-  <li nz-menu-item nzSelected routerLink="/team">
+  <li nz-menu-item nzSelected routerLink="/team" nzMatchRouterExact="true">
     <!-- <span nz-icon nzType="mail"></span> -->
     Team
   </li>
-  <li nz-menu-item routerLink="/fixtures">Fixtures & Results</li>
-  <li nz-menu-item routerLink="/news">News</li>
+
+  <!-- TODO The underline is around even for home/'' path -->
+  <!-- TODO The color of the links changes between blue (default) and black (config) -->
+
+  <li nz-menu-item routerLink="/fixtures" nzMatchRouterExact="true">
+    Fixtures & Results
+  </li>
+  <li nz-menu-item routerLink="/news" nzMatchRouterExact="true">News</li>
 </ul>
