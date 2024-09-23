@@ -28,9 +28,11 @@
 </ng-template>
 
 <ng-template #admin>
-  <a routerLink="/">
-    <img src="assets/osm-transparent.png" alt="app-logo" />
-  </a>
+  <nav class="banner-nav">
+    <a routerLink="/">
+      <img src="assets/osm-transparent.png" alt="app-logo" />
+    </a>
+  </nav>
   <app-admin-shell>
     <router-outlet />
   </app-admin-shell>

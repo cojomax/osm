@@ -5,8 +5,8 @@ import { NzModalModule } from '@nz/modal';
 import { AgGridAngular } from 'ag-grid-angular';
 import { ColDef } from 'ag-grid-community';
 import { finalize, mergeMap, Subscription, tap } from 'rxjs';
-import { Player } from '../../../domain/player/player.model';
-import { PlayerService } from '../../../domain/player/player.service';
+import { Player } from '../../../models/player.model';
+import { PlayerService } from '../../../services/player.service';
 import { EditButtonComponent } from './form/edit-btn/edit-btn.component';
 import { PlayerFormComponent } from './form/player.form';
 

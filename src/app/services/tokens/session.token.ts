@@ -1,6 +1,6 @@
 import { InjectionToken } from '@angular/core';
 import { User as FirebaseUser } from 'firebase/auth';
-import { User } from '../../domain/user/user.model';
+import { User } from '../../models/user.model';
 
 export const sessionFactory = () => new Session();
 

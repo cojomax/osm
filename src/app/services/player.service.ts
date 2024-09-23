@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { DocumentData, QueryDocumentSnapshot } from 'firebase/firestore/lite';
-import { FirebaseDbService } from '../../services/firebase/firebase.db.service';
-import { FireStoreCollections } from '../../shared/db-collection.enum';
-import { Player } from './player.model';
+import { FireStoreCollections } from '../firebase/db-collection.enum';
+import { FirebaseDbService } from '../firebase/services/firebase.db.service';
+import { Player } from '../models/player.model';
 
 const COLLECTION = FireStoreCollections.players;
 

@@ -10,7 +10,7 @@ import { BehaviorSubject, from } from 'rxjs';
 import {
   FIREBASE,
   Firebase,
-} from '../tokens/firebase-config.token';
+} from '../../services/tokens/firebase-config.token';
 
 @Injectable({ providedIn: 'root' })
 export class FirebaseAuthService {

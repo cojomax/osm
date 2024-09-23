@@ -9,7 +9,7 @@ import {
 import { NzButtonModule } from '@nz/button';
 import { NzFormModule } from '@nz/form';
 import { NzInputModule } from '@nz/input';
-import { Player } from '../../../../domain/player/player.model';
+import { Player } from '../../../../models/player.model';
 
 @Component({
   selector: 'app-player-form',

@@ -9,9 +9,12 @@ import {
   setDoc,
 } from 'firebase/firestore/lite';
 import { from, map } from 'rxjs';
-import { StoreConverter } from 'src/app/shared/converter.interface';
-import { FireStoreCollections } from 'src/app/shared/db-collection.enum';
-import { FIREBASE, Firebase } from '../tokens/firebase-config.token';
+import {
+  FIREBASE,
+  Firebase,
+} from '../../services/tokens/firebase-config.token';
+import { StoreConverter } from '../converter.interface';
+import { FireStoreCollections } from '../db-collection.enum';
 
 @Injectable({ providedIn: 'root' })
 export class FirebaseDbService {

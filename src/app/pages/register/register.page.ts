@@ -11,7 +11,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { tap } from 'rxjs';
-import { FirebaseAuthService } from '../../services/firebase/firebase.auth.service';
+import { FirebaseAuthService } from '../../firebase/services/firebase.auth.service';
 
 @Component({
   standalone: true,

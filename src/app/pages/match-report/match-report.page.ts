@@ -7,9 +7,9 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { MatchService } from '../../domain/match/match.service';
-import { Player } from '../../domain/player/player.model';
 import { MatchReport } from '../../models/match-report.model';
+import { Player } from '../../models/player.model';
+import { MatchService } from '../../services/match.service';
 
 @Component({
   standalone: true,
@@ -20,28 +20,28 @@ import { MatchReport } from '../../models/match-report.model';
 export class MatchReportPageComponent implements OnInit {
   protected matchForm!: FormGroup<any>;
   constructor(
-    private _fb: FormBuilder,
-    private _matchSvc: MatchService,
+    private fb: FormBuilder,
+    private matchSvc: MatchService,
   ) {}
 
   ngOnInit() {
-    this.matchForm = this._fb.group({
-      matchDetails: this._fb.group({
+    this.matchForm = this.fb.group({
+      matchDetails: this.fb.group({
         date: [null, [Validators.required]],
         kickoff: ['', [Validators.required]],
         location: ['', [Validators.required]],
       }),
-      opposition: this._fb.group({
+      opposition: this.fb.group({
         name: ['', [Validators.required]],
         goals: [0, [Validators.required]],
       }),
-      osm: this._fb.group({
-        kit: this._fb.control<'Home' | 'Away' | null>(null, [
+      osm: this.fb.group({
+        kit: this.fb.control<'Home' | 'Away' | null>(null, [
           Validators.required,
         ]),
         goals: [0, [Validators.required]],
-        scorers: this._fb.array([]),
-        assists: this._fb.array([]),
+        scorers: this.fb.array([]),
+        assists: this.fb.array([]),
         motm: ['', [Validators.required]],
         dotd: ['', [Validators.required]],
       }),
@@ -58,11 +58,11 @@ export class MatchReportPageComponent implements OnInit {
   }
 
   addScorer(): void {
-    this.scorers.push(this._fb.control(''));
+    this.scorers.push(this.fb.control(''));
   }
 
   addAssist(): void {
-    this.assists.push(this._fb.control(''));
+    this.assists.push(this.fb.control(''));
   }
 
   onSubmit(): void {
@@ -89,7 +89,7 @@ export class MatchReportPageComponent implements OnInit {
     // removeUndefinedPropertiesRecursive(matchReport);
 
     // if (this.matchForm.valid) {
-    this._matchSvc.saveMatchReport(matchReport);
+    this.matchSvc.saveMatchReport(matchReport);
     // }
   }
   // #endregion Generated

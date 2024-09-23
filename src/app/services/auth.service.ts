@@ -1,20 +1,22 @@
 import { Inject, Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { User as FirebaseUser } from 'firebase/auth';
 import { catchError, take, tap } from 'rxjs';
-import { FirebaseAuthService } from './firebase/firebase.auth.service';
+import { FirebaseAuthService } from '../firebase/services/firebase.auth.service';
 import { Session, SESSION } from './tokens/session.token';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   constructor(
-    private _firebaseSvc: FirebaseAuthService,
-    @Inject(SESSION) private _session: Session,
+    private firebaseSvc: FirebaseAuthService,
+    private router: Router,
+    @Inject(SESSION) private session: Session,
   ) {
     this.subscribeToUserChanges();
   }
 
   loginWithPassword(email: string, password: string) {
-    return this._firebaseSvc.signInEmailAndPassword(email, password).pipe(
+    return this.firebaseSvc.signInEmailAndPassword(email, password).pipe(
       catchError((error) => {
         const errorCode = error.code;
         console.error('Error signing in:', errorCode);
@@ -26,15 +28,20 @@ export class AuthService {
   }
 
   logout() {
-    return this._firebaseSvc.logout().pipe(take(1));
+    return this.firebaseSvc.logout().pipe(
+      take(1),
+      tap(() => {
+        this.router.navigateByUrl('/');
+      }),
+    );
   }
 
   private subscribeToUserChanges() {
-    this._firebaseSvc
+    this.firebaseSvc
       .onUserChange()
       .pipe(
         tap((user: FirebaseUser | null) => {
-          this._session.firebaseUser = user;
+          this.session.firebaseUser = user;
         }),
       )
       .subscribe();
