@@ -4,9 +4,9 @@
   --color-secondary: #ddb967;
   --color-secondary-rgba: 29, 30, 44;
 
-  /* Font */  
-  --font-accent: var(--color-secondary);
-  --font-primary: #1d1e2c;
+  /* Font */
+  --font-primary: var(--color-primary);
+  --font-secondary: var(--color-secondary);
   --font-color-alt: white;
   --font-size-sm: 12px;
   --font-size: 16px;
