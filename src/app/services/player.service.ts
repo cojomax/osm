@@ -1,5 +1,9 @@
 import { Injectable } from '@angular/core';
-import { DocumentData, QueryDocumentSnapshot } from 'firebase/firestore/lite';
+import {
+  DocumentData,
+  QueryDocumentSnapshot,
+  Timestamp,
+} from 'firebase/firestore/lite';
 import { FireStoreCollections } from '../firebase/db-collection.enum';
 import { FirebaseDbService } from '../firebase/services/firebase.db.service';
 import { Player } from '../models/player.model';
@@ -13,6 +17,9 @@ const playerConverter = {
       lastName: player.lastName,
       squadNumber: player.squadNumber,
       position: player.position,
+      country: player.country,
+      dob: player.dob,
+      height: player.height,
     };
     return req;
   },
@@ -26,9 +33,16 @@ const playerConverter = {
       lastName: player['lastName'],
       position: player['position'],
       squadNumber: player['squadNumber'],
+      country: player['country'],
+      dob: extractDate(player['dob']),
+      height: player['height'],
     });
   },
 };
+
+// TODO Figure out what's going on here and try remove this function.
+const extractDate = (date: Timestamp | string) =>
+  typeof date === 'string' ? new Date(date) : (date?.toDate() ?? null);
 
 @Injectable({ providedIn: 'root' })
 export class PlayerService {

@@ -1,3 +1,5 @@
+import { Position } from './position.enum';
+
 export class Player {
   constructor(init: Partial<Player>) {
     Object.assign(this, init);
@@ -12,8 +14,21 @@ export class Player {
   lastName = '';
 
   /** The position the player ordinarily plays. */
-  position = '';
+  position = Position.undefined;
 
   /** The squad number with which the player plays. */
   squadNumber = 0;
+
+  /** The home nation from which the player originates. */
+  country = '';
+
+  /** The date of birth of the player. */
+  dob: Date | null = null;
+
+  /** The player's height (cm). */
+  height: number | null = null;
+
+  get fullName() {
+    return `${this.firstName} ${this.lastName}`;
+  }
 }

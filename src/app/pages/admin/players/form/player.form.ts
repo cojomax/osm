@@ -7,9 +7,12 @@ import {
   Validators,
 } from '@angular/forms';
 import { NzButtonModule } from '@nz/button';
+import { NzDatePickerModule } from '@nz/date-picker';
 import { NzFormModule } from '@nz/form';
 import { NzInputModule } from '@nz/input';
+import { NzSelectModule } from '@nz/select';
 import { Player } from '../../../../models/player.model';
+import { Position } from '../../../../models/position.enum';
 
 @Component({
   selector: 'app-player-form',
@@ -20,14 +23,16 @@ import { Player } from '../../../../models/player.model';
     CommonModule,
     ReactiveFormsModule,
     NzButtonModule,
+    NzDatePickerModule,
     NzFormModule,
     NzInputModule,
+    NzSelectModule,
   ],
 })
 export class PlayerFormComponent implements OnInit {
   @Input() data: Player | null = null;
 
-  playerForm!: FormGroup<any>;
+  public playerForm!: FormGroup<any>;
 
   protected submitted = new EventEmitter<FormGroup>();
 
@@ -35,6 +40,14 @@ export class PlayerFormComponent implements OnInit {
     colOne: 6,
     colTwo: 14,
   };
+
+  protected positionOptions = Object.keys(Position).map((key) => ({
+    value: Position[key as keyof typeof Position],
+    label:
+      Position[key as keyof typeof Position] === Position.undefined
+        ? ''
+        : Position[key as keyof typeof Position],
+  }));
 
   get isFirstNameValid() {
     return (
@@ -64,29 +77,28 @@ export class PlayerFormComponent implements OnInit {
     );
   }
 
-  constructor(
-    private _fb: FormBuilder,
-  ) {}
+  constructor(private _fb: FormBuilder) {}
 
   ngOnInit() {
     this.playerForm = this._fb.group({
       playerId: [this.data?.playerId],
       firstName: [this.data?.firstName ?? '', Validators.required],
       lastName: [this.data?.lastName ?? '', Validators.required],
-      position: [this.data?.position ?? '', Validators.required],
-      squadNumber: [this.data?.squadNumber ?? null, Validators.required],
+      position: [this.data?.position ?? void 0],
+      squadNumber: [
+        this.data?.squadNumber ?? null,
+        [Validators.min(0), Validators.max(99), Validators.pattern(/^\d+$/)],
+      ],
+      country: [this.data?.country ?? '', Validators.required],
+      dob: [this.data?.dob ?? null],
+      height: [
+        this.data?.height ?? null,
+        [Validators.min(150), Validators.max(244), Validators.pattern(/^\d+$/)],
+      ],
     });
   }
 
   onSubmit() {
     this.submitted.emit(this.playerForm);
-    // this._playerSvc
-    //   .addPlayer(new Player(this.playerForm.value))
-    //   .pipe(
-    //     tap((res) => {
-    //       alert('done');
-    //     }),
-    //   )
-    //   .subscribe();
   }
 }

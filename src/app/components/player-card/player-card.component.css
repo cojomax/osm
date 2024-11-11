@@ -1,0 +1,62 @@
+:host {
+  display: block;
+}
+
+section {
+  display: flex;
+  align-items: flex-start;
+  /* width: 100%; */
+}
+
+p {
+  margin: 0;
+}
+
+.container {
+  background: linear-gradient(
+    to top left,
+    #e4c785 0%,
+    #e4c785 50%,
+    transparent 0%
+  );
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.number {
+  font-family: "Russo One";
+  font-size: 3rem;
+}
+
+.name {
+  font-size: 2em;
+}
+
+.position {
+  text-transform: uppercase;
+  font-weight: 200;
+}
+
+.season {
+  text-transform: uppercase;
+  color: gray;
+  padding-left: var(--space-md);
+  margin: var(--space-lg) 0 var(--space-md);
+}
+
+.data-display {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  /* font-size: 1rem; */
+}
+
+.data-display > p {
+  /* border: 1px solid rgba(0, 0, 0, 0.06); */
+  padding: var(--space-md);
+  /* margin-bottom: var(--space-sm); */
+}

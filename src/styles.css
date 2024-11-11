@@ -12,18 +12,22 @@
   box-sizing: border-box;
 }
 
-html {
+html, body, p {
   font-size: var(--font-size);
+  font-family: var(--font-family);
 }
+
+/* html {
+  --ant-font-size-base: var(--font-size);
+  --ant-font-family: var(--font-family);
+} */
 
 body {
   margin: 0;
 
   /* Font */
   /* color: var(--font-primary); */
-  /* font-size: var(--font-size); */
   /* font-family: Roboto, "Helvetica Neue", sans-serif; */
-  /* font-family: 'Noto Sans', sans-serif; */
 
   /* background-color: var(--color-primary); */
 }
@@ -44,6 +48,7 @@ h6 {
 
 p {
   margin: 0;
+  margin-bottom: 0;
 }
 
 ul {

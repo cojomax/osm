@@ -5,3 +5,7 @@
     margin: var(--space-md) auto 0;
     background-color: white;
 } */
+
+nz-date-picker {
+  width: 100%;
+}

@@ -4,6 +4,7 @@ import en from '@angular/common/locales/en';
 import {
   ApplicationConfig,
   importProvidersFrom,
+  LOCALE_ID,
   provideZoneChangeDetection,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -23,11 +24,11 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideAnimationsAsync(),
-    provideNzI18n(en_US),
     importProvidersFrom(FormsModule),
-    provideAnimationsAsync(),
     provideHttpClient(),
+    [{provide: LOCALE_ID, useValue: 'en-US' }],
     // Library Providers
+    provideNzI18n(en_US),
     { provide: NZ_CONFIG, useValue: ngZorroConfig },
     // Custom Providers
     { provide: SESSION, useFactory: sessionFactory },

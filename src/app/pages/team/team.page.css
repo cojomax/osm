@@ -1,0 +1,9 @@
+.carousel {
+    display: flex;
+    gap: var(--space-md);
+    cursor: grab;
+}
+
+.carousel > app-player-card {
+    width: 400px;
+}

@@ -46,6 +46,19 @@ export class FirebaseDbService {
     return from(setDoc(ref, item));
   }
 
+  private sanitizeItem<T>(item: T) {
+    if (item && typeof item !== 'object') {
+      return item;
+    }
+
+    for (const key in item) {
+      if (typeof item[key] === 'string') {
+        (item[key] as string) = item[key].trim();
+      }
+    }
+    return item;
+  }
+
   updateDocument<T>(
     collectionName: FireStoreCollections,
     id: string,
@@ -55,6 +68,8 @@ export class FirebaseDbService {
     if (!id) {
       throw new Error('No value for parameter: id');
     }
+
+    this.sanitizeItem(item);
 
     const ref = doc(
       collection(this._firebase.db, collectionName),

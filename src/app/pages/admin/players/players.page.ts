@@ -1,4 +1,12 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { DatePipe } from '@angular/common';
+import {
+  AfterViewInit,
+  Component,
+  Inject,
+  LOCALE_ID,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { NzButtonModule } from '@nz/button';
 import { NzIconModule } from '@nz/icon';
 import { NzModalModule } from '@nz/modal';
@@ -7,8 +15,8 @@ import { ColDef } from 'ag-grid-community';
 import { finalize, mergeMap, Subscription, tap } from 'rxjs';
 import { Player } from '../../../models/player.model';
 import { PlayerService } from '../../../services/player.service';
-import { EditButtonComponent } from './form/edit-btn/edit-btn.component';
 import { PlayerFormComponent } from './form/player.form';
+import { EditButtonComponent } from './renderers/edit-btn/edit-btn.component';
 
 @Component({
   standalone: true,
@@ -19,8 +27,8 @@ import { PlayerFormComponent } from './form/player.form';
     NzModalModule,
     PlayerFormComponent,
   ],
-  templateUrl: './players.component.html',
-  styleUrl: './players.component.css',
+  templateUrl: './players.page.html',
+  styleUrl: './players.page.css',
 })
 export class PlayersPageComponent implements OnInit, AfterViewInit {
   protected isSaving = false;
@@ -31,11 +39,17 @@ export class PlayersPageComponent implements OnInit, AfterViewInit {
   protected selectedPlayer: Player | null = null;
   protected players: Player[] = [];
 
-  private _subs = new Subscription();
+  private subs = new Subscription();
+  private datePipe: DatePipe;
 
   @ViewChild(PlayerFormComponent) form: PlayerFormComponent | undefined;
 
-  constructor(private _playerSvc: PlayerService) {}
+  constructor(
+    @Inject(LOCALE_ID) locale: string,
+    private playerSvc: PlayerService,
+  ) {
+    this.datePipe = new DatePipe(locale);
+  }
 
   ngOnInit() {
     this.refreshTable().subscribe();
@@ -44,16 +58,36 @@ export class PlayersPageComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {}
 
   ngOnDestroy() {
-    this._subs.unsubscribe();
+    this.subs.unsubscribe();
   }
 
   protected colDefs: ColDef[] = [
-    { field: 'squadNumber', headerName: '#' },
-    { field: 'firstName', editable: true },
+    {
+      field: 'squadNumber',
+      cellDataType: 'number',
+      headerName: '#',
+      width: 50,
+    },
+    { field: 'firstName' },
     { field: 'lastName' },
     { field: 'position' },
+    { field: 'country' },
+    {
+      field: 'dob',
+      cellDataType: 'date',
+      headerName: 'Date of Birth',
+      width: 150,
+      valueFormatter: (params) => this.datePipe.transform(params.value) ?? '',
+    },
+    {
+      field: 'height',
+      cellDataType: 'number',
+      headerName: 'Height (cm)',
+      width: 150,
+    },
     {
       field: 'action',
+      maxWidth: 150,
       cellRenderer: EditButtonComponent,
       cellRendererParams: { onEdit: this.onEditClick.bind(this) },
     },
@@ -70,7 +104,7 @@ export class PlayersPageComponent implements OnInit, AfterViewInit {
   protected onModalOpen() {
     this.isSumbitDisabled = this.form?.playerForm.invalid ?? true;
 
-    this._subs.add(
+    this.subs.add(
       this.form!.playerForm.statusChanges.pipe(
         tap(() => {
           this.isSumbitDisabled = this.form!.playerForm.invalid;
@@ -87,10 +121,10 @@ export class PlayersPageComponent implements OnInit, AfterViewInit {
     this.isSaving = true;
 
     const write$ = this.form.playerForm.get('playerId')?.value
-      ? this._playerSvc.updatePlayer(this.form.playerForm.value)
-      : this._playerSvc.addPlayer(new Player(this.form.playerForm.value));
+      ? this.playerSvc.updatePlayer(this.form.playerForm.value)
+      : this.playerSvc.addPlayer(new Player(this.form.playerForm.value));
 
-    this._subs.add(
+    this.subs.add(
       write$
         .pipe(
           mergeMap(() => this.refreshTable()),
@@ -105,7 +139,7 @@ export class PlayersPageComponent implements OnInit, AfterViewInit {
 
   protected onDelete() {
     this.isDeleting = true;
-    this._playerSvc
+    this.playerSvc
       .deletePlayer(this.selectedPlayer!.playerId)
       .pipe(
         mergeMap(() => this.refreshTable()),
@@ -126,7 +160,7 @@ export class PlayersPageComponent implements OnInit, AfterViewInit {
   }
 
   private refreshTable() {
-    return this._playerSvc.getAllPlayers().pipe(
+    return this.playerSvc.getAllPlayers().pipe(
       tap((players) => {
         this.players = players;
       }),

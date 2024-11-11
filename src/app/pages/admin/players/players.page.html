@@ -1,13 +1,15 @@
-<button nz-button nzType="primary" (click)="onAddClick()">
-  <span nz-icon nzType="user-add"></span>
-  Add
-</button>
+<div class="top">
+  <button nz-button nzType="primary" (click)="onAddClick()">
+    <span nz-icon nzType="user-add"></span>
+    Add
+  </button>
+</div>
 
 <ag-grid-angular
+  class="ag-theme-quartz-auto-dark"
+  style="height: 500px"
   [rowData]="players"
   [columnDefs]="colDefs"
-  class="ag-theme-quartz-dark"
-  style="height: 500px"
 />
 
 <nz-modal

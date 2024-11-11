@@ -8,8 +8,8 @@ import { PlayerService } from '../../../../services/player.service';
 @Component({
   standalone: true,
   imports: [NzAvatarModule],
-  templateUrl: './player-details.component.html',
-  styleUrl: './player-details.component.css',
+  templateUrl: './player-details.page.html',
+  styleUrl: './player-details.page.css',
 })
 export class PlayerDetailsPageComponent {
   protected player: Player | null = null;

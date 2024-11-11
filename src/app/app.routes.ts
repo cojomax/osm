@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
-import { PlayerDetailsPageComponent } from './pages/admin/players/details/player-details.component';
-import { PlayersPageComponent } from './pages/admin/players/players.component';
+import { PlayerDetailsPageComponent } from './pages/admin/players/details/player-details.page';
+import { PlayersPageComponent } from './pages/admin/players/players.page';
 import { HomePageComponent } from './pages/home/home.page';
 import { LoginPageComponent } from './pages/login/login.page';
 import { PageNotFoundPageComponent } from './pages/not-found/not-found.page';
