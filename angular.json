@@ -35,7 +35,7 @@
             "styles": [
               "src/styles.css",
               "src/theme/common.css",
-              "node_modules/ng-zorro-antd/ng-zorro-antd.variable.min.css"
+              "./node_modules/ng-zorro-antd/ng-zorro-antd.variable.min.css"
             ],
             "scripts": []
           },
@@ -67,7 +67,7 @@
               ]
             }
           },
-          "defaultConfiguration": "production"
+          "defaultConfiguration": "development"
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -106,5 +106,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "b175adad-c884-42c3-a12d-014a9073667e"
   }
 }

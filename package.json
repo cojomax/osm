@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "pnpm i && ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
@@ -19,7 +19,10 @@
     "@angular/platform-browser": "^18.2.0",
     "@angular/platform-browser-dynamic": "^18.2.0",
     "@angular/router": "^18.2.0",
+    "@ant-design/icons-angular": "^18.0.0",
     "ag-grid-angular": "^32.1.0",
+    "ag-grid-community": "^32.3.3",
+    "date-fns": "^4.1.0",
     "firebase": "^10.13.0",
     "ng-zorro-antd": "^18.1.1",
     "rxjs": "~7.8.0",
