@@ -11,12 +11,12 @@ import { NzButtonModule } from '@nz/button';
 import { NzIconModule } from '@nz/icon';
 import { NzModalModule } from '@nz/modal';
 import { AgGridAngular } from 'ag-grid-angular';
-import { ColDef } from 'ag-grid-community';
 import { finalize, mergeMap, Subscription, tap } from 'rxjs';
 import { Player } from '../../../models/player.model';
 import { PlayerService } from '../../../services/player.service';
 import { PlayerFormComponent } from './form/player.form';
 import { EditButtonComponent } from './renderers/edit-btn/edit-btn.component';
+import { ColDef } from 'ag-grid-community';
 
 @Component({
   standalone: true,
@@ -34,7 +34,7 @@ export class PlayersPageComponent implements OnInit, AfterViewInit {
   protected isSaving = false;
   protected isDeleting = false;
   protected isModalVisible = false;
-  protected isSumbitDisabled = true;
+  protected isSubmitDisabled = true;
 
   protected selectedPlayer: Player | null = null;
   protected players: Player[] = [];
@@ -102,12 +102,12 @@ export class PlayersPageComponent implements OnInit, AfterViewInit {
   }
 
   protected onModalOpen() {
-    this.isSumbitDisabled = this.form?.playerForm.invalid ?? true;
+    this.isSubmitDisabled = this.form?.playerForm.invalid ?? true;
 
     this.subs.add(
       this.form!.playerForm.statusChanges.pipe(
         tap(() => {
-          this.isSumbitDisabled = this.form!.playerForm.invalid;
+          this.isSubmitDisabled = this.form!.playerForm.invalid;
         }),
       ).subscribe(),
     );
