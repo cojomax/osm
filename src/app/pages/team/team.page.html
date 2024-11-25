@@ -1,37 +1,17 @@
 <div class="osm-container">
   <!-- Goalkeeper Cards -->
   <nz-divider nzText="Goalkeepers"></nz-divider>
-  <div class="carousel">
-    <app-player-card
-      *ngFor="let gk of goalkeepers"
-      [player]="gk"
-    ></app-player-card>
-  </div>
+  <app-player-swiper [players]="goalkeepers"></app-player-swiper>
 
   <!-- Defender Cards -->
   <nz-divider nzText="Defenders"></nz-divider>
-  <div class="carousel">
-    <app-player-card
-      *ngFor="let def of defenders"
-      [player]="def"
-    ></app-player-card>
-  </div>
+  <app-player-swiper [players]="defenders"></app-player-swiper>
 
   <!-- Midfielder Cards -->
   <nz-divider nzText="Midfielders"></nz-divider>
-  <div class="carousel">
-    <app-player-card
-      *ngFor="let mid of midfielders"
-      [player]="mid"
-    ></app-player-card>
-  </div>
+  <app-player-swiper [players]="midfielders"></app-player-swiper>
 
   <!-- Forward Cards -->
   <nz-divider nzText="Forwards"></nz-divider>
-  <div class="carousel">
-    <app-player-card
-      *ngFor="let fwd of forwards"
-      [player]="fwd"
-    ></app-player-card>
-  </div>
+  <app-player-swiper [players]="forwards"></app-player-swiper>
 </div>

@@ -1,0 +1,12 @@
+<div class="swiper swiper-player">
+  <div class="swiper-wrapper">
+    <app-player-card
+      class="swiper-slide"
+      *ngFor="let player of players"
+      [player]="player"
+    ></app-player-card>
+  </div>
+
+  <!-- TODO Dots don't update when I swipe... -->
+  <div class="swiper-pagination"></div>
+</div>
