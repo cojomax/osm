@@ -9,7 +9,6 @@ import {
 } from '@angular/router';
 import { NzLayoutModule } from '@nz/layout';
 import { AdminShellComponent } from './components/admin/shell/admin-shell.component';
-import { NavigationAdminComponent } from './components/navigation/admin/navigation-admin.component';
 import { NavigationMainComponent } from './components/navigation/main/navigation-main.component';
 import { NavigationTopComponent } from './components/navigation/top/navigation-top.component';
 import { RouteService } from './services/route.service';
@@ -17,20 +16,19 @@ import { RouteService } from './services/route.service';
 type ViewState = 'public' | 'admin' | 'login';
 
 @Component({
-    selector: 'app-root',
-    imports: [
-        AdminShellComponent,
-        CommonModule,
-        FormsModule,
-        NavigationAdminComponent,
-        NavigationMainComponent,
-        NavigationTopComponent,
-        NzLayoutModule,
-        RouterModule,
-        RouterOutlet,
-    ],
-    templateUrl: './app.component.html',
-    styleUrl: './app.component.css'
+  selector: 'app-root',
+  imports: [
+    AdminShellComponent,
+    CommonModule,
+    FormsModule,
+    NavigationMainComponent,
+    NavigationTopComponent,
+    NzLayoutModule,
+    RouterModule,
+    RouterOutlet,
+  ],
+  templateUrl: './app.component.html',
+  styleUrl: './app.component.css',
 })
 export class AppComponent implements OnInit {
   protected viewState: ViewState = 'public';

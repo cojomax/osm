@@ -14,7 +14,7 @@ export class Player {
   lastName = '';
 
   /** The position the player ordinarily plays. */
-  position = Position.undefined;
+  position = Position.Undefined;
 
   /** The squad number with which the player plays. */
   squadNumber = 0;

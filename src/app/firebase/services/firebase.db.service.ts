@@ -14,7 +14,7 @@ import {
   Firebase,
 } from '../../services/tokens/firebase-config.token';
 import { StoreConverter } from '../converter.interface';
-import { FireStoreCollections } from '../db-collection.enum';
+import { FireStoreCollection } from '../db-collection.enum';
 
 @Injectable({ providedIn: 'root' })
 export class FirebaseDbService {
@@ -36,7 +36,7 @@ export class FirebaseDbService {
   }
 
   createDocument<T>(
-    collectionName: FireStoreCollections,
+    collectionName: FireStoreCollection,
     item: T,
     converter: StoreConverter<T>,
   ) {
@@ -60,7 +60,7 @@ export class FirebaseDbService {
   }
 
   updateDocument<T>(
-    collectionName: FireStoreCollections,
+    collectionName: FireStoreCollection,
     id: string,
     item: T,
     converter: StoreConverter<T>,
@@ -79,7 +79,7 @@ export class FirebaseDbService {
     return from(setDoc(ref, item));
   }
 
-  deleteDocument(collectionName: FireStoreCollections, id: string) {
+  deleteDocument(collectionName: FireStoreCollection, id: string) {
     return from(deleteDoc(doc(this._firebase.db, collectionName, id)));
   }
 }

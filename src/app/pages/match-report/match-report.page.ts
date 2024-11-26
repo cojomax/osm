@@ -70,7 +70,7 @@ export class MatchReportPageComponent implements OnInit {
     const player = new Player({
       firstName: 'Max',
       lastName: 'Cobbett',
-      position: Position.midfielder,
+      position: Position.Midfielder,
       squadNumber: 0,
     });
 

@@ -1,7 +1,7 @@
 export enum Position {
-    undefined = 'Undefined',
-    goalkeeper = 'Goalkeeper',
-    defender = 'Defender',
-    midfielder = 'Midfielder',
-    forward = 'Forward',
+  Undefined = 'Undefined',
+  Goalkeeper = 'Goalkeeper',
+  Defender = 'Defender',
+  Midfielder = 'Midfielder',
+  Forward = 'Forward',
 }

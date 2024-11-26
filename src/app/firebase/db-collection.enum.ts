@@ -1,4 +1,4 @@
-export enum FireStoreCollections {
-  players = 'players',
-  matches = 'matches',
+export enum FireStoreCollection {
+  Players = 'players',
+  Matches = 'matches',
 }

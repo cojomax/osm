@@ -4,11 +4,11 @@ import {
   QueryDocumentSnapshot,
   Timestamp,
 } from 'firebase/firestore/lite';
-import { FireStoreCollections } from '../firebase/db-collection.enum';
+import { FireStoreCollection } from '../firebase/db-collection.enum';
 import { FirebaseDbService } from '../firebase/services/firebase.db.service';
 import { Player } from '../models/player.model';
 
-const COLLECTION = FireStoreCollections.players;
+const COLLECTION = FireStoreCollection.Players;
 
 const playerConverter = {
   toFirestore: (player: Player) => {

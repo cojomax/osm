@@ -15,18 +15,18 @@ import { Player } from '../../../../models/player.model';
 import { Position } from '../../../../models/position.enum';
 
 @Component({
-    selector: 'app-player-form',
-    templateUrl: './player.form.html',
-    styleUrl: './player.form.css',
-    imports: [
-        CommonModule,
-        ReactiveFormsModule,
-        NzButtonModule,
-        NzDatePickerModule,
-        NzFormModule,
-        NzInputModule,
-        NzSelectModule,
-    ]
+  selector: 'app-player-form',
+  templateUrl: './player.form.html',
+  styleUrl: './player.form.css',
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    NzButtonModule,
+    NzDatePickerModule,
+    NzFormModule,
+    NzInputModule,
+    NzSelectModule,
+  ],
 })
 export class PlayerFormComponent implements OnInit {
   @Input() data: Player | null = null;
@@ -43,7 +43,7 @@ export class PlayerFormComponent implements OnInit {
   protected positionOptions = Object.keys(Position).map((key) => ({
     value: Position[key as keyof typeof Position],
     label:
-      Position[key as keyof typeof Position] === Position.undefined
+      Position[key as keyof typeof Position] === Position.Undefined
         ? ''
         : Position[key as keyof typeof Position],
   }));

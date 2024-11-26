@@ -8,9 +8,9 @@ import { PlayerService } from '../../services/player.service';
 import { PlayerSwiperComponent } from '../../components/player-swiper/player-swiper.component';
 
 @Component({
-    imports: [CommonModule, NzDividerModule, PlayerSwiperComponent],
-    templateUrl: './team.page.html',
-    styleUrl: './team.page.css'
+  imports: [CommonModule, NzDividerModule, PlayerSwiperComponent],
+  templateUrl: './team.page.html',
+  styleUrl: './team.page.css',
 })
 export class TeamPageComponent implements OnInit {
   protected goalkeepers: Player[] = [];
@@ -38,34 +38,34 @@ export class TeamPageComponent implements OnInit {
 
   private filterByPosition(players: Player[]) {
     this.goalkeepers = [
-      ...players.filter((p) => p.position === Position.goalkeeper),
-      ...players.filter((p) => p.position === Position.goalkeeper),
-      ...players.filter((p) => p.position === Position.goalkeeper),
-      ...players.filter((p) => p.position === Position.goalkeeper),
-      ...players.filter((p) => p.position === Position.goalkeeper),
-      ...players.filter((p) => p.position === Position.goalkeeper),
+      ...players.filter((p) => p.position === Position.Goalkeeper),
+      ...players.filter((p) => p.position === Position.Goalkeeper),
+      ...players.filter((p) => p.position === Position.Goalkeeper),
+      ...players.filter((p) => p.position === Position.Goalkeeper),
+      ...players.filter((p) => p.position === Position.Goalkeeper),
+      ...players.filter((p) => p.position === Position.Goalkeeper),
     ];
 
     this.defenders = [
-      ...players.filter((p) => p.position === Position.defender),
-      ...players.filter((p) => p.position === Position.defender),
-      ...players.filter((p) => p.position === Position.defender),
-      ...players.filter((p) => p.position === Position.defender),
-      ...players.filter((p) => p.position === Position.defender),
-      ...players.filter((p) => p.position === Position.defender),
+      ...players.filter((p) => p.position === Position.Defender),
+      ...players.filter((p) => p.position === Position.Defender),
+      ...players.filter((p) => p.position === Position.Defender),
+      ...players.filter((p) => p.position === Position.Defender),
+      ...players.filter((p) => p.position === Position.Defender),
+      ...players.filter((p) => p.position === Position.Defender),
     ];
 
     this.midfielders = [
-      ...players.filter((p) => p.position === Position.midfielder),
-      ...players.filter((p) => p.position === Position.midfielder),
-      ...players.filter((p) => p.position === Position.midfielder),
-      ...players.filter((p) => p.position === Position.midfielder),
-      ...players.filter((p) => p.position === Position.midfielder),
-      ...players.filter((p) => p.position === Position.midfielder),
+      ...players.filter((p) => p.position === Position.Midfielder),
+      ...players.filter((p) => p.position === Position.Midfielder),
+      ...players.filter((p) => p.position === Position.Midfielder),
+      ...players.filter((p) => p.position === Position.Midfielder),
+      ...players.filter((p) => p.position === Position.Midfielder),
+      ...players.filter((p) => p.position === Position.Midfielder),
     ];
 
     this.positionless = players.filter(
-      (p) => p.position === Position.undefined,
+      (p) => p.position === Position.Undefined,
     );
   }
 }
