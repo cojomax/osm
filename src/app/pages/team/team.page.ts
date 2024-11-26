@@ -8,10 +8,9 @@ import { PlayerService } from '../../services/player.service';
 import { PlayerSwiperComponent } from '../../components/player-swiper/player-swiper.component';
 
 @Component({
-  standalone: true,
-  imports: [CommonModule, NzDividerModule, PlayerSwiperComponent],
-  templateUrl: './team.page.html',
-  styleUrl: './team.page.css',
+    imports: [CommonModule, NzDividerModule, PlayerSwiperComponent],
+    templateUrl: './team.page.html',
+    styleUrl: './team.page.css'
 })
 export class TeamPageComponent implements OnInit {
   protected goalkeepers: Player[] = [];

@@ -17,21 +17,20 @@ import { RouteService } from './services/route.service';
 type ViewState = 'public' | 'admin' | 'login';
 
 @Component({
-  selector: 'app-root',
-  standalone: true,
-  imports: [
-    AdminShellComponent,
-    CommonModule,
-    FormsModule,
-    NavigationAdminComponent,
-    NavigationMainComponent,
-    NavigationTopComponent,
-    NzLayoutModule,
-    RouterModule,
-    RouterOutlet,
-  ],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.css',
+    selector: 'app-root',
+    imports: [
+        AdminShellComponent,
+        CommonModule,
+        FormsModule,
+        NavigationAdminComponent,
+        NavigationMainComponent,
+        NavigationTopComponent,
+        NzLayoutModule,
+        RouterModule,
+        RouterOutlet,
+    ],
+    templateUrl: './app.component.html',
+    styleUrl: './app.component.css'
 })
 export class AppComponent implements OnInit {
   protected viewState: ViewState = 'public';

@@ -19,16 +19,15 @@ import { EditButtonComponent } from './renderers/edit-btn/edit-btn.component';
 import { ColDef } from 'ag-grid-community';
 
 @Component({
-  standalone: true,
-  imports: [
-    AgGridAngular,
-    NzButtonModule,
-    NzIconModule,
-    NzModalModule,
-    PlayerFormComponent,
-  ],
-  templateUrl: './players.page.html',
-  styleUrl: './players.page.css',
+    imports: [
+        AgGridAngular,
+        NzButtonModule,
+        NzIconModule,
+        NzModalModule,
+        PlayerFormComponent,
+    ],
+    templateUrl: './players.page.html',
+    styleUrl: './players.page.css'
 })
 export class PlayersPageComponent implements OnInit, AfterViewInit {
   protected isSaving = false;

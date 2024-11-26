@@ -16,18 +16,17 @@ import { catchError, finalize, tap } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
-  standalone: true,
-  imports: [
-    FormsModule,
-    NzButtonModule,
-    NzFormModule,
-    NzIconModule,
-    NzInputModule,
-    ReactiveFormsModule,
-    RouterModule,
-  ],
-  templateUrl: './login.page.html',
-  styleUrl: './login.page.css',
+    imports: [
+        FormsModule,
+        NzButtonModule,
+        NzFormModule,
+        NzIconModule,
+        NzInputModule,
+        ReactiveFormsModule,
+        RouterModule,
+    ],
+    templateUrl: './login.page.html',
+    styleUrl: './login.page.css'
 })
 export class LoginPageComponent implements OnInit {
   protected isSubmitting = false;

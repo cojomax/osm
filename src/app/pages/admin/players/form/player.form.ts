@@ -15,19 +15,18 @@ import { Player } from '../../../../models/player.model';
 import { Position } from '../../../../models/position.enum';
 
 @Component({
-  selector: 'app-player-form',
-  templateUrl: './player.form.html',
-  styleUrl: './player.form.css',
-  standalone: true,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    NzButtonModule,
-    NzDatePickerModule,
-    NzFormModule,
-    NzInputModule,
-    NzSelectModule,
-  ],
+    selector: 'app-player-form',
+    templateUrl: './player.form.html',
+    styleUrl: './player.form.css',
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        NzButtonModule,
+        NzDatePickerModule,
+        NzFormModule,
+        NzInputModule,
+        NzSelectModule,
+    ]
 })
 export class PlayerFormComponent implements OnInit {
   @Input() data: Player | null = null;

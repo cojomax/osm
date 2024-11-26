@@ -4,9 +4,8 @@ import { ICellRendererAngularComp } from 'ag-grid-angular';
 import { ICellRendererParams } from 'ag-grid-community';
 
 @Component({
-  standalone: true,
-  imports: [NzButtonModule],
-  templateUrl: './edit-btn.component.html',
+    imports: [NzButtonModule],
+    templateUrl: './edit-btn.component.html'
 })
 export class EditButtonComponent implements ICellRendererAngularComp {
   @Output() clicked = new EventEmitter<void>();

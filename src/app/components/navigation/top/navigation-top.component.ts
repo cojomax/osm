@@ -8,11 +8,10 @@ import { AuthService } from 'src/app/services/auth.service';
 import { SESSION, Session } from 'src/app/services/tokens/session.token';
 
 @Component({
-  selector: 'app-navigation-top',
-  templateUrl: './navigation-top.component.html',
-  styleUrl: './navigation-top.component.css',
-  standalone: true,
-  imports: [CommonModule, FormsModule, NzSelectModule, RouterModule],
+    selector: 'app-navigation-top',
+    templateUrl: './navigation-top.component.html',
+    styleUrl: './navigation-top.component.css',
+    imports: [CommonModule, FormsModule, NzSelectModule, RouterModule]
 })
 export class NavigationTopComponent {
   protected selectedRole = UserRole.undefined;

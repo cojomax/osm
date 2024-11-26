@@ -10,15 +10,16 @@ import {
 import { MatchReport } from '../../models/match-report.model';
 import { Player } from '../../models/player.model';
 import { MatchService } from '../../services/match.service';
+import { Position } from '../../models/position.enum';
 
 @Component({
-  standalone: true,
   imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './match-report.page.html',
   styleUrl: './match-report.page.css',
 })
 export class MatchReportPageComponent implements OnInit {
   protected matchForm!: FormGroup<any>;
+
   constructor(
     private fb: FormBuilder,
     private matchSvc: MatchService,
@@ -69,7 +70,7 @@ export class MatchReportPageComponent implements OnInit {
     const player = new Player({
       firstName: 'Max',
       lastName: 'Cobbett',
-      position: 'MID',
+      position: Position.midfielder,
       squadNumber: 0,
     });
 
@@ -92,5 +93,6 @@ export class MatchReportPageComponent implements OnInit {
     this.matchSvc.saveMatchReport(matchReport);
     // }
   }
+
   // #endregion Generated
 }

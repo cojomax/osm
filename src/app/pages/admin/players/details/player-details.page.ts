@@ -6,10 +6,9 @@ import { Player } from 'src/app/models/player.model';
 import { PlayerService } from '../../../../services/player.service';
 
 @Component({
-  standalone: true,
-  imports: [NzAvatarModule],
-  templateUrl: './player-details.page.html',
-  styleUrl: './player-details.page.css',
+    imports: [NzAvatarModule],
+    templateUrl: './player-details.page.html',
+    styleUrl: './player-details.page.css'
 })
 export class PlayerDetailsPageComponent {
   protected player: Player | null = null;
