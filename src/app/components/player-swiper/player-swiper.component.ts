@@ -15,12 +15,12 @@ export class PlayerSwiperComponent implements AfterContentInit {
 
   ngAfterContentInit() {
     // @ts-ignore
-    window['swiper'] = new Swiper('.swiper-player', {
+    window['swiper'] = new Swiper('.swiper', {
       slidesPerView: 3,
-      spaceBetween: 30,
-      pagination: {
-        el: '.swiper-pagination',
-        clickable: true,
+      spaceBetween: 60,
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
       },
     });
   }
