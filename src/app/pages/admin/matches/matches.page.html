@@ -1,0 +1,40 @@
+<ag-grid-angular
+  class="ag-theme-quartz-auto-dark"
+  style="height: 500px"
+  [rowData]="matches"
+  [columnDefs]="colDefs"
+/>
+
+<app-player-form *nzModalContent [data]="selectedMatch"></app-player-form>
+
+<nz-modal
+  nzTitle="Edit Player"
+  (nzOnCancel)="onCancel()"
+  (nzAfterOpen)="onModalOpen()"
+  (nzAfterClose)="onModalClose()"
+  [(nzVisible)]="isModalVisible"
+>
+  <app-player-form *nzModalContent [data]="selectedMatch"></app-player-form>
+  <div *nzModalFooter class="spaced">
+    <button
+      nz-button
+      nzDanger
+      nzType="primary"
+      [nzLoading]="isDeleting"
+      (click)="onDelete()"
+    >
+      Delete
+    </button>
+    <span class="space"></span>
+    <button nz-button nzType="default" (click)="onCancel()">Cancel</button>
+    <button
+      nz-button
+      nzType="primary"
+      [nzLoading]="isSaving"
+      [disabled]="isSubmitDisabled"
+      (click)="onSubmit()"
+    >
+      Submit
+    </button>
+  </div>
+</nz-modal>
