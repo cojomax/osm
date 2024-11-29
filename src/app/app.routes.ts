@@ -5,19 +5,21 @@ import { HomePageComponent } from './pages/home/home.page';
 import { LoginPageComponent } from './pages/login/login.page';
 import { PageNotFoundPageComponent } from './pages/not-found/not-found.page';
 import { TeamPageComponent } from './pages/team/team.page';
+import { MatchesPageComponent } from './pages/admin/matches/matches.page';
 
 export const routes: Routes = [
   { path: '', component: HomePageComponent },
   { path: 'login', component: LoginPageComponent },
   // { path: 'register', component: RegisterPageComponent },
-  // { path: 'match-report', component: MatchReportPageComponent },
+  // { path: 'match-report', component: MatchReportPageComponent },z
   { path: 'team', component: TeamPageComponent },
   {
     path: 'admin',
-    
+
     children: [
       { path: 'players/:id', component: PlayerDetailsPageComponent },
       { path: 'players', component: PlayersPageComponent },
+      { path: 'matches', component: MatchesPageComponent },
     ],
   },
   { path: '**', component: PageNotFoundPageComponent },

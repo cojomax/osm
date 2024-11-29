@@ -1,15 +1,13 @@
 export class Goal {
-  constructor(init: Partial<Goal>) {
+  constructor(init: Goal) {
     Object.assign(this, init);
   }
 
   goalId = '';
 
-  matchId = '';
-
   /** The ID of the player that scored the goal. */
-  playerId = '';
+  scorer = '';
 
   /** The ID of the player that assisted the goal, if any. */
-  assistId = '';
+  assisted: string | undefined;
 }

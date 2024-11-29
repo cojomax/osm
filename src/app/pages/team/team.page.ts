@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { NzDividerModule } from '@nz/divider';
 import { Subscription, tap } from 'rxjs';
-import { Player } from '../../models/player.model';
+import { Player } from '../../api/models/player.model';
 import { Position } from '../../models/position.enum';
 import { PlayerService } from '../../services/player.service';
 import { PlayerSwiperComponent } from '../../components/player-swiper/player-swiper.component';

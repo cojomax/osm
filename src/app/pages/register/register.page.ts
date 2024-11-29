@@ -11,17 +11,17 @@ import {
   Validators,
 } from '@angular/forms';
 import { tap } from 'rxjs';
-import { FirebaseAuthService } from '../../firebase/services/firebase.auth.service';
+import { FirebaseAuthService } from '../../api/firebase/services/firebase.auth.service';
 
 @Component({
-    imports: [
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        ReactiveFormsModule,
-    ],
-    templateUrl: './register.page.html',
-    styleUrl: './register.page.css'
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    ReactiveFormsModule,
+  ],
+  templateUrl: './register.page.html',
+  styleUrl: './register.page.css',
 })
 export class RegisterPageComponent {
   protected registerForm!: FormGroup<any>;

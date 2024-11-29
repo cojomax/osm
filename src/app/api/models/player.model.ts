@@ -1,4 +1,4 @@
-import { Position } from './position.enum';
+import { Position } from '../../models/position.enum';
 
 export class Player {
   constructor(init: Partial<Player>) {

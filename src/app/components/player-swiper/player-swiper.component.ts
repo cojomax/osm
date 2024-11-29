@@ -1,13 +1,13 @@
 import { AfterContentInit, Component, Input } from '@angular/core';
 import { PlayerCardComponent } from '../player-card/player-card.component';
-import { Player } from '../../models/player.model';
+import { Player } from '../../api/models/player.model';
 import { CommonModule } from '@angular/common';
 
 @Component({
-    selector: 'app-player-swiper',
-    templateUrl: './player-swiper.component.html',
-    styleUrls: ['./player-swiper.component.css'],
-    imports: [CommonModule, PlayerCardComponent]
+  selector: 'app-player-swiper',
+  templateUrl: './player-swiper.component.html',
+  styleUrls: ['./player-swiper.component.css'],
+  imports: [CommonModule, PlayerCardComponent],
 })
 export class PlayerSwiperComponent implements AfterContentInit {
   @Input() players: Player[] = [];

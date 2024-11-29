@@ -1,0 +1,43 @@
+import { Team } from './team.model';
+import { Goal } from './goal.model';
+
+export class Match {
+  constructor(init: Partial<Match>) {
+    Object.assign(this, init);
+  }
+
+  matchId = '';
+
+  /** The date the match is played on. */
+  date: Date | null = null;
+
+  venue: string | null = null;
+
+  /**
+   * The name of the competition for which the match is scheduled.
+   */
+  competition = '';
+
+  opponent: Team | null = null;
+
+  homeGoals: number | null = null;
+
+  opponentGoals: number | null = null;
+
+  goals: Goal[] = [];
+  
+  /** The ID of the player voted man of the match. */
+  manOfMatch: string | null = null;
+
+  /** The ID of the player voted dick of the day. */
+  dickOfDay: string | null = null;
+
+  /** The ID of the match report. */
+  matchReportId: string | null = null;
+
+  /** The name of the division (if the competition is a league). */
+  division: string | undefined;
+
+  /** The week (league) or round (cup) number of the match. */
+  round: string | undefined;
+}

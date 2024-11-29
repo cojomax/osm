@@ -1,16 +1,16 @@
 import { Inject, Injectable } from '@angular/core';
 import {
   createUserWithEmailAndPassword,
-  User as FirebaseUser,
   onAuthStateChanged,
   signInWithEmailAndPassword,
   signOut,
+  User as FirebaseUser,
 } from 'firebase/auth';
 import { BehaviorSubject, from } from 'rxjs';
 import {
   FIREBASE,
   Firebase,
-} from '../../services/tokens/firebase-config.token';
+} from '../../../services/tokens/firebase-config.token';
 
 @Injectable({ providedIn: 'root' })
 export class FirebaseAuthService {

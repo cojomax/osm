@@ -1,13 +1,39 @@
 import { Injectable } from '@angular/core';
-import { MatchReport } from '../models/match-report.model';
+import { FirebaseDbService } from '../api/firebase/services/firebase.db.service';
+import { FireStoreCollection } from '../api/firebase/db-collection.enum';
+import { Match } from '../api/models/match.model';
+import { StoreConverter } from '../api/firebase/converter.interface';
 
-const COLLECTION_NAME = 'matches';
+const COLLECTION = FireStoreCollection.Matches;
+
+const matchConverter = {} as StoreConverter<Match>;
 
 @Injectable({ providedIn: 'root' })
 export class MatchService {
-  constructor() {}
+  constructor(private _dbSvc: FirebaseDbService) {}
 
-  async saveMatchReport(match: MatchReport) {
-    // return await this._fb.createDocument(COLLECTION_NAME, match, {});
+  getAllMatches() {
+    return this._dbSvc.getCollection<Match>(COLLECTION, matchConverter);
+  }
+
+  getMatch(matchId: string) {
+    return this._dbSvc.getDocument<Match>(COLLECTION, matchId, matchConverter);
+  }
+
+  addMatch(match: Match) {
+    return this._dbSvc.createDocument(COLLECTION, match, matchConverter);
+  }
+
+  updateMatch(match: Match) {
+    return this._dbSvc.updateDocument(
+      COLLECTION,
+      match.matchId,
+      match,
+      matchConverter,
+    );
+  }
+
+  deleteMatch(matchId: string) {
+    return this._dbSvc.deleteDocument(COLLECTION, matchId);
   }
 }

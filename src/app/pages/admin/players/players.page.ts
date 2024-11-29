@@ -4,6 +4,7 @@ import {
   Component,
   Inject,
   LOCALE_ID,
+  OnDestroy,
   OnInit,
   ViewChild,
 } from '@angular/core';
@@ -12,24 +13,24 @@ import { NzIconModule } from '@nz/icon';
 import { NzModalModule } from '@nz/modal';
 import { AgGridAngular } from 'ag-grid-angular';
 import { finalize, mergeMap, Subscription, tap } from 'rxjs';
-import { Player } from '../../../models/player.model';
+import { Player } from '../../../api/models/player.model';
 import { PlayerService } from '../../../services/player.service';
 import { PlayerFormComponent } from './form/player.form';
 import { EditButtonComponent } from './renderers/edit-btn/edit-btn.component';
 import { ColDef } from 'ag-grid-community';
 
 @Component({
-    imports: [
-        AgGridAngular,
-        NzButtonModule,
-        NzIconModule,
-        NzModalModule,
-        PlayerFormComponent,
-    ],
-    templateUrl: './players.page.html',
-    styleUrl: './players.page.css'
+  imports: [
+    AgGridAngular,
+    NzButtonModule,
+    NzIconModule,
+    NzModalModule,
+    PlayerFormComponent,
+  ],
+  templateUrl: './players.page.html',
+  styleUrl: './players.page.css',
 })
-export class PlayersPageComponent implements OnInit, AfterViewInit {
+export class PlayersPageComponent implements OnInit, AfterViewInit, OnDestroy {
   protected isSaving = false;
   protected isDeleting = false;
   protected isModalVisible = false;
@@ -101,12 +102,12 @@ export class PlayersPageComponent implements OnInit, AfterViewInit {
   }
 
   protected onModalOpen() {
-    this.isSubmitDisabled = this.form?.playerForm.invalid ?? true;
+    this.isSubmitDisabled = this.form?.matchForm.invalid ?? true;
 
     this.subs.add(
-      this.form!.playerForm.statusChanges.pipe(
+      this.form!.matchForm.statusChanges.pipe(
         tap(() => {
-          this.isSubmitDisabled = this.form!.playerForm.invalid;
+          this.isSubmitDisabled = this.form!.matchForm.invalid;
         }),
       ).subscribe(),
     );
@@ -119,9 +120,9 @@ export class PlayersPageComponent implements OnInit, AfterViewInit {
 
     this.isSaving = true;
 
-    const write$ = this.form.playerForm.get('playerId')?.value
-      ? this.playerSvc.updatePlayer(this.form.playerForm.value)
-      : this.playerSvc.addPlayer(new Player(this.form.playerForm.value));
+    const write$ = this.form.matchForm.get('playerId')?.value
+      ? this.playerSvc.updatePlayer(this.form.matchForm.value)
+      : this.playerSvc.addPlayer(new Player(this.form.matchForm.value));
 
     this.subs.add(
       write$

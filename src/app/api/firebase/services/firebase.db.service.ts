@@ -12,7 +12,7 @@ import { from, map } from 'rxjs';
 import {
   FIREBASE,
   Firebase,
-} from '../../services/tokens/firebase-config.token';
+} from '../../../services/tokens/firebase-config.token';
 import { StoreConverter } from '../converter.interface';
 import { FireStoreCollection } from '../db-collection.enum';
 

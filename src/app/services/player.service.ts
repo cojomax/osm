@@ -4,9 +4,9 @@ import {
   QueryDocumentSnapshot,
   Timestamp,
 } from 'firebase/firestore/lite';
-import { FireStoreCollection } from '../firebase/db-collection.enum';
-import { FirebaseDbService } from '../firebase/services/firebase.db.service';
-import { Player } from '../models/player.model';
+import { FireStoreCollection } from '../api/firebase/db-collection.enum';
+import { FirebaseDbService } from '../api/firebase/services/firebase.db.service';
+import { Player } from '../api/models/player.model';
 
 const COLLECTION = FireStoreCollection.Players;
 

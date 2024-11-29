@@ -1,23 +1,18 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { NzButtonModule } from '@nz/button';
 import { NzDatePickerModule } from '@nz/date-picker';
 import { NzFormModule } from '@nz/form';
 import { NzInputModule } from '@nz/input';
 import { NzSelectModule } from '@nz/select';
-import { Player } from '../../../../api/models/player.model';
 import { Position } from '../../../../models/position.enum';
+import { Match } from '../../../../api/models/match.model';
 
 @Component({
-  selector: 'app-player-form',
-  templateUrl: './player.form.html',
-  styleUrl: './player.form.css',
+  selector: 'app-match-form',
+  templateUrl: './match.form.html',
+  styleUrl: './match.form.css',
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -28,8 +23,8 @@ import { Position } from '../../../../models/position.enum';
     NzSelectModule,
   ],
 })
-export class PlayerFormComponent implements OnInit {
-  @Input() data: Player | null = null;
+export class MatchFormComponent implements OnInit {
+  @Input() data: Match | null = null;
 
   public matchForm!: FormGroup<any>;
 
@@ -79,22 +74,23 @@ export class PlayerFormComponent implements OnInit {
   constructor(private _fb: FormBuilder) {}
 
   ngOnInit() {
-    this.matchForm = this._fb.group({
-      playerId: [this.data?.playerId],
-      firstName: [this.data?.firstName ?? '', Validators.required],
-      lastName: [this.data?.lastName ?? '', Validators.required],
-      position: [this.data?.position ?? void 0],
-      squadNumber: [
-        this.data?.squadNumber ?? null,
-        [Validators.min(0), Validators.max(99), Validators.pattern(/^\d+$/)],
-      ],
-      country: [this.data?.country ?? '', Validators.required],
-      dob: [this.data?.dob ?? null],
-      height: [
-        this.data?.height ?? null,
-        [Validators.min(150), Validators.max(244), Validators.pattern(/^\d+$/)],
-      ],
-    });
+    this.matchForm = {} as any;
+    //   this._fb.group({
+    //   playerId: [this.data?.playerId],
+    //   firstName: [this.data?.firstName ?? '', Validators.required],
+    //   lastName: [this.data?.lastName ?? '', Validators.required],
+    //   position: [this.data?.position ?? void 0],
+    //   squadNumber: [
+    //     this.data?.squadNumber ?? null,
+    //     [Validators.min(0), Validators.max(99), Validators.pattern(/^\d+$/)],
+    //   ],
+    //   country: [this.data?.country ?? '', Validators.required],
+    //   dob: [this.data?.dob ?? null],
+    //   height: [
+    //     this.data?.height ?? null,
+    //     [Validators.min(150), Validators.max(244), Validators.pattern(/^\d+$/)],
+    //   ],
+    // });
   }
 
   onSubmit() {

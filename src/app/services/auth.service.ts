@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { User as FirebaseUser } from 'firebase/auth';
 import { catchError, take, tap } from 'rxjs';
-import { FirebaseAuthService } from '../firebase/services/firebase.auth.service';
+import { FirebaseAuthService } from '../api/firebase/services/firebase.auth.service';
 import { Session, SESSION } from './tokens/session.token';
 
 @Injectable({ providedIn: 'root' })

@@ -1,4 +1,4 @@
-import { Goal } from './goal.model';
+import { Goal } from '../api/models/goal.model';
 import { Opposition } from './opposition.model';
 
 export class MatchReport {

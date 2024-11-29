@@ -8,7 +8,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { MatchReport } from '../../models/match-report.model';
-import { Player } from '../../models/player.model';
+import { Player } from '../../api/models/player.model';
 import { MatchService } from '../../services/match.service';
 import { Position } from '../../models/position.enum';
 
