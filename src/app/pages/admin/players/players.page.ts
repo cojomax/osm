@@ -102,12 +102,12 @@ export class PlayersPageComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   protected onModalOpen() {
-    this.isSubmitDisabled = this.form?.matchForm.invalid ?? true;
+    this.isSubmitDisabled = this.form?.playerForm.invalid ?? true;
 
     this.subs.add(
-      this.form!.matchForm.statusChanges.pipe(
+      this.form!.playerForm.statusChanges.pipe(
         tap(() => {
-          this.isSubmitDisabled = this.form!.matchForm.invalid;
+          this.isSubmitDisabled = this.form!.playerForm.invalid;
         }),
       ).subscribe(),
     );
@@ -120,9 +120,9 @@ export class PlayersPageComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.isSaving = true;
 
-    const write$ = this.form.matchForm.get('playerId')?.value
-      ? this.playerSvc.updatePlayer(this.form.matchForm.value)
-      : this.playerSvc.addPlayer(new Player(this.form.matchForm.value));
+    const write$ = this.form.playerForm.get('playerId')?.value
+      ? this.playerSvc.updatePlayer(this.form.playerForm.value)
+      : this.playerSvc.addPlayer(new Player(this.form.playerForm.value));
 
     this.subs.add(
       write$

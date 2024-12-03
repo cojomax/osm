@@ -15,7 +15,6 @@ export const routes: Routes = [
   { path: 'team', component: TeamPageComponent },
   {
     path: 'admin',
-
     children: [
       { path: 'players/:id', component: PlayerDetailsPageComponent },
       { path: 'players', component: PlayersPageComponent },

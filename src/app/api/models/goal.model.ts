@@ -6,8 +6,8 @@ export class Goal {
   goalId = '';
 
   /** The ID of the player that scored the goal. */
-  scorer = '';
+  scoredBy = '';
 
   /** The ID of the player that assisted the goal, if any. */
-  assisted: string | undefined;
+  assistedBy: string | undefined;
 }

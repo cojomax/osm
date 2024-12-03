@@ -1,7 +1,21 @@
 <ul nz-menu nzMode="inline">
   <ul>
-    <li nz-menu-item nzSelected (click)="onNavigate('players')">Players</li>
-    <li nz-menu-item (click)="onNavigate('matches')">Matches</li>
+    <li
+      nz-menu-item
+      nzMatchRouter
+      routerLink="/admin/players"
+      (click)="onNavigate('players')"
+    >
+      Players
+    </li>
+    <li
+      nz-menu-item
+      nzMatchRouter
+      routerLink="/admin/matches"
+      (click)="onNavigate('matches')"
+    >
+      Matches
+    </li>
   </ul>
   <!-- <li nz-submenu nzTitle="Navigation One" nzIcon="mail" nzOpen>
       <ul>

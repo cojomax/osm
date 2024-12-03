@@ -31,7 +31,7 @@ import { Position } from '../../../../models/position.enum';
 export class PlayerFormComponent implements OnInit {
   @Input() data: Player | null = null;
 
-  public matchForm!: FormGroup<any>;
+  public playerForm!: FormGroup<any>;
 
   protected submitted = new EventEmitter<FormGroup>();
 
@@ -50,36 +50,36 @@ export class PlayerFormComponent implements OnInit {
 
   get isFirstNameValid() {
     return (
-      this.matchForm.get('firstName')?.touched &&
-      this.matchForm.get('firstName')?.invalid
+      this.playerForm.get('firstName')?.touched &&
+      this.playerForm.get('firstName')?.invalid
     );
   }
 
   get isLastNameValid() {
     return (
-      this.matchForm.get('lastName')?.touched &&
-      this.matchForm.get('lastName')?.invalid
+      this.playerForm.get('lastName')?.touched &&
+      this.playerForm.get('lastName')?.invalid
     );
   }
 
   get isPositionValid() {
     return (
-      this.matchForm.get('position')?.touched &&
-      this.matchForm.get('position')?.invalid
+      this.playerForm.get('position')?.touched &&
+      this.playerForm.get('position')?.invalid
     );
   }
 
   get isSquadNumberValid() {
     return (
-      this.matchForm.get('squadNumber')?.touched &&
-      this.matchForm.get('squadNumber')?.invalid
+      this.playerForm.get('squadNumber')?.touched &&
+      this.playerForm.get('squadNumber')?.invalid
     );
   }
 
   constructor(private _fb: FormBuilder) {}
 
   ngOnInit() {
-    this.matchForm = this._fb.group({
+    this.playerForm = this._fb.group({
       playerId: [this.data?.playerId],
       firstName: [this.data?.firstName ?? '', Validators.required],
       lastName: [this.data?.lastName ?? '', Validators.required],
@@ -98,6 +98,6 @@ export class PlayerFormComponent implements OnInit {
   }
 
   onSubmit() {
-    this.submitted.emit(this.matchForm);
+    this.submitted.emit(this.playerForm);
   }
 }
