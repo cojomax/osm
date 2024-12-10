@@ -11,6 +11,8 @@ export class Match {
   /** The date the match is played on. */
   date: Date | null = null;
 
+  time: Date | null = null;
+
   venue: string | null = null;
 
   /**
@@ -20,12 +22,12 @@ export class Match {
 
   opponent: Team | null = null;
 
-  homeGoals: number | null = null;
+  homeScore: number | null = null;
 
-  opponentGoals: number | null = null;
+  opponentScore: number | null = null;
 
   goals: Goal[] = [];
-  
+
   /** The ID of the player voted man of the match. */
   manOfMatch: string | null = null;
 
@@ -33,7 +35,7 @@ export class Match {
   dickOfDay: string | null = null;
 
   /** The ID of the match report. */
-  matchReportId: string | null = null;
+  matchReport: string | null = null;
 
   /** The name of the division (if the competition is a league). */
   division: string | undefined;

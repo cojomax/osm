@@ -1,11 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NzButtonModule } from '@nz/button';
 import { NzDatePickerModule } from '@nz/date-picker';
 import { NzFormModule } from '@nz/form';
@@ -42,38 +37,23 @@ export class PlayerFormComponent implements OnInit {
 
   protected positionOptions = Object.keys(Position).map((key) => ({
     value: Position[key as keyof typeof Position],
-    label:
-      Position[key as keyof typeof Position] === Position.Undefined
-        ? ''
-        : Position[key as keyof typeof Position],
+    label: Position[key as keyof typeof Position] === Position.Undefined ? '' : Position[key as keyof typeof Position],
   }));
 
   get isFirstNameValid() {
-    return (
-      this.playerForm.get('firstName')?.touched &&
-      this.playerForm.get('firstName')?.invalid
-    );
+    return this.playerForm.get('firstName')?.touched && this.playerForm.get('firstName')?.invalid;
   }
 
   get isLastNameValid() {
-    return (
-      this.playerForm.get('lastName')?.touched &&
-      this.playerForm.get('lastName')?.invalid
-    );
+    return this.playerForm.get('lastName')?.touched && this.playerForm.get('lastName')?.invalid;
   }
 
   get isPositionValid() {
-    return (
-      this.playerForm.get('position')?.touched &&
-      this.playerForm.get('position')?.invalid
-    );
+    return this.playerForm.get('position')?.touched && this.playerForm.get('position')?.invalid;
   }
 
   get isSquadNumberValid() {
-    return (
-      this.playerForm.get('squadNumber')?.touched &&
-      this.playerForm.get('squadNumber')?.invalid
-    );
+    return this.playerForm.get('squadNumber')?.touched && this.playerForm.get('squadNumber')?.invalid;
   }
 
   constructor(private _fb: FormBuilder) {}
@@ -90,14 +70,7 @@ export class PlayerFormComponent implements OnInit {
       ],
       country: [this.data?.country ?? '', Validators.required],
       dob: [this.data?.dob ?? null],
-      height: [
-        this.data?.height ?? null,
-        [Validators.min(150), Validators.max(244), Validators.pattern(/^\d+$/)],
-      ],
+      height: [this.data?.height ?? null, [Validators.min(150), Validators.max(244), Validators.pattern(/^\d+$/)]],
     });
-  }
-
-  onSubmit() {
-    this.submitted.emit(this.playerForm);
   }
 }

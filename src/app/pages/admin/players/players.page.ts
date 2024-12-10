@@ -1,13 +1,5 @@
-import { DatePipe } from '@angular/common';
-import {
-  AfterViewInit,
-  Component,
-  Inject,
-  LOCALE_ID,
-  OnDestroy,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { CommonModule, DatePipe } from '@angular/common';
+import { AfterViewInit, Component, Inject, LOCALE_ID, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NzButtonModule } from '@nz/button';
 import { NzIconModule } from '@nz/icon';
 import { NzModalModule } from '@nz/modal';
@@ -20,13 +12,7 @@ import { EditButtonComponent } from './renderers/edit-btn/edit-btn.component';
 import { ColDef } from 'ag-grid-community';
 
 @Component({
-  imports: [
-    AgGridAngular,
-    NzButtonModule,
-    NzIconModule,
-    NzModalModule,
-    PlayerFormComponent,
-  ],
+  imports: [AgGridAngular, CommonModule, NzButtonModule, NzIconModule, NzModalModule, PlayerFormComponent],
   templateUrl: './players.page.html',
   styleUrl: './players.page.css',
 })
@@ -93,7 +79,10 @@ export class PlayersPageComponent implements OnInit, AfterViewInit, OnDestroy {
     },
   ];
 
+  protected isEditing = false;
+
   protected onEditClick(playerId: string) {
+    this.isEditing = true;
     this.openModal(this.players.find((p) => p.playerId === playerId)!);
   }
 
@@ -156,6 +145,7 @@ export class PlayersPageComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   protected onModalClose() {
+    this.isEditing = false;
     this.selectedPlayer = null;
   }
 

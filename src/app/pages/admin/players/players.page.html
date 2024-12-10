@@ -13,18 +13,19 @@
 />
 
 <nz-modal
-  nzTitle="Edit Player"
+  [nzTitle]="isEditing ? 'Edit Player' : 'Add Player'"
   (nzOnCancel)="onCancel()"
   (nzAfterOpen)="onModalOpen()"
   (nzAfterClose)="onModalClose()"
   [(nzVisible)]="isModalVisible"
 >
-  <app-player-form *nzModalContent [data]="selectedPlayer"> </app-player-form>
+  <app-player-form *nzModalContent [data]="selectedPlayer"></app-player-form>
   <div *nzModalFooter class="spaced">
     <button
       nz-button
       nzDanger
       nzType="primary"
+      *ngIf="isEditing"
       [nzLoading]="isDeleting"
       (click)="onDelete()"
     >

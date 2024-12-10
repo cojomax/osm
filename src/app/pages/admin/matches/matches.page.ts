@@ -1,33 +1,17 @@
 import { DatePipe } from '@angular/common';
-import {
-  AfterViewInit,
-  Component,
-  Inject,
-  LOCALE_ID,
-  OnDestroy,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { AfterViewInit, Component, Inject, LOCALE_ID, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NzButtonModule } from '@nz/button';
 import { NzIconModule } from '@nz/icon';
 import { NzModalModule } from '@nz/modal';
 import { AgGridAngular } from 'ag-grid-angular';
 import { finalize, mergeMap, Subscription, tap } from 'rxjs';
-import { Player } from '../../../api/models/player.model';
 import { ColDef } from 'ag-grid-community';
-import { MatchFormComponent } from './form/match.form';
-import { PlayerFormComponent } from '../players/form/player.form';
+import { FixtureFormComponent } from './form/fixture.form';
 import { Match } from '../../../api/models/match.model';
 import { MatchService } from '../../../services/match.service';
 
 @Component({
-  imports: [
-    AgGridAngular,
-    NzButtonModule,
-    NzIconModule,
-    NzModalModule,
-    PlayerFormComponent,
-  ],
+  imports: [AgGridAngular, NzButtonModule, NzIconModule, NzModalModule, FixtureFormComponent],
   templateUrl: './matches.page.html',
   styleUrl: './matches.page.css',
 })
@@ -43,7 +27,7 @@ export class MatchesPageComponent implements OnInit, AfterViewInit, OnDestroy {
   private subs = new Subscription();
   private datePipe: DatePipe;
 
-  @ViewChild(MatchFormComponent) form: MatchFormComponent | undefined;
+  @ViewChild(FixtureFormComponent) form: FixtureFormComponent | undefined;
 
   constructor(
     @Inject(LOCALE_ID) locale: string,
@@ -64,6 +48,9 @@ export class MatchesPageComponent implements OnInit, AfterViewInit, OnDestroy {
 
   protected colDefs: ColDef[] = [
     { field: 'date' },
+    { field: 'time' },
+    { field: 'venue' },
+    { field: 'competition' },
     { field: 'opponent' },
     {},
     // {
@@ -97,8 +84,8 @@ export class MatchesPageComponent implements OnInit, AfterViewInit, OnDestroy {
     // },
   ];
 
-  protected onEditClick(playerId: string) {
-    this.openModal(this.matches.find((p) => p.playerId === playerId)!);
+  protected onEditClick(matchId: string) {
+    this.openModal(this.matches.find((p) => p.matchId === matchId)!);
   }
 
   protected onAddClick() {
@@ -106,12 +93,12 @@ export class MatchesPageComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   protected onModalOpen() {
-    this.isSubmitDisabled = this.form?.matchForm.invalid ?? true;
+    this.isSubmitDisabled = this.form?.fixtureForm.invalid ?? true;
 
     this.subs.add(
-      this.form!.matchForm.statusChanges.pipe(
+      this.form!.fixtureForm.statusChanges.pipe(
         tap(() => {
-          this.isSubmitDisabled = this.form!.matchForm.invalid;
+          this.isSubmitDisabled = this.form!.fixtureForm.invalid;
         }),
       ).subscribe(),
     );
@@ -124,9 +111,9 @@ export class MatchesPageComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.isSaving = true;
 
-    const write$ = this.form.matchForm.get('playerId')?.value
-      ? this.matchSvc.updatePlayer(this.form.matchForm.value)
-      : this.matchSvc.addPlayer(new Player(this.form.matchForm.value));
+    const write$ = this.form.fixtureForm.get('matchId')?.value
+      ? this.matchSvc.updateMatch(this.form.fixtureForm.value)
+      : this.matchSvc.addMatch(new Match(this.form.fixtureForm.value));
 
     this.subs.add(
       write$
@@ -144,7 +131,7 @@ export class MatchesPageComponent implements OnInit, AfterViewInit, OnDestroy {
   protected onDelete() {
     this.isDeleting = true;
     this.matchSvc
-      .deletePlayer(this.selectedMatch!.playerId)
+      .deleteMatch(this.selectedMatch!.matchId)
       .pipe(
         mergeMap(() => this.refreshTable()),
         finalize(() => {
@@ -164,15 +151,15 @@ export class MatchesPageComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private refreshTable() {
-    return this.matchSvc.getAllPlayers().pipe(
-      tap((players) => {
-        this.matches = players;
+    return this.matchSvc.getAllMatches().pipe(
+      tap((matches) => {
+        this.matches = matches;
       }),
     );
   }
 
-  private openModal(player: Player | null = null) {
-    this.selectedMatch = player;
+  private openModal(match: Match | null = null) {
+    this.selectedMatch = match;
     this.isModalVisible = true;
   }
 

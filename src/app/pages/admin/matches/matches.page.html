@@ -1,3 +1,11 @@
+<div class="top">
+  <button nz-button nzType="primary" (click)="onAddClick()">
+    <span nz-icon nzType="file-add"></span>
+    Add Fixture
+  </button>
+</div>
+
+
 <ag-grid-angular
   class="ag-theme-quartz-auto-dark"
   style="height: 500px"
@@ -5,16 +13,14 @@
   [columnDefs]="colDefs"
 />
 
-<app-player-form *nzModalContent [data]="selectedMatch"></app-player-form>
-
 <nz-modal
-  nzTitle="Edit Player"
+  nzTitle="Add Fixture"
   (nzOnCancel)="onCancel()"
   (nzAfterOpen)="onModalOpen()"
   (nzAfterClose)="onModalClose()"
   [(nzVisible)]="isModalVisible"
 >
-  <app-player-form *nzModalContent [data]="selectedMatch"></app-player-form>
+  <app-fixture-form *nzModalContent [data]="selectedMatch"></app-fixture-form>
   <div *nzModalFooter class="spaced">
     <button
       nz-button
