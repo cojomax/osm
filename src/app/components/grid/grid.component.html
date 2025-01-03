@@ -1,0 +1,13 @@
+<div class="top">
+  <button nz-button nzType="primary" (click)="onAddClick()">
+    <ng-content select="[add-button]"></ng-content>
+  </button>
+</div>
+
+<ag-grid-angular
+  class="ag-theme-quartz-auto-dark"
+  style="height: 500px"
+  [rowData]="data"
+  [columnDefs]="colDefs"
+/>
+

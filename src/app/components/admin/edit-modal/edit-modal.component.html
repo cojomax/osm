@@ -1,0 +1,19 @@
+<nz-modal
+  [nzTitle]="modalTitle"
+  (nzOnCancel)="onCancel()"
+  (nzAfterOpen)="onModalOpen()"
+  (nzAfterClose)="onModalClose()"
+  [(nzVisible)]="isVisible"
+>
+  <!--  <app-player-form *nzModalContent [data]="selectedItem"></app-player-form>-->
+  <div *nzModalFooter class="spaced">
+    <button nz-button nzDanger nzType="primary" *ngIf="isEditing()" [nzLoading]="isDeleting()" (click)="onDelete()">
+      Delete
+    </button>
+    <span class="space"></span>
+    <button nz-button nzType="default" (click)="onCancel()">Cancel</button>
+    <button nz-button nzType="primary" [nzLoading]="isSaving()" [disabled]="isSubmitDisabled()" (click)="onSubmit()">
+      Submit
+    </button>
+  </div>
+</nz-modal>
