@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { AgGridAngular } from 'ag-grid-angular';
 import { ColDef } from 'ag-grid-community';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
@@ -14,12 +14,14 @@ export class GridComponent<T> {
   @Input() colDefs: ColDef<T>[] = [];
   @Input() data: T[] = [];
 
+  @Output() add = new EventEmitter<void>();
+
   protected selectedItem: T | null = null;
 
   private subs = new Subscription();
 
   protected onAddClick() {
-    //   this.openModal();
+    this.add.emit();
   }
 
   // protected onEditClick(playerId: string) {

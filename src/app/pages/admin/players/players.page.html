@@ -1,13 +1,18 @@
-<app-grid [colDefs]="colDefs" [data]="players()">
+<app-grid [colDefs]="colDefs" [data]="players()" (add)="onAdd()">
   <span add-button>
     <span nz-icon nzType="user-add"></span>
     Player
   </span>
 </app-grid>
-hi
+
 <app-edit-modal
+  modalTitle="Player"
+  [isEditing]="!!selectedPlayer()"
   [isModalVisible]="isModalVisible()"
   (delete)="onDelete()"
   (cancel)="onCancel()"
   (submit)="onSubmit()"
-></app-edit-modal>
+  (afterClose)="onClose()"
+>
+  <app-player-form [data]="selectedPlayer()"></app-player-form>
+</app-edit-modal>

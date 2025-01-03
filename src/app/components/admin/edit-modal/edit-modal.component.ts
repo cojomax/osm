@@ -1,29 +1,31 @@
-import { Component, effect, EventEmitter, input, Input, Output, signal } from '@angular/core';
-import { NzModalComponent, NzModalFooterDirective } from 'ng-zorro-antd/modal';
+import { Component, computed, effect, EventEmitter, input, Input, Output, signal } from '@angular/core';
+import { NzModalFooterDirective } from 'ng-zorro-antd/modal';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
 import { CommonModule } from '@angular/common';
 import { NzModalModule } from '@nz/modal';
 
 @Component({
   selector: 'app-edit-modal',
-  imports: [NzModalComponent, NzModalModule, NzButtonComponent, CommonModule, NzModalFooterDirective],
+  imports: [NzModalModule, NzButtonComponent, CommonModule, NzModalFooterDirective],
   templateUrl: './edit-modal.component.html',
   styleUrl: './edit-modal.component.css',
 })
-export class EditModalComponent {
+export class EditModalComponent<T> {
   isVisible: boolean = false;
   protected isSaving = signal(false);
   protected isDeleting = signal(false);
-  protected isEditing = signal(false);
   protected isSubmitDisabled = signal(true);
 
   @Input() modalTitle = '';
+  modalTxt = computed(() => `${this.isEditing() ? 'Edit' : 'Add'} Player`);
 
+  isEditing = input(false);
   isModalVisible = input(false);
 
   @Output() delete = new EventEmitter<void>();
   @Output() cancel = new EventEmitter<void>();
   @Output() submit = new EventEmitter<void>();
+  @Output() afterClose = new EventEmitter<void>();
 
   constructor() {
     effect(() => {
@@ -86,7 +88,6 @@ export class EditModalComponent {
   }
 
   protected onModalClose() {
-    // this.isEditing = false;
-    // this.selectedItem = null;
+    this.afterClose.emit();
   }
 }

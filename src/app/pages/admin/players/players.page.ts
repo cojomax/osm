@@ -12,12 +12,13 @@ import { GridComponent } from '../../../components/grid/grid.component';
 import { EditModalComponent } from '../../../components/admin/edit-modal/edit-modal.component';
 
 @Component({
-  imports: [CommonModule, NzButtonModule, NzIconModule, GridComponent, EditModalComponent],
+  imports: [CommonModule, NzButtonModule, NzIconModule, GridComponent, EditModalComponent, PlayerFormComponent],
   templateUrl: './players.page.html',
   styleUrl: './players.page.css',
 })
 export class PlayersPageComponent implements OnInit, AfterViewInit, OnDestroy {
   protected players = signal<Player[]>([]);
+  protected selectedPlayer = signal<Player | null>(null);
   protected isModalVisible = signal(false);
 
   private datePipe: DatePipe;
@@ -76,9 +77,12 @@ export class PlayersPageComponent implements OnInit, AfterViewInit, OnDestroy {
   ];
 
   protected onEditClick(playerId: string) {
+    this.openModal(this.players().find((p) => p.playerId === playerId)!);
+  }
+
+  private openModal(player: Player | null = null) {
+    this.selectedPlayer.set(player);
     this.isModalVisible.set(true);
-    // this.isEditing = true;
-    // this.openModal(this.players.find((p) => p.playerId === playerId)!);
   }
 
   private updateTableData() {
@@ -87,6 +91,10 @@ export class PlayersPageComponent implements OnInit, AfterViewInit, OnDestroy {
         this.players.set(players);
       }),
     );
+  }
+
+  onAdd() {
+    this.isModalVisible.set(true);
   }
 
   onDelete() {
@@ -99,5 +107,9 @@ export class PlayersPageComponent implements OnInit, AfterViewInit, OnDestroy {
 
   onSubmit() {
     this.isModalVisible.set(false);
+  }
+
+  onClose() {
+    this.selectedPlayer.set(null);
   }
 }

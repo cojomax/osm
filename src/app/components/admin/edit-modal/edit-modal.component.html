@@ -1,11 +1,14 @@
 <nz-modal
-  [nzTitle]="modalTitle"
+  [nzTitle]="modalTxt()"
   (nzOnCancel)="onCancel()"
   (nzAfterOpen)="onModalOpen()"
   (nzAfterClose)="onModalClose()"
   [(nzVisible)]="isVisible"
 >
-  <!--  <app-player-form *nzModalContent [data]="selectedItem"></app-player-form>-->
+  <ng-container *nzModalContent>
+    <ng-content></ng-content>
+  </ng-container>
+
   <div *nzModalFooter class="spaced">
     <button nz-button nzDanger nzType="primary" *ngIf="isEditing()" [nzLoading]="isDeleting()" (click)="onDelete()">
       Delete
