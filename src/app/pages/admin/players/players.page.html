@@ -1,46 +1,13 @@
-<div class="top">
-  <button nz-button nzType="primary" (click)="onAddClick()">
+<app-grid [colDefs]="colDefs" [data]="players()">
+  <span add-button>
     <span nz-icon nzType="user-add"></span>
-    Add
-  </button>
-</div>
-
-<ag-grid-angular
-  class="ag-theme-quartz-auto-dark"
-  style="height: 500px"
-  [rowData]="players"
-  [columnDefs]="colDefs"
-/>
-
-<nz-modal
-  [nzTitle]="isEditing ? 'Edit Player' : 'Add Player'"
-  (nzOnCancel)="onCancel()"
-  (nzAfterOpen)="onModalOpen()"
-  (nzAfterClose)="onModalClose()"
-  [(nzVisible)]="isModalVisible"
->
-  <app-player-form *nzModalContent [data]="selectedPlayer"></app-player-form>
-  <div *nzModalFooter class="spaced">
-    <button
-      nz-button
-      nzDanger
-      nzType="primary"
-      *ngIf="isEditing"
-      [nzLoading]="isDeleting"
-      (click)="onDelete()"
-    >
-      Delete
-    </button>
-    <span class="space"></span>
-    <button nz-button nzType="default" (click)="onCancel()">Cancel</button>
-    <button
-      nz-button
-      nzType="primary"
-      [nzLoading]="isSaving"
-      [disabled]="isSubmitDisabled"
-      (click)="onSubmit()"
-    >
-      Submit
-    </button>
-  </div>
-</nz-modal>
+    Player
+  </span>
+</app-grid>
+hi
+<app-edit-modal
+  [isModalVisible]="isModalVisible()"
+  (delete)="onDelete()"
+  (cancel)="onCancel()"
+  (submit)="onSubmit()"
+></app-edit-modal>

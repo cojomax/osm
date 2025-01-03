@@ -1,33 +1,29 @@
 import { CommonModule, DatePipe } from '@angular/common';
-import { AfterViewInit, Component, Inject, LOCALE_ID, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, Inject, LOCALE_ID, OnDestroy, OnInit, signal, ViewChild } from '@angular/core';
 import { NzButtonModule } from '@nz/button';
 import { NzIconModule } from '@nz/icon';
-import { NzModalModule } from '@nz/modal';
-import { AgGridAngular } from 'ag-grid-angular';
-import { finalize, mergeMap, Subscription, tap } from 'rxjs';
+import { Subscription, tap } from 'rxjs';
 import { Player } from '../../../api/models/player.model';
 import { PlayerService } from '../../../services/player.service';
 import { PlayerFormComponent } from './form/player.form';
 import { EditButtonComponent } from './renderers/edit-btn/edit-btn.component';
 import { ColDef } from 'ag-grid-community';
+import { GridComponent } from '../../../components/grid/grid.component';
+import { EditModalComponent } from '../../../components/admin/edit-modal/edit-modal.component';
 
 @Component({
-  imports: [AgGridAngular, CommonModule, NzButtonModule, NzIconModule, NzModalModule, PlayerFormComponent],
+  imports: [CommonModule, NzButtonModule, NzIconModule, GridComponent, EditModalComponent],
   templateUrl: './players.page.html',
   styleUrl: './players.page.css',
 })
 export class PlayersPageComponent implements OnInit, AfterViewInit, OnDestroy {
-  protected isSaving = false;
-  protected isDeleting = false;
-  protected isModalVisible = false;
-  protected isSubmitDisabled = true;
+  protected players = signal<Player[]>([]);
+  protected isModalVisible = signal(false);
 
-  protected selectedPlayer: Player | null = null;
-  protected players: Player[] = [];
-
-  private subs = new Subscription();
   private datePipe: DatePipe;
+  private subs = new Subscription();
 
+  @ViewChild(GridComponent) grid: GridComponent<Player> | undefined;
   @ViewChild(PlayerFormComponent) form: PlayerFormComponent | undefined;
 
   constructor(
@@ -38,7 +34,7 @@ export class PlayersPageComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.refreshTable().subscribe();
+    this.subs.add(this.updateTableData().subscribe());
   }
 
   ngAfterViewInit() {}
@@ -47,7 +43,7 @@ export class PlayersPageComponent implements OnInit, AfterViewInit, OnDestroy {
     this.subs.unsubscribe();
   }
 
-  protected colDefs: ColDef[] = [
+  protected colDefs: ColDef<Player>[] = [
     {
       field: 'squadNumber',
       cellDataType: 'number',
@@ -72,97 +68,36 @@ export class PlayersPageComponent implements OnInit, AfterViewInit, OnDestroy {
       width: 150,
     },
     {
-      field: 'action',
+      colId: 'action',
       maxWidth: 150,
       cellRenderer: EditButtonComponent,
       cellRendererParams: { onEdit: this.onEditClick.bind(this) },
     },
   ];
 
-  protected isEditing = false;
-
   protected onEditClick(playerId: string) {
-    this.isEditing = true;
-    this.openModal(this.players.find((p) => p.playerId === playerId)!);
+    this.isModalVisible.set(true);
+    // this.isEditing = true;
+    // this.openModal(this.players.find((p) => p.playerId === playerId)!);
   }
 
-  protected onAddClick() {
-    this.openModal();
-  }
-
-  protected onModalOpen() {
-    this.isSubmitDisabled = this.form?.playerForm.invalid ?? true;
-
-    this.subs.add(
-      this.form!.playerForm.statusChanges.pipe(
-        tap(() => {
-          this.isSubmitDisabled = this.form!.playerForm.invalid;
-        }),
-      ).subscribe(),
-    );
-  }
-
-  protected onSubmit() {
-    if (!this.form) {
-      return;
-    }
-
-    this.isSaving = true;
-
-    const write$ = this.form.playerForm.get('playerId')?.value
-      ? this.playerSvc.updatePlayer(this.form.playerForm.value)
-      : this.playerSvc.addPlayer(new Player(this.form.playerForm.value));
-
-    this.subs.add(
-      write$
-        .pipe(
-          mergeMap(() => this.refreshTable()),
-          finalize(() => {
-            this.closeModal();
-            this.isSaving = false;
-          }),
-        )
-        .subscribe(),
-    );
-  }
-
-  protected onDelete() {
-    this.isDeleting = true;
-    this.playerSvc
-      .deletePlayer(this.selectedPlayer!.playerId)
-      .pipe(
-        mergeMap(() => this.refreshTable()),
-        finalize(() => {
-          this.closeModal();
-          this.isDeleting = false;
-        }),
-      )
-      .subscribe();
-  }
-
-  protected onCancel() {
-    this.closeModal();
-  }
-
-  protected onModalClose() {
-    this.isEditing = false;
-    this.selectedPlayer = null;
-  }
-
-  private refreshTable() {
+  private updateTableData() {
     return this.playerSvc.getAllPlayers().pipe(
       tap((players) => {
-        this.players = players;
+        this.players.set(players);
       }),
     );
   }
 
-  private openModal(player: Player | null = null) {
-    this.selectedPlayer = player;
-    this.isModalVisible = true;
+  onDelete() {
+    this.isModalVisible.set(false);
   }
 
-  private closeModal() {
-    this.isModalVisible = false;
+  onCancel() {
+    this.isModalVisible.set(false);
+  }
+
+  onSubmit() {
+    this.isModalVisible.set(false);
   }
 }
