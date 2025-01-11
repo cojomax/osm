@@ -5,14 +5,6 @@
   </span>
 </app-grid>
 
-<app-edit-modal
-  modalTitle="Player"
-  [isEditing]="!!selectedPlayer()"
-  [isModalVisible]="isModalVisible()"
-  (delete)="onDelete()"
-  (cancel)="onCancel()"
-  (submit)="onSubmit()"
-  (afterClose)="onClose()"
->
-  <app-player-form [data]="selectedPlayer()"></app-player-form>
-</app-edit-modal>
+<app-form-modal modalTitle="Player" (modified)="onModified()">
+  <app-player-form #form (update)="modalSvc.updateStatus($event)"></app-player-form>
+</app-form-modal>

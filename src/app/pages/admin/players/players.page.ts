@@ -1,5 +1,5 @@
 import { CommonModule, DatePipe } from '@angular/common';
-import { AfterViewInit, Component, Inject, LOCALE_ID, OnDestroy, OnInit, signal, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, inject, LOCALE_ID, OnDestroy, OnInit, signal, ViewChild } from '@angular/core';
 import { NzButtonModule } from '@nz/button';
 import { NzIconModule } from '@nz/icon';
 import { Subscription, tap } from 'rxjs';
@@ -9,29 +9,34 @@ import { PlayerFormComponent } from './form/player.form';
 import { EditButtonComponent } from './renderers/edit-btn/edit-btn.component';
 import { ColDef } from 'ag-grid-community';
 import { GridComponent } from '../../../components/grid/grid.component';
-import { EditModalComponent } from '../../../components/admin/edit-modal/edit-modal.component';
+import { REPOSITORY_SERVICE } from '../../../components/admin/form-modal/form-modal.token';
+import { FormModalComponent } from '../../../components/admin/form-modal/form-modal.component';
+import { FormModalService } from '../../../components/admin/form-modal/form-modal.service';
 
 @Component({
-  imports: [CommonModule, NzButtonModule, NzIconModule, GridComponent, EditModalComponent, PlayerFormComponent],
+  imports: [CommonModule, NzButtonModule, NzIconModule, GridComponent, PlayerFormComponent, FormModalComponent],
   templateUrl: './players.page.html',
   styleUrl: './players.page.css',
+  providers: [FormModalService, { provide: REPOSITORY_SERVICE, useExisting: PlayerService }],
 })
 export class PlayersPageComponent implements OnInit, AfterViewInit, OnDestroy {
   protected players = signal<Player[]>([]);
   protected selectedPlayer = signal<Player | null>(null);
-  protected isModalVisible = signal(false);
+  protected isFormValid = signal(false);
 
   private datePipe: DatePipe;
   private subs = new Subscription();
 
+  // TODO Remove undefined?
   @ViewChild(GridComponent) grid: GridComponent<Player> | undefined;
   @ViewChild(PlayerFormComponent) form: PlayerFormComponent | undefined;
 
   constructor(
-    @Inject(LOCALE_ID) locale: string,
+    protected modalSvc: FormModalService<Player>,
     private playerSvc: PlayerService,
   ) {
-    this.datePipe = new DatePipe(locale);
+    // TODO Confirm this is change was right
+    this.datePipe = new DatePipe(inject(LOCALE_ID));
   }
 
   ngOnInit() {
@@ -76,40 +81,38 @@ export class PlayersPageComponent implements OnInit, AfterViewInit, OnDestroy {
     },
   ];
 
+  protected onFormUpdated(isValid: boolean) {
+    this.isFormValid.set(isValid);
+  }
+
   protected onEditClick(playerId: string) {
-    this.openModal(this.players().find((p) => p.playerId === playerId)!);
+    this.openModal(this.players().find((p) => p.id === playerId)!);
   }
 
   private openModal(player: Player | null = null) {
     this.selectedPlayer.set(player);
-    this.isModalVisible.set(true);
+    this.modalSvc.openModal(this.selectedPlayer());
   }
 
   private updateTableData() {
-    return this.playerSvc.getAllPlayers().pipe(
+    return this.playerSvc.fetch().pipe(
       tap((players) => {
         this.players.set(players);
       }),
     );
   }
 
+  /** Handles the add event from the GridComponent. */
   onAdd() {
-    this.isModalVisible.set(true);
-  }
-
-  onDelete() {
-    this.isModalVisible.set(false);
-  }
-
-  onCancel() {
-    this.isModalVisible.set(false);
-  }
-
-  onSubmit() {
-    this.isModalVisible.set(false);
+    this.openModal();
   }
 
   onClose() {
     this.selectedPlayer.set(null);
+  }
+
+  protected onModified() {
+    // TODO Try add this to where updates are made
+    this.subs.add(this.updateTableData().subscribe());
   }
 }

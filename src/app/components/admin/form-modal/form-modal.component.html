@@ -1,8 +1,7 @@
 <nz-modal
-  [nzTitle]="modalTxt()"
+  [nzTitle]="modalTitleTxt()"
   (nzOnCancel)="onCancel()"
-  (nzAfterOpen)="onModalOpen()"
-  (nzAfterClose)="onModalClose()"
+  (nzAfterClose)="onAfterClose()"
   [(nzVisible)]="isVisible"
 >
   <ng-container *nzModalContent>
@@ -10,12 +9,12 @@
   </ng-container>
 
   <div *nzModalFooter class="spaced">
-    <button nz-button nzDanger nzType="primary" *ngIf="isEditing()" [nzLoading]="isDeleting()" (click)="onDelete()">
+    <button nz-button nzDanger nzType="primary" *ngIf="isEditForm()" [nzLoading]="isDeleting()" (click)="onDelete()">
       Delete
     </button>
     <span class="space"></span>
     <button nz-button nzType="default" (click)="onCancel()">Cancel</button>
-    <button nz-button nzType="primary" [nzLoading]="isSaving()" [disabled]="isSubmitDisabled()" (click)="onSubmit()">
+    <button nz-button nzType="primary" [nzLoading]="isSubmitting()" [disabled]="!isValid()" (click)="onSubmit()">
       Submit
     </button>
   </div>
