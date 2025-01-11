@@ -26,7 +26,7 @@ export class TeamPageComponent implements OnInit {
   ngOnInit() {
     this.subs.add(
       this.playerSvc
-        .getAllPlayers()
+        .fetch()
         .pipe(
           tap((result) => {
             this.filterByPosition(result);
@@ -64,8 +64,6 @@ export class TeamPageComponent implements OnInit {
       ...players.filter((p) => p.position === Position.Midfielder),
     ];
 
-    this.positionless = players.filter(
-      (p) => p.position === Position.Undefined,
-    );
+    this.positionless = players.filter((p) => p.position === Position.Undefined);
   }
 }

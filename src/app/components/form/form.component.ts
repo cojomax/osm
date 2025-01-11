@@ -1,12 +1,7 @@
 import { FormGroup } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { EventEmitter } from '@angular/core';
 
 export abstract class FormComponent {
-  abstract form: FormGroup<any>;
-
-  // abstract isFormValid: WritableSignal<boolean>;
-
-  abstract updateForm(): void;
-
-  abstract formUpdated$: Observable<boolean>;
+  public abstract form: FormGroup<any>;
+  protected abstract update: EventEmitter<boolean>;
 }

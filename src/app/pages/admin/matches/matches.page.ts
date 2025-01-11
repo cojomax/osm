@@ -85,7 +85,7 @@ export class MatchesPageComponent implements OnInit, AfterViewInit, OnDestroy {
   ];
 
   protected onEditClick(matchId: string) {
-    this.openModal(this.matches.find((p) => p.matchId === matchId)!);
+    this.openModal(this.matches.find((p) => p.id === matchId)!);
   }
 
   protected onAddClick() {
@@ -131,7 +131,7 @@ export class MatchesPageComponent implements OnInit, AfterViewInit, OnDestroy {
   protected onDelete() {
     this.isDeleting = true;
     this.matchSvc
-      .deleteMatch(this.selectedMatch!.matchId)
+      .deleteMatch(this.selectedMatch!.id)
       .pipe(
         mergeMap(() => this.refreshTable()),
         finalize(() => {

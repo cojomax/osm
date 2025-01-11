@@ -2,10 +2,11 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { NzButtonModule } from '@nz/button';
 import { ICellRendererAngularComp } from 'ag-grid-angular';
 import { ICellRendererParams } from 'ag-grid-community';
+import { DomainItem } from '../../../../../api/models/domain-item.interface';
 
 @Component({
-    imports: [NzButtonModule],
-    templateUrl: './edit-btn.component.html'
+  imports: [NzButtonModule],
+  templateUrl: './edit-btn.component.html',
 })
 export class EditButtonComponent implements ICellRendererAngularComp {
   @Output() clicked = new EventEmitter<void>();
@@ -21,6 +22,6 @@ export class EditButtonComponent implements ICellRendererAngularComp {
   }
 
   buttonClicked() {
-    this.params.onEdit(this.params.data.playerId);
+    this.params.onEdit((this.params.data as DomainItem).id);
   }
 }

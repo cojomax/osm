@@ -1,9 +1,11 @@
-export class Goal {
+import { DomainItem } from './domain-item.interface';
+
+export class Goal implements DomainItem {
   constructor(init: Goal) {
     Object.assign(this, init);
   }
 
-  goalId = '';
+  id = '';
 
   /** The ID of the player that scored the goal. */
   scoredBy = '';

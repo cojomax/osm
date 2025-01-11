@@ -25,12 +25,7 @@ export class MatchService {
   }
 
   updateMatch(match: Match) {
-    return this._dbSvc.updateDocument(
-      COLLECTION,
-      match.matchId,
-      match,
-      matchConverter,
-    );
+    return this._dbSvc.updateDocument(COLLECTION, match.id, match, matchConverter);
   }
 
   deleteMatch(matchId: string) {

@@ -1,12 +1,9 @@
 import { Injectable } from '@angular/core';
-import {
-  DocumentData,
-  QueryDocumentSnapshot,
-  Timestamp,
-} from 'firebase/firestore/lite';
+import { DocumentData, QueryDocumentSnapshot, Timestamp } from 'firebase/firestore/lite';
 import { FireStoreCollection } from '../api/firebase/db-collection.enum';
 import { FirebaseDbService } from '../api/firebase/services/firebase.db.service';
 import { Player } from '../api/models/player.model';
+import { Repository } from './repository.interface';
 
 const COLLECTION = FireStoreCollection.Players;
 
@@ -23,12 +20,10 @@ const playerConverter = {
     };
     return req;
   },
-  fromFirestore: (
-    snapshot: QueryDocumentSnapshot<DocumentData, DocumentData>,
-  ) => {
+  fromFirestore: (snapshot: QueryDocumentSnapshot<DocumentData, DocumentData>) => {
     const player = snapshot.data();
     return new Player({
-      playerId: snapshot.id,
+      id: snapshot.id,
       firstName: player['firstName'],
       lastName: player['lastName'],
       position: player['position'],
@@ -45,35 +40,26 @@ const extractDate = (date: Timestamp | string) =>
   typeof date === 'string' ? new Date(date) : (date?.toDate() ?? null);
 
 @Injectable({ providedIn: 'root' })
-export class PlayerService {
+export class PlayerService implements Repository<Player> {
   constructor(private _dbSvc: FirebaseDbService) {}
 
-  getAllPlayers() {
+  fetch() {
     return this._dbSvc.getCollection<Player>(COLLECTION, playerConverter);
   }
 
-  getPlayer(playerId: string) {
-    return this._dbSvc.getDocument<Player>(
-      COLLECTION,
-      playerId,
-      playerConverter,
-    );
+  find(playerId: string) {
+    return this._dbSvc.getDocument<Player>(COLLECTION, playerId, playerConverter);
   }
 
-  addPlayer(player: Player) {
+  create(player: Player) {
     return this._dbSvc.createDocument(COLLECTION, player, playerConverter);
   }
 
-  updatePlayer(player: Player) {
-    return this._dbSvc.updateDocument(
-      COLLECTION,
-      player.playerId,
-      player,
-      playerConverter,
-    );
+  update(player: Player) {
+    return this._dbSvc.updateDocument(COLLECTION, player.id, player, playerConverter);
   }
 
-  deletePlayer(playerId: string) {
+  delete(playerId: string) {
     return this._dbSvc.deleteDocument(COLLECTION, playerId);
   }
 }

@@ -1,11 +1,12 @@
 import { Position } from '../../models/position.enum';
+import { DomainItem } from './domain-item.interface';
 
-export class Player {
+export class Player implements DomainItem {
   constructor(init: Partial<Player>) {
     Object.assign(this, init);
   }
 
-  playerId = '';
+  id = '';
 
   /** The first name of the player. */
   firstName = '';

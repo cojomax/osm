@@ -42,28 +42,12 @@ export class FixtureFormComponent implements OnInit {
     label: Position[key as keyof typeof Position] === Position.Undefined ? '' : Position[key as keyof typeof Position],
   }));
 
-  get isFirstNameValid() {
-    return this.fixtureForm.get('firstName')?.touched && this.fixtureForm.get('firstName')?.invalid;
-  }
-
-  get isLastNameValid() {
-    return this.fixtureForm.get('lastName')?.touched && this.fixtureForm.get('lastName')?.invalid;
-  }
-
-  get isPositionValid() {
-    return this.fixtureForm.get('position')?.touched && this.fixtureForm.get('position')?.invalid;
-  }
-
-  get isSquadNumberValid() {
-    return this.fixtureForm.get('squadNumber')?.touched && this.fixtureForm.get('squadNumber')?.invalid;
-  }
-
   constructor(private _fb: FormBuilder) {}
 
   ngOnInit() {
     this.fixtureForm = this._fb.group({
       // Fixture details
-      matchId: [this.data?.matchId],
+      matchId: [this.data?.id],
       date: [this.data?.date ?? null, Validators.required],
       time: [this.data?.time ?? null, Validators.required],
       venue: [this.data?.venue ?? '', Validators.required],

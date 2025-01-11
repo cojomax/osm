@@ -1,12 +1,13 @@
 import { Team } from './team.model';
 import { Goal } from './goal.model';
+import { DomainItem } from './domain-item.interface';
 
-export class Match {
+export class Match implements DomainItem {
   constructor(init: Partial<Match>) {
     Object.assign(this, init);
   }
 
-  matchId = '';
+  id = '';
 
   /** The date the match is played on. */
   date: Date | null = null;

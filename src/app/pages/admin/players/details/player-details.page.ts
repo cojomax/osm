@@ -27,7 +27,7 @@ export class PlayerDetailsPageComponent {
     }
 
     this.svc
-      .getPlayer(playerId)
+      .find(playerId)
       .pipe(
         tap((p) => {
           this.player = p;
