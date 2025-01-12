@@ -11,14 +11,13 @@ export class Fixture implements DomainItem {
 
   /** The date the match is played on. */
   date: Date | null = null;
-
+  // TODO Merge into one
   time: Date | null = null;
 
   venue: string | null = null;
 
-  /**
-   * The name of the competition for which the match is scheduled.
-   */
+  /** Details of the competition for which the fixture is scheduled. */
+  // TODO Change this to an ID for Competition type.
   competition = '';
 
   opponent: Team | null = null;
@@ -37,10 +36,4 @@ export class Fixture implements DomainItem {
 
   /** The ID of the match report. */
   matchReport: string | null = null;
-
-  /** The name of the division (if the competition is a league). */
-  division: string | undefined;
-
-  /** The week (league) or round (cup) number of the match. */
-  round: string | undefined;
 }

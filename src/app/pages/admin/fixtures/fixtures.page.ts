@@ -10,7 +10,7 @@ import { Fixture } from '../../../api/models/fixture.model';
 import { FixtureService } from '../../../services/fixture.service';
 import { FormModalComponent } from '../../../components/admin/form-modal/form-modal.component';
 import { GridComponent } from '../../../components/grid/grid.component';
-import { EditButtonComponent } from '../players/renderers/edit-btn/edit-btn.component';
+import { EditButtonComponent } from '../players/renderers/edit-btn.component';
 import { FormModalService } from '../../../components/admin/form-modal/form-modal.service';
 import { REPOSITORY_SERVICE } from '../../../components/admin/form-modal/form-modal.token';
 
@@ -46,7 +46,7 @@ export class FixturesPageComponent implements OnInit, AfterViewInit, OnDestroy {
     this.subs.unsubscribe();
   }
 
-  protected colDefs: ColDef[] = [
+  protected colDefs: ColDef<Fixture>[] = [
     {
       field: 'date',
       cellDataType: 'date',
@@ -59,13 +59,20 @@ export class FixturesPageComponent implements OnInit, AfterViewInit, OnDestroy {
       valueFormatter: (params) => this.datePipe.transform(params.value, 'shortTime') ?? '',
     },
     { field: 'venue' },
-    { field: 'competition' },
+    // { field: 'competition' },
     { field: 'opponent' },
     {
-      colId: 'action',
+      colId: 'score',
+      headerName: 'Score',
+      valueFormatter: (params) => `${params.data?.homeScore ?? 0} - ${params.data?.opponentScore ?? 0}`,
+    },
+    {
+      colId: 'edit',
       maxWidth: 150,
       cellRenderer: EditButtonComponent,
-      cellRendererParams: { onEdit: this.onEditClick.bind(this) },
+      cellRendererParams: {
+        onEdit: this.onEditClick.bind(this),
+      },
     },
     // {
     //   field: 'squadNumber',

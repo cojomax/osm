@@ -6,7 +6,7 @@ import { Subscription, tap } from 'rxjs';
 import { Player } from '../../../api/models/player.model';
 import { PlayerService } from '../../../services/player.service';
 import { PlayerFormComponent } from './form/player.form';
-import { EditButtonComponent } from './renderers/edit-btn/edit-btn.component';
+import { EditButtonComponent } from './renderers/edit-btn.component';
 import { ColDef } from 'ag-grid-community';
 import { GridComponent } from '../../../components/grid/grid.component';
 import { REPOSITORY_SERVICE } from '../../../components/admin/form-modal/form-modal.token';
