@@ -5,7 +5,7 @@ import { HomePageComponent } from './pages/home/home.page';
 import { LoginPageComponent } from './pages/login/login.page';
 import { PageNotFoundPageComponent } from './pages/not-found/not-found.page';
 import { TeamPageComponent } from './pages/team/team.page';
-import { MatchesPageComponent } from './pages/admin/matches/matches.page';
+import { FixturesPageComponent } from './pages/admin/fixtures/fixtures.page';
 
 export const routes: Routes = [
   { path: '', component: HomePageComponent },
@@ -18,7 +18,7 @@ export const routes: Routes = [
     children: [
       { path: 'players/:id', component: PlayerDetailsPageComponent },
       { path: 'players', component: PlayersPageComponent },
-      { path: 'matches', component: MatchesPageComponent },
+      { path: 'fixtures', component: FixturesPageComponent },
     ],
   },
   { path: '**', component: PageNotFoundPageComponent },

@@ -1,36 +1,36 @@
 import { Injectable } from '@angular/core';
 import { FirebaseDbService } from '../api/firebase/services/firebase.db.service';
 import { FireStoreCollection } from '../api/firebase/db-collection.enum';
-import { Match } from '../api/models/match.model';
+import { Fixture } from '../api/models/fixture.model';
 import { StoreConverter } from '../api/firebase/converter.interface';
 import { Repository } from './repository.interface';
 import { FixtureConverter } from '../api/firebase/converters/fixture.converter';
 
-const COLLECTION = FireStoreCollection.Matches;
+const COLLECTION = FireStoreCollection.Fixtures;
 
 @Injectable({
   providedIn: 'root',
 })
-export class MatchService implements Repository<Match> {
-  private readonly converter: StoreConverter<Match>;
+export class FixtureService implements Repository<Fixture> {
+  private readonly converter: StoreConverter<Fixture>;
 
   constructor(private _dbSvc: FirebaseDbService) {
     this.converter = new FixtureConverter();
   }
 
   fetch() {
-    return this._dbSvc.getCollection<Match>(COLLECTION, this.converter);
+    return this._dbSvc.getCollection<Fixture>(COLLECTION, this.converter);
   }
 
   find(matchId: string) {
-    return this._dbSvc.getDocument<Match>(COLLECTION, matchId, this.converter);
+    return this._dbSvc.getDocument<Fixture>(COLLECTION, matchId, this.converter);
   }
 
-  create(match: Match) {
+  create(match: Fixture) {
     return this._dbSvc.createDocument(COLLECTION, match, this.converter);
   }
 
-  update(match: Match) {
+  update(match: Fixture) {
     return this._dbSvc.updateDocument(COLLECTION, match.id, match, this.converter);
   }
 

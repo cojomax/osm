@@ -1,8 +1,8 @@
 import { StoreConverter } from '../converter.interface';
-import { Match } from '../../models/match.model';
+import { Fixture } from '../../models/fixture.model';
 
-export class FixtureConverter implements StoreConverter<Match> {
-  toFirestore(match: Match) {
+export class FixtureConverter implements StoreConverter<Fixture> {
+  toFirestore(match: Fixture) {
     return {
       date: match.date,
       time: match.time,
@@ -12,9 +12,9 @@ export class FixtureConverter implements StoreConverter<Match> {
     };
   }
 
-  fromFirestore(snapshot: any): Match {
+  fromFirestore(snapshot: any): Fixture {
     const match = snapshot.data();
-    return new Match({
+    return new Fixture({
       id: snapshot.id,
       date: match['date']?.toDate(),
       time: match['time']?.toDate(),

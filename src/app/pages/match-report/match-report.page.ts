@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatchReport } from '../../models/match-report.model';
 import { Player } from '../../api/models/player.model';
-import { MatchService } from '../../services/match.service';
+import { FixtureService } from '../../services/fixture.service';
 import { Position } from '../../models/position.enum';
 
 @Component({
@@ -16,7 +16,7 @@ export class MatchReportPageComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private matchSvc: MatchService,
+    private matchSvc: FixtureService,
   ) {}
 
   ngOnInit() {

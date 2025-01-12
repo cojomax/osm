@@ -6,8 +6,8 @@ import { NzModalModule } from '@nz/modal';
 import { Subscription, tap } from 'rxjs';
 import { ColDef } from 'ag-grid-community';
 import { FixtureFormComponent } from './form/fixture.form';
-import { Match } from '../../../api/models/match.model';
-import { MatchService } from '../../../services/match.service';
+import { Fixture } from '../../../api/models/fixture.model';
+import { FixtureService } from '../../../services/fixture.service';
 import { FormModalComponent } from '../../../components/admin/form-modal/form-modal.component';
 import { GridComponent } from '../../../components/grid/grid.component';
 import { EditButtonComponent } from '../players/renderers/edit-btn/edit-btn.component';
@@ -16,13 +16,13 @@ import { REPOSITORY_SERVICE } from '../../../components/admin/form-modal/form-mo
 
 @Component({
   imports: [NzButtonModule, NzIconModule, NzModalModule, FixtureFormComponent, FormModalComponent, GridComponent],
-  templateUrl: './matches.page.html',
-  styleUrl: './matches.page.css',
-  providers: [FormModalService, { provide: REPOSITORY_SERVICE, useExisting: MatchService }],
+  templateUrl: './fixtures.page.html',
+  styleUrl: './fixtures.page.css',
+  providers: [FormModalService, { provide: REPOSITORY_SERVICE, useExisting: FixtureService }],
 })
-export class MatchesPageComponent implements OnInit, AfterViewInit, OnDestroy {
-  protected fixtures = signal<Match[]>([]);
-  protected selectedFixture = signal<Match | null>(null);
+export class FixturesPageComponent implements OnInit, AfterViewInit, OnDestroy {
+  protected fixtures = signal<Fixture[]>([]);
+  protected selectedFixture = signal<Fixture | null>(null);
 
   private datePipe: DatePipe;
   private subs = new Subscription();
@@ -30,8 +30,8 @@ export class MatchesPageComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild(FixtureFormComponent) form!: FixtureFormComponent;
 
   constructor(
-    protected modalSvc: FormModalService<Match>,
-    private matchSvc: MatchService,
+    protected modalSvc: FormModalService<Fixture>,
+    private matchSvc: FixtureService,
   ) {
     this.datePipe = new DatePipe(inject(LOCALE_ID));
   }
@@ -106,15 +106,15 @@ export class MatchesPageComponent implements OnInit, AfterViewInit, OnDestroy {
     this.openModal(this.fixtures().find((f) => f.id === matchId)!);
   }
 
-  protected openModal(fixture: Match | null = null) {
+  protected openModal(fixture: Fixture | null = null) {
     this.selectedFixture.set(fixture);
     this.modalSvc.openModal(this.selectedFixture());
   }
 
   private updateTableData() {
     return this.matchSvc.fetch().pipe(
-      tap((matches) => {
-        this.fixtures.set(matches);
+      tap((fixtures) => {
+        this.fixtures.set(fixtures);
       }),
     );
   }
