@@ -12,6 +12,7 @@ interface ModalState<T> {
 @Injectable()
 export class FormModalService<T extends DomainItem> {
   isVisible$: Observable<ModalState<T>>;
+  
   private isVisibleSbj = new BehaviorSubject<ModalState<T>>({ visible: false, data: null });
 
   constructor(@Inject(REPOSITORY_SERVICE) private repositorySvc: Repository<T>) {

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NzButtonModule } from '@nz/button';
 import { NzDatePickerModule } from '@nz/date-picker';
@@ -7,7 +7,7 @@ import { NzFormModule } from '@nz/form';
 import { NzInputModule } from '@nz/input';
 import { Position } from '../../../../models/position.enum';
 import { FormComponent } from '../../../../components/form/form.component';
-import { tap } from 'rxjs';
+import { Subscription, tap } from 'rxjs';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 
 @Component({
@@ -24,7 +24,7 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
     NzSelectModule,
   ],
 })
-export class PlayerFormComponent extends FormComponent implements OnInit {
+export class PlayerFormComponent extends FormComponent implements OnInit, OnDestroy {
   form!: FormGroup;
 
   protected rowSpan = {
@@ -37,12 +37,12 @@ export class PlayerFormComponent extends FormComponent implements OnInit {
     label: Position[key as keyof typeof Position] === Position.Undefined ? '' : Position[key as keyof typeof Position],
   }));
 
-  @Output() update = new EventEmitter<boolean>();
+  private subs = new Subscription();
 
-  constructor(
-    private _fb: FormBuilder,
-    private cdr: ChangeDetectorRef,
-  ) {
+  /** Emitted when the form status changes. */
+  @Output() statusChanged = new EventEmitter<boolean>();
+
+  constructor(private _fb: FormBuilder) {
     super();
   }
 
@@ -58,12 +58,18 @@ export class PlayerFormComponent extends FormComponent implements OnInit {
       height: [null, [Validators.min(150), Validators.max(244), Validators.pattern(/^\d+$/)]],
     });
 
-    this.form.statusChanges
-      .pipe(
-        tap(() => {
-          this.update.emit(this.form.valid);
-        }),
-      )
-      .subscribe();
+    this.subs.add(
+      this.form.statusChanges
+        .pipe(
+          tap(() => {
+            this.statusChanged.emit(this.form.valid);
+          }),
+        )
+        .subscribe(),
+    );
+  }
+
+  ngOnDestroy() {
+    this.subs.unsubscribe();
   }
 }

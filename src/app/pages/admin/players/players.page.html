@@ -6,5 +6,5 @@
 </app-grid>
 
 <app-form-modal modalTitle="Player" (modified)="onModified()">
-  <app-player-form #form (update)="modalSvc.updateStatus($event)"></app-player-form>
+  <app-player-form (statusChanged)="modalSvc.updateStatus($event)"></app-player-form>
 </app-form-modal>

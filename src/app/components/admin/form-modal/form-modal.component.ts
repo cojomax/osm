@@ -27,18 +27,21 @@ import { PlayerFormComponent } from '../../../pages/admin/players/form/player.fo
 export class FormModalComponent<T> implements OnInit, OnDestroy {
   modalTitle = input('');
 
-  formState = computed(() => this.formSvc.formState());
-  isSubmitting = computed(() => this.formState() === 'submit');
-  isDeleting = computed(() => this.formState() === 'delete');
-  isFormProcessing = computed(() => this.isSubmitting() || this.isDeleting());
-
   formComponent = contentChild.required<FormComponent>(PlayerFormComponent);
+
+  /** Control the visibility of the form. Needs to be a plain property for two-way data binding. */
   protected isVisible = false;
+
   protected item = signal<DomainItem | undefined>(void 0);
 
+  protected isSubmitting = computed(() => this.formState() === 'submit');
+  protected isDeleting = computed(() => this.formState() === 'delete');
+  protected isFormProcessing = computed(() => this.isSubmitting() || this.isDeleting());
   protected isEditForm = computed(() => !!this.formSvc.formData());
   protected modalTitleTxt = computed(() => `${this.isEditForm() ? 'Edit' : 'Add'} ${this.modalTitle()}`);
   protected isValid = computed(() => this.formSvc.formIsValid());
+
+  private formState = computed(() => this.formSvc.formState());
 
   private subs = new Subscription();
 
@@ -50,6 +53,7 @@ export class FormModalComponent<T> implements OnInit, OnDestroy {
     this.subs.add(
       this.formSvc.isVisible$.subscribe((payload) => {
         const { visible, data } = payload;
+        // Initialize the form state and optionally fill with data.
         this.formComponent().reset(data);
         this.isVisible = visible;
       }),
