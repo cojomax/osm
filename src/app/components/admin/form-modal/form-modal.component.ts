@@ -30,6 +30,7 @@ export class FormModalComponent<T> implements OnInit, OnDestroy {
   formState = computed(() => this.formSvc.formState());
   isSubmitting = computed(() => this.formState() === 'submit');
   isDeleting = computed(() => this.formState() === 'delete');
+  isFormProcessing = computed(() => this.isSubmitting() || this.isDeleting());
 
   formComponent = contentChild.required<FormComponent>(PlayerFormComponent);
   protected isVisible = false;
