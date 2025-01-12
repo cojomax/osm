@@ -3,32 +3,38 @@ import { FirebaseDbService } from '../api/firebase/services/firebase.db.service'
 import { FireStoreCollection } from '../api/firebase/db-collection.enum';
 import { Match } from '../api/models/match.model';
 import { StoreConverter } from '../api/firebase/converter.interface';
+import { Repository } from './repository.interface';
+import { FixtureConverter } from '../api/firebase/converters/fixture.converter';
 
 const COLLECTION = FireStoreCollection.Matches;
 
-const matchConverter = {} as StoreConverter<Match>;
+@Injectable({
+  providedIn: 'root',
+})
+export class MatchService implements Repository<Match> {
+  private readonly converter: StoreConverter<Match>;
 
-@Injectable({ providedIn: 'root' })
-export class MatchService {
-  constructor(private _dbSvc: FirebaseDbService) {}
-
-  getAllMatches() {
-    return this._dbSvc.getCollection<Match>(COLLECTION, matchConverter);
+  constructor(private _dbSvc: FirebaseDbService) {
+    this.converter = new FixtureConverter();
   }
 
-  getMatch(matchId: string) {
-    return this._dbSvc.getDocument<Match>(COLLECTION, matchId, matchConverter);
+  fetch() {
+    return this._dbSvc.getCollection<Match>(COLLECTION, this.converter);
   }
 
-  addMatch(match: Match) {
-    return this._dbSvc.createDocument(COLLECTION, match, matchConverter);
+  find(matchId: string) {
+    return this._dbSvc.getDocument<Match>(COLLECTION, matchId, this.converter);
   }
 
-  updateMatch(match: Match) {
-    return this._dbSvc.updateDocument(COLLECTION, match.id, match, matchConverter);
+  create(match: Match) {
+    return this._dbSvc.createDocument(COLLECTION, match, this.converter);
   }
 
-  deleteMatch(matchId: string) {
+  update(match: Match) {
+    return this._dbSvc.updateDocument(COLLECTION, match.id, match, this.converter);
+  }
+
+  delete(matchId: string) {
     return this._dbSvc.deleteDocument(COLLECTION, matchId);
   }
 }

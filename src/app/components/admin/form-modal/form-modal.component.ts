@@ -1,7 +1,7 @@
 import {
   Component,
   computed,
-  contentChild,
+  ContentChild,
   EventEmitter,
   input,
   OnDestroy,
@@ -17,7 +17,6 @@ import { Subscription, tap } from 'rxjs';
 import { DomainItem } from '../../../api/models/domain-item.interface';
 import { FormModalService } from './form-modal.service';
 import { FormComponent } from '../../form/form.component';
-import { PlayerFormComponent } from '../../../pages/admin/players/form/player.form';
 
 @Component({
   selector: 'app-form-modal',
@@ -27,7 +26,7 @@ import { PlayerFormComponent } from '../../../pages/admin/players/form/player.fo
 export class FormModalComponent<T> implements OnInit, OnDestroy {
   modalTitle = input('');
 
-  formComponent = contentChild.required<FormComponent>(PlayerFormComponent);
+  @ContentChild(FormComponent, { static: true }) formComponent!: FormComponent;
 
   /** Control the visibility of the form. Needs to be a plain property for two-way data binding. */
   protected isVisible = false;
@@ -54,7 +53,7 @@ export class FormModalComponent<T> implements OnInit, OnDestroy {
       this.formSvc.isVisible$.subscribe((payload) => {
         const { visible, data } = payload;
         // Initialize the form state and optionally fill with data.
-        this.formComponent().reset(data);
+        this.formComponent?.reset(data);
         this.isVisible = visible;
       }),
     );
@@ -67,7 +66,7 @@ export class FormModalComponent<T> implements OnInit, OnDestroy {
   protected onSubmit() {
     this.subs.add(
       this.formSvc
-        .submitForm(this.formComponent().form.value, this.isEditForm())
+        .submitForm(this.formComponent.form.value, this.isEditForm())
         .pipe(
           tap(() => {
             this.modified.emit();

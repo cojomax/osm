@@ -1,46 +1,10 @@
-<div class="top">
-  <button nz-button nzType="primary" (click)="onAddClick()">
-    <span nz-icon nzType="file-add"></span>
-    Add Fixture
-  </button>
-</div>
+<app-grid [colDefs]="colDefs" [data]="fixtures()" (add)="onAdd()">
+  <span add-button>
+    <span nz-icon nzType="user-add"></span>
+    Fixture
+  </span>
+</app-grid>
 
-
-<ag-grid-angular
-  class="ag-theme-quartz-auto-dark"
-  style="height: 500px"
-  [rowData]="matches"
-  [columnDefs]="colDefs"
-/>
-
-<nz-modal
-  nzTitle="Add Fixture"
-  (nzOnCancel)="onCancel()"
-  (nzAfterOpen)="onModalOpen()"
-  (nzAfterClose)="onModalClose()"
-  [(nzVisible)]="isModalVisible"
->
-  <app-fixture-form *nzModalContent [data]="selectedMatch"></app-fixture-form>
-  <div *nzModalFooter class="spaced">
-    <button
-      nz-button
-      nzDanger
-      nzType="primary"
-      [nzLoading]="isDeleting"
-      (click)="onDelete()"
-    >
-      Delete
-    </button>
-    <span class="space"></span>
-    <button nz-button nzType="default" (click)="onCancel()">Cancel</button>
-    <button
-      nz-button
-      nzType="primary"
-      [nzLoading]="isSaving"
-      [disabled]="isSubmitDisabled"
-      (click)="onSubmit()"
-    >
-      Submit
-    </button>
-  </div>
-</nz-modal>
+<app-form-modal modalTitle="Fixture" (modified)="onModified()">
+  <app-fixture-form (statusChanged)="modalSvc.updateStatus($event)"></app-fixture-form>
+</app-form-modal>

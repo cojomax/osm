@@ -23,14 +23,11 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
     NzInputModule,
     NzSelectModule,
   ],
+  // Must be provided to work in the form modal component.
+  providers: [{ provide: FormComponent, useExisting: PlayerFormComponent }],
 })
 export class PlayerFormComponent extends FormComponent implements OnInit, OnDestroy {
   form!: FormGroup;
-
-  protected rowSpan = {
-    colOne: 6,
-    colTwo: 14,
-  };
 
   protected positionOptions = Object.keys(Position).map((key) => ({
     value: Position[key as keyof typeof Position],

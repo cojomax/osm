@@ -22,20 +22,17 @@ import { FormModalService } from '../../../components/admin/form-modal/form-moda
 export class PlayersPageComponent implements OnInit, AfterViewInit, OnDestroy {
   protected players = signal<Player[]>([]);
   protected selectedPlayer = signal<Player | null>(null);
-  protected isFormValid = signal(false);
 
   private datePipe: DatePipe;
   private subs = new Subscription();
 
-  // TODO Remove undefined?
-  @ViewChild(GridComponent) grid: GridComponent<Player> | undefined;
-  @ViewChild(PlayerFormComponent) form: PlayerFormComponent | undefined;
+  @ViewChild(GridComponent) grid!: GridComponent<Player>;
+  @ViewChild(PlayerFormComponent) form!: PlayerFormComponent;
 
   constructor(
     protected modalSvc: FormModalService<Player>,
     private playerSvc: PlayerService,
   ) {
-    // TODO Confirm this is change was right
     this.datePipe = new DatePipe(inject(LOCALE_ID));
   }
 
@@ -81,8 +78,9 @@ export class PlayersPageComponent implements OnInit, AfterViewInit, OnDestroy {
     },
   ];
 
-  protected onFormUpdated(isValid: boolean) {
-    this.isFormValid.set(isValid);
+  /** Handles the add event from the GridComponent. */
+  protected onAdd() {
+    this.openModal();
   }
 
   protected onEditClick(playerId: string) {
@@ -100,15 +98,6 @@ export class PlayersPageComponent implements OnInit, AfterViewInit, OnDestroy {
         this.players.set(players);
       }),
     );
-  }
-
-  /** Handles the add event from the GridComponent. */
-  onAdd() {
-    this.openModal();
-  }
-
-  onClose() {
-    this.selectedPlayer.set(null);
   }
 
   protected onModified() {

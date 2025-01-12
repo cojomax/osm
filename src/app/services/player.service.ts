@@ -1,62 +1,37 @@
 import { Injectable } from '@angular/core';
-import { DocumentData, QueryDocumentSnapshot, Timestamp } from 'firebase/firestore/lite';
 import { FireStoreCollection } from '../api/firebase/db-collection.enum';
 import { FirebaseDbService } from '../api/firebase/services/firebase.db.service';
 import { Player } from '../api/models/player.model';
 import { Repository } from './repository.interface';
+import { StoreConverter } from '../api/firebase/converter.interface';
+import { PlayerConverter } from '../api/firebase/converters/player.converter';
 
 const COLLECTION = FireStoreCollection.Players;
 
-const playerConverter = {
-  toFirestore: (player: Player) => {
-    const req = {
-      firstName: player.firstName,
-      lastName: player.lastName,
-      squadNumber: player.squadNumber,
-      position: player.position,
-      country: player.country,
-      dob: player.dob,
-      height: player.height,
-    };
-    return req;
-  },
-  fromFirestore: (snapshot: QueryDocumentSnapshot<DocumentData, DocumentData>) => {
-    const player = snapshot.data();
-    return new Player({
-      id: snapshot.id,
-      firstName: player['firstName'],
-      lastName: player['lastName'],
-      position: player['position'],
-      squadNumber: player['squadNumber'],
-      country: player['country'],
-      dob: extractDate(player['dob']),
-      height: player['height'],
-    });
-  },
-};
-
-// TODO Figure out what's going on here and try remove this function.
-const extractDate = (date: Timestamp | string) =>
-  typeof date === 'string' ? new Date(date) : (date?.toDate() ?? null);
-
-@Injectable({ providedIn: 'root' })
+@Injectable({
+  providedIn: 'root',
+})
 export class PlayerService implements Repository<Player> {
-  constructor(private _dbSvc: FirebaseDbService) {}
+  private readonly converter: StoreConverter<Player>;
+
+  constructor(private _dbSvc: FirebaseDbService) {
+    this.converter = new PlayerConverter();
+  }
 
   fetch() {
-    return this._dbSvc.getCollection<Player>(COLLECTION, playerConverter);
+    return this._dbSvc.getCollection<Player>(COLLECTION, this.converter);
   }
 
   find(playerId: string) {
-    return this._dbSvc.getDocument<Player>(COLLECTION, playerId, playerConverter);
+    return this._dbSvc.getDocument<Player>(COLLECTION, playerId, this.converter);
   }
 
   create(player: Player) {
-    return this._dbSvc.createDocument(COLLECTION, player, playerConverter);
+    return this._dbSvc.createDocument(COLLECTION, player, this.converter);
   }
 
   update(player: Player) {
-    return this._dbSvc.updateDocument(COLLECTION, player.id, player, playerConverter);
+    return this._dbSvc.updateDocument(COLLECTION, player.id, player, this.converter);
   }
 
   delete(playerId: string) {

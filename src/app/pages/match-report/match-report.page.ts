@@ -1,12 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import {
-  FormArray,
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatchReport } from '../../models/match-report.model';
 import { Player } from '../../api/models/player.model';
 import { MatchService } from '../../services/match.service';
@@ -37,9 +31,7 @@ export class MatchReportPageComponent implements OnInit {
         goals: [0, [Validators.required]],
       }),
       osm: this.fb.group({
-        kit: this.fb.control<'Home' | 'Away' | null>(null, [
-          Validators.required,
-        ]),
+        kit: this.fb.control<'Home' | 'Away' | null>(null, [Validators.required]),
         goals: [0, [Validators.required]],
         scorers: this.fb.array([]),
         assists: this.fb.array([]),
@@ -90,7 +82,7 @@ export class MatchReportPageComponent implements OnInit {
     // removeUndefinedPropertiesRecursive(matchReport);
 
     // if (this.matchForm.valid) {
-    this.matchSvc.saveMatchReport(matchReport);
+    // this.matchSvc.saveMatchReport(matchReport);
     // }
   }
 

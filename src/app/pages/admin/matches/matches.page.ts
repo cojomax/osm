@@ -1,43 +1,43 @@
 import { DatePipe } from '@angular/common';
-import { AfterViewInit, Component, Inject, LOCALE_ID, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, inject, LOCALE_ID, OnDestroy, OnInit, signal, ViewChild } from '@angular/core';
 import { NzButtonModule } from '@nz/button';
 import { NzIconModule } from '@nz/icon';
 import { NzModalModule } from '@nz/modal';
-import { AgGridAngular } from 'ag-grid-angular';
-import { finalize, mergeMap, Subscription, tap } from 'rxjs';
+import { Subscription, tap } from 'rxjs';
 import { ColDef } from 'ag-grid-community';
 import { FixtureFormComponent } from './form/fixture.form';
 import { Match } from '../../../api/models/match.model';
 import { MatchService } from '../../../services/match.service';
+import { FormModalComponent } from '../../../components/admin/form-modal/form-modal.component';
+import { GridComponent } from '../../../components/grid/grid.component';
+import { EditButtonComponent } from '../players/renderers/edit-btn/edit-btn.component';
+import { FormModalService } from '../../../components/admin/form-modal/form-modal.service';
+import { REPOSITORY_SERVICE } from '../../../components/admin/form-modal/form-modal.token';
 
 @Component({
-  imports: [AgGridAngular, NzButtonModule, NzIconModule, NzModalModule, FixtureFormComponent],
+  imports: [NzButtonModule, NzIconModule, NzModalModule, FixtureFormComponent, FormModalComponent, GridComponent],
   templateUrl: './matches.page.html',
   styleUrl: './matches.page.css',
+  providers: [FormModalService, { provide: REPOSITORY_SERVICE, useExisting: MatchService }],
 })
 export class MatchesPageComponent implements OnInit, AfterViewInit, OnDestroy {
-  protected isSaving = false;
-  protected isDeleting = false;
-  protected isModalVisible = false;
-  protected isSubmitDisabled = true;
+  protected fixtures = signal<Match[]>([]);
+  protected selectedFixture = signal<Match | null>(null);
 
-  protected selectedMatch: Match | null = null;
-  protected matches: Match[] = [];
-
-  private subs = new Subscription();
   private datePipe: DatePipe;
+  private subs = new Subscription();
 
-  @ViewChild(FixtureFormComponent) form: FixtureFormComponent | undefined;
+  @ViewChild(FixtureFormComponent) form!: FixtureFormComponent;
 
   constructor(
-    @Inject(LOCALE_ID) locale: string,
+    protected modalSvc: FormModalService<Match>,
     private matchSvc: MatchService,
   ) {
-    this.datePipe = new DatePipe(locale);
+    this.datePipe = new DatePipe(inject(LOCALE_ID));
   }
 
   ngOnInit() {
-    this.refreshTable().subscribe();
+    this.subs.add(this.updateTableData().subscribe());
   }
 
   ngAfterViewInit() {}
@@ -47,12 +47,26 @@ export class MatchesPageComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   protected colDefs: ColDef[] = [
-    { field: 'date' },
-    { field: 'time' },
+    {
+      field: 'date',
+      cellDataType: 'date',
+      width: 250,
+      valueFormatter: (params) => this.datePipe.transform(params.value, 'fullDate') ?? '',
+    },
+    {
+      field: 'time',
+      cellDataType: 'date',
+      valueFormatter: (params) => this.datePipe.transform(params.value, 'shortTime') ?? '',
+    },
     { field: 'venue' },
     { field: 'competition' },
     { field: 'opponent' },
-    {},
+    {
+      colId: 'action',
+      maxWidth: 150,
+      cellRenderer: EditButtonComponent,
+      cellRendererParams: { onEdit: this.onEditClick.bind(this) },
+    },
     // {
     //   field: 'squadNumber',
     //   cellDataType: 'number',
@@ -84,86 +98,29 @@ export class MatchesPageComponent implements OnInit, AfterViewInit, OnDestroy {
     // },
   ];
 
-  protected onEditClick(matchId: string) {
-    this.openModal(this.matches.find((p) => p.id === matchId)!);
-  }
-
-  protected onAddClick() {
+  protected onAdd() {
     this.openModal();
   }
 
-  protected onModalOpen() {
-    this.isSubmitDisabled = this.form?.fixtureForm.invalid ?? true;
-
-    this.subs.add(
-      this.form!.fixtureForm.statusChanges.pipe(
-        tap(() => {
-          this.isSubmitDisabled = this.form!.fixtureForm.invalid;
-        }),
-      ).subscribe(),
-    );
+  protected onEditClick(matchId: string) {
+    this.openModal(this.fixtures().find((f) => f.id === matchId)!);
   }
 
-  protected onSubmit() {
-    if (!this.form) {
-      return;
-    }
-
-    this.isSaving = true;
-
-    const write$ = this.form.fixtureForm.get('matchId')?.value
-      ? this.matchSvc.updateMatch(this.form.fixtureForm.value)
-      : this.matchSvc.addMatch(new Match(this.form.fixtureForm.value));
-
-    this.subs.add(
-      write$
-        .pipe(
-          mergeMap(() => this.refreshTable()),
-          finalize(() => {
-            this.closeModal();
-            this.isSaving = false;
-          }),
-        )
-        .subscribe(),
-    );
+  protected openModal(fixture: Match | null = null) {
+    this.selectedFixture.set(fixture);
+    this.modalSvc.openModal(this.selectedFixture());
   }
 
-  protected onDelete() {
-    this.isDeleting = true;
-    this.matchSvc
-      .deleteMatch(this.selectedMatch!.id)
-      .pipe(
-        mergeMap(() => this.refreshTable()),
-        finalize(() => {
-          this.closeModal();
-          this.isDeleting = false;
-        }),
-      )
-      .subscribe();
-  }
-
-  protected onCancel() {
-    this.closeModal();
-  }
-
-  protected onModalClose() {
-    this.selectedMatch = null;
-  }
-
-  private refreshTable() {
-    return this.matchSvc.getAllMatches().pipe(
+  private updateTableData() {
+    return this.matchSvc.fetch().pipe(
       tap((matches) => {
-        this.matches = matches;
+        this.fixtures.set(matches);
       }),
     );
   }
 
-  private openModal(match: Match | null = null) {
-    this.selectedMatch = match;
-    this.isModalVisible = true;
-  }
-
-  private closeModal() {
-    this.isModalVisible = false;
+  protected onModified() {
+    // TODO Try add this to where updates are made
+    this.subs.add(this.updateTableData().subscribe());
   }
 }

@@ -1,14 +1,14 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NzButtonModule } from '@nz/button';
-import { NzDatePickerModule } from '@nz/date-picker';
 import { NzFormModule } from '@nz/form';
 import { NzInputModule } from '@nz/input';
 import { NzSelectModule } from '@nz/select';
-import { Position } from '../../../../models/position.enum';
-import { Match } from '../../../../api/models/match.model';
 import { NzTimePickerComponent } from '@nz/time-picker';
+import { Subscription, tap } from 'rxjs';
+import { FormComponent } from '../../../../components/form/form.component';
+import { NzDatePickerModule } from '@nz/date-picker';
 
 @Component({
   selector: 'app-fixture-form',
@@ -24,35 +24,29 @@ import { NzTimePickerComponent } from '@nz/time-picker';
     NzSelectModule,
     NzTimePickerComponent,
   ],
+  // Must be provided to work in the form modal component.
+  providers: [{ provide: FormComponent, useExisting: FixtureFormComponent }],
 })
-export class FixtureFormComponent implements OnInit {
-  @Input() data: Match | null = null;
+export class FixtureFormComponent extends FormComponent implements OnInit, OnDestroy {
+  form!: FormGroup;
 
-  public fixtureForm!: FormGroup<any>;
+  private subs = new Subscription();
 
-  protected submitted = new EventEmitter<FormGroup>();
+  /** Emitted when the form status changes. */
+  @Output() statusChanged = new EventEmitter<boolean>();
 
-  protected rowSpan = {
-    colOne: 6,
-    colTwo: 14,
-  };
-
-  protected positionOptions = Object.keys(Position).map((key) => ({
-    value: Position[key as keyof typeof Position],
-    label: Position[key as keyof typeof Position] === Position.Undefined ? '' : Position[key as keyof typeof Position],
-  }));
-
-  constructor(private _fb: FormBuilder) {}
+  constructor(private _fb: FormBuilder) {
+    super();
+  }
 
   ngOnInit() {
-    this.fixtureForm = this._fb.group({
-      // Fixture details
-      matchId: [this.data?.id],
-      date: [this.data?.date ?? null, Validators.required],
-      time: [this.data?.time ?? null, Validators.required],
-      venue: [this.data?.venue ?? '', Validators.required],
-      competition: [this.data?.competition ?? '', Validators.required],
-      opponent: [this.data?.opponent ?? '', Validators.required],
+    this.form = this._fb.group({
+      id: [void 0],
+      date: [null, Validators.required],
+      time: [null],
+      venue: ['', Validators.required],
+      competition: ['', Validators.required],
+      opponent: ['', Validators.required],
 
       // Report details
       // homeScore: [this.data?.homeScore ?? 0, [Validators.min(0), Validators.max(29), Validators.pattern(/^\d+$/)]],
@@ -64,5 +58,19 @@ export class FixtureFormComponent implements OnInit {
       // dickOfDay: [this.data?.dickOfDay ?? ''],
       // matchReport: [this.data?.matchReport ?? ''],
     });
+
+    this.subs.add(
+      this.form.statusChanges
+        .pipe(
+          tap(() => {
+            this.statusChanged.emit(this.form.valid);
+          }),
+        )
+        .subscribe(),
+    );
+  }
+
+  ngOnDestroy() {
+    this.subs.unsubscribe();
   }
 }

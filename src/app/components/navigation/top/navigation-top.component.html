@@ -5,7 +5,7 @@
   <span style="flex-grow: 1"></span>
 
   <ng-container *ngIf="hasAdminAccess">
-    <a  routerLink="/admin/players">Admin</a>|
+    <a routerLink="/admin/players">Admin</a>|
   </ng-container>
 
   <ng-container *ngIf="session.isActive; else login">

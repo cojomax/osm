@@ -1,86 +1,37 @@
-<form nz-form [formGroup]="fixtureForm">
-  <!-- Date -->
+<form nz-form [formGroup]="form">
+  <!-- Date & Time -->
   <nz-form-item>
-    <nz-form-label [nzSpan]="rowSpan.colOne" nzFor="id-date">
-      Date
-    </nz-form-label>
-    <nz-form-control
-      [nzSpan]="rowSpan.colTwo"
-      nzErrorTip="Match time is required."
-    >
-      <nz-date-picker id="id-date" formControlName="date"></nz-date-picker>
+    <nz-form-label [nzSpan]="rowSpan.colOne" nzFor="id-date"> Date</nz-form-label>
+    <nz-form-control [nzSpan]="8" nzErrorTip="Match time is required.">
+      <nz-date-picker id="id-date" formControlName="date" nzPlaceHolder="YYYY-MM-DD"></nz-date-picker>
     </nz-form-control>
-  </nz-form-item>
-
-  <!-- Time -->
-  <nz-form-item>
-    <nz-form-label [nzSpan]="rowSpan.colOne" nzFor="id-time">
-      Time
-    </nz-form-label>
-    <nz-form-control
-      [nzSpan]="rowSpan.colTwo"
-      nzErrorTip="Match time is required."
-    >
-      <nz-time-picker
-        id="id-time"
-        formControlName="time"
-        nzPlaceHolder="HH:mm"
-        nzFormat="HH:mm"
-      ></nz-time-picker>
+    &nbsp;
+    <nz-form-control [nzSpan]="6">
+      <nz-time-picker id="id-time" formControlName="time" nzPlaceHolder="HH:mm" nzFormat="HH:mm"></nz-time-picker>
     </nz-form-control>
   </nz-form-item>
 
   <!-- Venue -->
   <nz-form-item>
-    <nz-form-label [nzSpan]="rowSpan.colOne" nzFor="id-venue">
-      Venue
-    </nz-form-label>
-    <nz-form-control
-      [nzSpan]="rowSpan.colTwo"
-      nzErrorTip="Venue is required"
-    >
-      <input
-        nz-input
-        id="id-venue"
-        formControlName="venue"
-        type="text"
-      />
+    <nz-form-label [nzSpan]="rowSpan.colOne" nzFor="id-venue"> Venue</nz-form-label>
+    <nz-form-control [nzSpan]="rowSpan.colTwo" nzErrorTip="Venue is required">
+      <input nz-input id="id-venue" formControlName="venue" type="text" />
     </nz-form-control>
   </nz-form-item>
 
   <!-- Competition -->
   <nz-form-item>
-    <nz-form-label [nzSpan]="rowSpan.colOne" nzFor="id-competition">
-      Competition
-    </nz-form-label>
-    <nz-form-control
-      [nzSpan]="rowSpan.colTwo"
-      nzErrorTip="Competition is required"
-    >
-      <input
-        nz-input
-        id="id-competition"
-        formControlName="competition"
-        type="text"
-      />
+    <nz-form-label [nzSpan]="rowSpan.colOne" nzFor="id-competition"> Competition</nz-form-label>
+    <nz-form-control [nzSpan]="rowSpan.colTwo" nzErrorTip="Competition is required">
+      <input nz-input id="id-competition" formControlName="competition" type="text" />
     </nz-form-control>
   </nz-form-item>
 
   <!-- Opponent -->
   <nz-form-item>
-    <nz-form-label [nzSpan]="rowSpan.colOne" nzFor="id-opponent">
-      Opponent
-    </nz-form-label>
-    <nz-form-control
-      [nzSpan]="rowSpan.colTwo"
-      nzErrorTip="Opponent is required"
-    >
-      <input
-        nz-input
-        id="id-opponent"
-        formControlName="opponent"
-        type="text"
-      />
+    <nz-form-label [nzSpan]="rowSpan.colOne" nzFor="id-opponent"> Opponent</nz-form-label>
+    <nz-form-control [nzSpan]="rowSpan.colTwo" nzErrorTip="Opponent is required">
+      <input nz-input id="id-opponent" formControlName="opponent" type="text" />
     </nz-form-control>
   </nz-form-item>
 </form>
