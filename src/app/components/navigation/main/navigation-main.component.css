@@ -30,3 +30,10 @@ a:hover::after,
   transform: translateX(-50%);
   background: var(--font-secondary);
 }
+
+@media (max-width: 768px) {
+  ul {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

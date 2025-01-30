@@ -1,18 +1,38 @@
 <div class="banner-top">
-  <span *ngIf="session.firebaseUser">
-    Logged in as: {{ session.firebaseUser.email }}
-  </span>
-  <span style="flex-grow: 1"></span>
+  <div class="container desktop">
+    <span *ngIf="session.firebaseUser"> Logged in as: {{ session.firebaseUser.email }} </span>
+    <span class="g-spacer"></span>
 
-  <ng-container *ngIf="hasAdminAccess">
-    <a routerLink="/admin/players">Admin</a>|
-  </ng-container>
+    <ng-container *ngIf="hasAdminAccess"><a routerLink="/admin/players">Admin</a>|</ng-container>
 
-  <ng-container *ngIf="session.isActive; else login">
-    <a (click)="onLogout()">Log Out</a>
-  </ng-container>
+    <ng-container *ngIf="session.isActive; else login">
+      <a (click)="onLogout()">Log Out</a>
+    </ng-container>
 
-  <ng-template #login>
-    <a routerLink="/login">Log In</a>
-  </ng-template>
+    <ng-template #login>
+      <a routerLink="/login">Log In</a>
+    </ng-template>
+  </div>
+
+  <div class="container mobile">
+    <button nz-button nzType="link" (click)="onMenuBtnClick()">
+      <nz-icon nzType="menu" nzTheme="outline"></nz-icon>
+    </button>
+    <span class="g-spacer"></span>
+    <a routerLink="/">
+      <img src="assets/osm-transparent.png" alt="app-logo" />
+    </a>
+  </div>
 </div>
+
+<nz-drawer
+  [nzVisible]="isDrawerOpen()"
+  [nzPlacement]="'left'"
+  nzTitle="... add template ..."
+  (nzOnClose)="onDrawerClose()"
+>
+  <ng-container *nzDrawerContent>
+    <app-navigation-main></app-navigation-main>
+  </ng-container>
+</nz-drawer>
+

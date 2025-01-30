@@ -17,3 +17,9 @@ img {
   width: 100px;
   margin-top: -28px;
 }
+
+@media (max-width: 768px) {
+  nav.nav {
+    display: none;
+  }
+}
