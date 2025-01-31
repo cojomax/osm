@@ -1,12 +1,7 @@
 import { registerLocaleData } from '@angular/common';
 import { provideHttpClient } from '@angular/common/http';
 import en from '@angular/common/locales/en';
-import {
-  ApplicationConfig,
-  importProvidersFrom,
-  LOCALE_ID,
-  provideZoneChangeDetection,
-} from '@angular/core';
+import { ApplicationConfig, importProvidersFrom, LOCALE_ID, provideZoneChangeDetection } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideRouter } from '@angular/router';
@@ -16,6 +11,7 @@ import { ngZorroConfig } from 'src/theme/ng-zorro.config';
 import { routes } from './app.routes';
 import { FIREBASE, firebaseFactory } from './services/tokens/firebase-config.token';
 import { SESSION, sessionFactory } from './services/tokens/session.token';
+import { IS_MOBILE } from './services/tokens/device-detection.token';
 
 registerLocaleData(en);
 
@@ -26,12 +22,13 @@ export const appConfig: ApplicationConfig = {
     provideAnimationsAsync(),
     importProvidersFrom(FormsModule),
     provideHttpClient(),
-    [{provide: LOCALE_ID, useValue: 'en-US' }],
+    [{ provide: LOCALE_ID, useValue: 'en-US' }],
     // Library Providers
     provideNzI18n(en_US),
     { provide: NZ_CONFIG, useValue: ngZorroConfig },
     // Custom Providers
     { provide: SESSION, useFactory: sessionFactory },
     { provide: FIREBASE, useFactory: firebaseFactory },
+    { provide: IS_MOBILE, useFactory: () => window.innerWidth < 768 },
   ],
 };

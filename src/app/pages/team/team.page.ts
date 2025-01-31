@@ -5,10 +5,10 @@ import { Subscription, tap } from 'rxjs';
 import { Player } from '../../api/models/player.model';
 import { Position } from '../../models/position.enum';
 import { PlayerService } from '../../services/player.service';
-import { PlayerSwiperComponent } from '../../components/player-swiper/player-swiper.component';
+import { SwiperComponent } from '../../components/swiper/swiper.component';
 
 @Component({
-  imports: [CommonModule, NzDividerModule, PlayerSwiperComponent],
+  imports: [CommonModule, NzDividerModule, SwiperComponent],
   templateUrl: './team.page.html',
   styleUrl: './team.page.css',
 })

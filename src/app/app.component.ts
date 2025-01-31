@@ -7,6 +7,7 @@ import { AdminShellComponent } from './components/admin/shell/admin-shell.compon
 import { NavigationMainComponent } from './components/navigation/main/navigation-main.component';
 import { NavigationTopComponent } from './components/navigation/top/navigation-top.component';
 import { RouteService } from './services/route.service';
+import { register } from 'swiper/element/bundle';
 
 type ViewState = 'public' | 'admin' | 'login';
 
@@ -42,5 +43,8 @@ export class AppComponent implements OnInit {
         this.viewState = !isAdmin && !isLogin ? 'public' : isAdmin ? 'admin' : 'login';
       }
     });
+
+    // Register Swiper web components
+    register();
   }
 }

@@ -1,0 +1,8 @@
+:host {
+  display: block;
+  padding: var(--space-xl);
+}
+
+swiper-slide {
+  width: 80%;
+}
