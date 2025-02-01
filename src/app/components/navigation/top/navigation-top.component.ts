@@ -1,15 +1,15 @@
 import { CommonModule } from '@angular/common';
-import { Component, Inject, signal } from '@angular/core';
+import { Component, Inject, OnInit, signal, TemplateRef, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { EventType, Router, RouterModule } from '@angular/router';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzIconModule } from 'ng-zorro-antd/icon';
-import { User, UserRole } from 'src/app/models/user.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { SESSION, Session } from 'src/app/services/tokens/session.token';
 import { NzButtonModule } from '@nz/button';
-import { NzDrawerComponent, NzDrawerContentDirective } from 'ng-zorro-antd/drawer';
+import { NzDrawerModule, NzDrawerRef, NzDrawerService } from 'ng-zorro-antd/drawer';
 import { NavigationMainComponent } from '../main/navigation-main.component';
+import { tap } from 'rxjs';
 
 @Component({
   selector: 'app-navigation-top',
@@ -22,23 +22,37 @@ import { NavigationMainComponent } from '../main/navigation-main.component';
     RouterModule,
     NzButtonModule,
     NzIconModule,
-    NzDrawerComponent,
-    NzDrawerContentDirective,
     NavigationMainComponent,
+    NzDrawerModule,
   ],
 })
-export class NavigationTopComponent {
-  protected selectedRole = UserRole.undefined;
+export class NavigationTopComponent implements OnInit {
+  // protected selectedRole = UserRole.undefined;
+  // protected user: User | null = null;
+  // protected userRole = UserRole;
 
-  protected user: User | null = null;
+  private drawerRef = signal<NzDrawerRef | undefined>(void 0);
 
-  protected userRole = UserRole;
-  protected isDrawerOpen = signal(false);
+  @ViewChild('drawerTmpl') drawerTmpl!: TemplateRef<any>;
 
   constructor(
     @Inject(SESSION) protected session: Session,
     private authSvc: AuthService,
+    private drawerSvc: NzDrawerService,
+    private router: Router,
   ) {}
+
+  ngOnInit() {
+    this.router.events
+      .pipe(
+        tap((event) => {
+          if (event.type === EventType.NavigationStart) {
+            this.drawerRef()?.close();
+          }
+        }),
+      )
+      .subscribe();
+  }
 
   protected onLogout() {
     this.authSvc.logout().subscribe();
@@ -50,10 +64,11 @@ export class NavigationTopComponent {
   }
 
   protected onMenuBtnClick() {
-    this.isDrawerOpen.update((value) => !value);
-  }
-
-  protected onDrawerClose() {
-    this.isDrawerOpen.set(false);
+    this.drawerRef.set(
+      this.drawerSvc.create({
+        nzPlacement: 'left',
+        nzContent: this.drawerTmpl,
+      }),
+    );
   }
 }

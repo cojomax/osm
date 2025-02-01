@@ -25,14 +25,7 @@
   </div>
 </div>
 
-<nz-drawer
-  [nzVisible]="isDrawerOpen()"
-  [nzPlacement]="'left'"
-  nzTitle="... add template ..."
-  (nzOnClose)="onDrawerClose()"
->
-  <ng-container *nzDrawerContent>
-    <app-navigation-main></app-navigation-main>
-  </ng-container>
-</nz-drawer>
+<ng-template #drawerTmpl>
+  <app-navigation-main></app-navigation-main>
+</ng-template>
 
