@@ -28,14 +28,14 @@
               },
               {
                 "glob": "**/*",
-                "input": "./node_modules/@ant-design/icons-angular/src/inline-svg/",
+                "input": "node_modules/@ant-design/icons-angular/src/inline-svg/",
                 "output": "/assets/"
               }
             ],
             "styles": [
+              "node_modules/ng-zorro-antd/ng-zorro-antd.variable.min.css",
               "src/styles.css",
-              "src/theme/common.css",
-              "./node_modules/ng-zorro-antd/ng-zorro-antd.variable.min.css"
+              "src/theme/common.css"
             ],
             "scripts": []
           },
