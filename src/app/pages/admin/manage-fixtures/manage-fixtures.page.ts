@@ -16,11 +16,11 @@ import { REPOSITORY_SERVICE } from '../../../components/admin/form-modal/form-mo
 
 @Component({
   imports: [NzButtonModule, NzIconModule, NzModalModule, FixtureFormComponent, FormModalComponent, GridComponent],
-  templateUrl: './fixtures.page.html',
-  styleUrl: './fixtures.page.css',
+  templateUrl: './manage-fixtures.page.html',
+  styleUrl: './manage-fixtures.page.css',
   providers: [FormModalService, { provide: REPOSITORY_SERVICE, useExisting: FixtureService }],
 })
-export class FixturesPageComponent implements OnInit, AfterViewInit, OnDestroy {
+export class ManageFixturesPageComponent implements OnInit, AfterViewInit, OnDestroy {
   protected fixtures = signal<Fixture[]>([]);
   protected selectedFixture = signal<Fixture | null>(null);
 

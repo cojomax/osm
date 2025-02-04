@@ -5,7 +5,8 @@ import { HomePageComponent } from './pages/home/home.page';
 import { LoginPageComponent } from './pages/login/login.page';
 import { PageNotFoundPageComponent } from './pages/not-found/not-found.page';
 import { TeamPageComponent } from './pages/team/team.page';
-import { FixturesPageComponent } from './pages/admin/fixtures/fixtures.page';
+import { ManageFixturesPageComponent } from './pages/admin/manage-fixtures/manage-fixtures.page';
+import { FixturesPageComponent } from './pages/fixtures/fixtures.page';
 
 export const routes: Routes = [
   { path: '', component: HomePageComponent },
@@ -13,12 +14,13 @@ export const routes: Routes = [
   // { path: 'register', component: RegisterPageComponent },
   // { path: 'match-report', component: MatchReportPageComponent },z
   { path: 'team', component: TeamPageComponent },
+  { path: 'fixtures', component: FixturesPageComponent },
   {
     path: 'admin',
     children: [
       { path: 'players/:id', component: PlayerDetailsPageComponent },
       { path: 'players', component: PlayersPageComponent },
-      { path: 'fixtures', component: FixturesPageComponent },
+      { path: 'fixtures', component: ManageFixturesPageComponent },
     ],
   },
   { path: '**', component: PageNotFoundPageComponent },
