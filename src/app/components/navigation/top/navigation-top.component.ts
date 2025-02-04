@@ -66,7 +66,7 @@ export class NavigationTopComponent implements OnInit {
   protected onMenuBtnClick() {
     this.drawerRef.set(
       this.drawerSvc.create({
-        nzPlacement: 'left',
+        nzPlacement: 'top',
         nzContent: this.drawerTmpl,
       }),
     );
