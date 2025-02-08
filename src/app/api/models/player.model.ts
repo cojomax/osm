@@ -29,6 +29,8 @@ export class Player implements DomainItem {
   /** The player's height (cm). */
   height: number | null = null;
 
+  isLegend = false;
+
   get fullName() {
     return `${this.firstName} ${this.lastName}`;
   }

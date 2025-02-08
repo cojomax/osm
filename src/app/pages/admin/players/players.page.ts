@@ -53,6 +53,7 @@ export class PlayersPageComponent implements OnInit, AfterViewInit, OnDestroy {
       headerName: '#',
       width: 50,
     },
+    { field: 'isLegend', headerName: 'Legend' },
     { field: 'firstName' },
     { field: 'lastName' },
     { field: 'position' },

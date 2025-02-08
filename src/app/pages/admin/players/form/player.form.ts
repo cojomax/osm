@@ -50,9 +50,10 @@ export class PlayerFormComponent extends FormComponent implements OnInit, OnDest
       lastName: ['', Validators.required],
       position: [void 0],
       squadNumber: [null, [Validators.min(0), Validators.max(99), Validators.pattern(/^\d+$/)]],
-      country: ['', Validators.required],
+      country: [''],
       dob: [null],
-      height: [null, [Validators.min(150), Validators.max(244), Validators.pattern(/^\d+$/)]],
+      height: [null, [Validators.min(100), Validators.max(244), Validators.pattern(/^\d+$/)]],
+      isLegend: [false],
     });
 
     this.subs.add(

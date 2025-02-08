@@ -12,6 +12,7 @@ export class PlayerConverter implements StoreConverter<Player> {
       country: player.country,
       dob: player.dob,
       height: player.height,
+      isLegend: player.isLegend,
     };
   }
 
@@ -27,6 +28,7 @@ export class PlayerConverter implements StoreConverter<Player> {
       // dob: extractDate(player['dob']),
       dob: player['dob']?.toDate(),
       height: player['height'],
+      isLegend: player['isLegend'],
     });
   }
 }
