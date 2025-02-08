@@ -17,7 +17,7 @@ export class TeamPageComponent implements OnInit {
   protected defenders: Player[] = [];
   protected midfielders: Player[] = [];
   protected forwards: Player[] = [];
-  protected positionless: Player[] = [];
+  protected legends: Player[] = [];
 
   private subs = new Subscription();
 
@@ -37,33 +37,22 @@ export class TeamPageComponent implements OnInit {
   }
 
   private filterByPosition(players: Player[]) {
-    this.goalkeepers = [
-      ...players.filter((p) => p.position === Position.Goalkeeper),
-      ...players.filter((p) => p.position === Position.Goalkeeper),
-      ...players.filter((p) => p.position === Position.Goalkeeper),
-      ...players.filter((p) => p.position === Position.Goalkeeper),
-      ...players.filter((p) => p.position === Position.Goalkeeper),
-      ...players.filter((p) => p.position === Position.Goalkeeper),
-    ];
+    this.goalkeepers = players
+      .filter((p) => !p.isLegend && p.position === Position.Goalkeeper)
+      .sort((a, b) => (a.squadNumber < b.squadNumber ? -1 : 1));
 
-    this.defenders = [
-      ...players.filter((p) => p.position === Position.Defender),
-      ...players.filter((p) => p.position === Position.Defender),
-      ...players.filter((p) => p.position === Position.Defender),
-      ...players.filter((p) => p.position === Position.Defender),
-      ...players.filter((p) => p.position === Position.Defender),
-      ...players.filter((p) => p.position === Position.Defender),
-    ];
+    this.defenders = players
+      .filter((p) => !p.isLegend && p.position === Position.Defender)
+      .sort((a, b) => (a.squadNumber < b.squadNumber ? -1 : 1));
 
-    this.midfielders = [
-      ...players.filter((p) => p.position === Position.Midfielder),
-      ...players.filter((p) => p.position === Position.Midfielder),
-      ...players.filter((p) => p.position === Position.Midfielder),
-      ...players.filter((p) => p.position === Position.Midfielder),
-      ...players.filter((p) => p.position === Position.Midfielder),
-      ...players.filter((p) => p.position === Position.Midfielder),
-    ];
+    this.midfielders = players
+      .filter((p) => !p.isLegend && p.position === Position.Midfielder)
+      .sort((a, b) => (a.squadNumber < b.squadNumber ? -1 : 1));
 
-    this.positionless = players.filter((p) => p.position === Position.Undefined);
+    this.forwards = players
+      .filter((p) => !p.isLegend && p.position === Position.Forward)
+      .sort((a, b) => (a.squadNumber < b.squadNumber ? -1 : 1));
+
+    this.legends = players.filter((p) => p.isLegend).sort((a, b) => a.lastName.localeCompare(b.lastName));
   }
 }

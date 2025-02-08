@@ -7,3 +7,13 @@
 .carousel > app-player-card {
     width: 400px;
 }
+
+.swiper-container {
+  padding: 0 120px;
+}
+
+@media (max-width: 768px) {
+  .swiper-container {
+    padding: 0;
+  }
+}
