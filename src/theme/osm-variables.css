@@ -1,13 +1,13 @@
 :root {
 
-  /* Color */
+  /* Colors */
   --color-primary: #1d1e2c;
   --color-secondary: #ddb967;
   --color-tertiary: #7bbeed;
   --color-alternate: #828282;
   --color-secondary-rgba: 29, 30, 44;
 
-  /* Font */
+  /* Fonts */
   --font-primary: var(--color-primary);
   --font-secondary: var(--color-secondary);
   --font-tertiary: var(--color-tertiary);
