@@ -6,7 +6,7 @@
 .banner-top {
   width: 100%;
   height: var(--banner-size-desktop);
-  background-color: var(--color-primary);
+  background-color: var(--color-tertiary);
   color: white;
 }
 

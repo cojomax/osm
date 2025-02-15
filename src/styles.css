@@ -29,7 +29,7 @@ body {
   /* color: var(--font-primary); */
   /* font-family: Roboto, "Helvetica Neue", sans-serif; */
 
-  /* background-color: var(--color-primary); */
+   background-color: var(--color-primary);
 }
 
 html,

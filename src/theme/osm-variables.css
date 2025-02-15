@@ -4,14 +4,12 @@
   --color-primary: #1d1e2c;
   --color-secondary: #ddb967;
   --color-tertiary: #7bbeed;
-  --color-alternate: #828282;
-  --color-secondary-rgba: 29, 30, 44;
+  --color-light: #e1e1e1;
 
   /* Fonts */
-  --font-primary: var(--color-primary);
+  --font-primary: var(--color-light);
   --font-secondary: var(--color-secondary);
   --font-tertiary: var(--color-tertiary);
-  --font-alternate: var(--color-alternate);
   --font-color-alt: white;
   --font-size-sm: 12px;
   --font-size: 16px;
