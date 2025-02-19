@@ -21,7 +21,6 @@
       <nz-form-label [nzSpan]="rowSpan.colOne" nzFor="id-position"> Position </nz-form-label>
       <nz-form-control [nzSpan]="rowSpan.colTwo" nzErrorTip="Position is required">
         <nz-input-group>
-          <!-- ngModel="lucy" -->
           <nz-select nzPlaceHolder="" formControlName="position">
             <nz-option
               *ngFor="let position of positionOptions"

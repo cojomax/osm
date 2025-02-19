@@ -44,7 +44,7 @@ img {
 }
 
 .details {
-  color: var(--font-alternate);
+  color: var(--font-primary);
   font-size: var(--font-size-sm);
 }
 

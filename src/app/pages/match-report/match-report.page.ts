@@ -16,7 +16,7 @@ export class MatchReportPageComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private matchSvc: FixtureService,
+    private fixtureSvc: FixtureService,
   ) {}
 
   ngOnInit() {

@@ -14,7 +14,7 @@ import { NzButtonComponent } from 'ng-zorro-antd/button';
 import { CommonModule } from '@angular/common';
 import { NzModalModule } from '@nz/modal';
 import { Subscription, tap } from 'rxjs';
-import { DomainItem } from '../../../api/models/domain-item.interface';
+import { Entity } from '../../../api/models/entity.interface';
 import { FormModalService } from './form-modal.service';
 import { FormComponent } from '../../form/form.component';
 
@@ -31,7 +31,7 @@ export class FormModalComponent<T> implements OnInit, OnDestroy {
   /** Control the visibility of the form. Needs to be a plain property for two-way data binding. */
   protected isVisible = false;
 
-  protected item = signal<DomainItem | undefined>(void 0);
+  protected item = signal<Entity | undefined>(void 0);
 
   protected isSubmitting = computed(() => this.formState() === 'submit');
   protected isDeleting = computed(() => this.formState() === 'delete');
@@ -46,7 +46,7 @@ export class FormModalComponent<T> implements OnInit, OnDestroy {
 
   @Output() modified = new EventEmitter<unknown>();
 
-  constructor(protected formSvc: FormModalService<DomainItem>) {}
+  constructor(protected formSvc: FormModalService<Entity>) {}
 
   ngOnInit() {
     this.subs.add(

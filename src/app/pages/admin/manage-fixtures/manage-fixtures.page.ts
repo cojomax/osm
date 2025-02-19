@@ -13,6 +13,10 @@ import { GridComponent } from '../../../components/grid/grid.component';
 import { EditButtonComponent } from '../players/renderers/edit-btn.component';
 import { FormModalService } from '../../../components/admin/form-modal/form-modal.service';
 import { REPOSITORY_SERVICE } from '../../../components/admin/form-modal/form-modal.token';
+import { VenueService } from '../../../services/venue.service';
+import { TeamService } from '../../../services/team.service';
+import { Venue } from '../../../api/models/venue.model';
+import { Team } from '../../../api/models/team.model';
 
 @Component({
   imports: [NzButtonModule, NzIconModule, NzModalModule, FixtureFormComponent, FormModalComponent, GridComponent],
@@ -22,6 +26,8 @@ import { REPOSITORY_SERVICE } from '../../../components/admin/form-modal/form-mo
 })
 export class ManageFixturesPageComponent implements OnInit, AfterViewInit, OnDestroy {
   protected fixtures = signal<Fixture[]>([]);
+  protected venues = signal<Venue[]>([]);
+  protected teams = signal<Team[]>([]);
   protected selectedFixture = signal<Fixture | null>(null);
 
   private datePipe: DatePipe;
@@ -31,13 +37,27 @@ export class ManageFixturesPageComponent implements OnInit, AfterViewInit, OnDes
 
   constructor(
     protected modalSvc: FormModalService<Fixture>,
-    private matchSvc: FixtureService,
+    private fixtureSvc: FixtureService,
+    private teamSvc: TeamService,
+    private venuesSvc: VenueService,
   ) {
     this.datePipe = new DatePipe(inject(LOCALE_ID));
   }
 
   ngOnInit() {
     this.subs.add(this.updateTableData().subscribe());
+    this.subs.add(
+      this.venuesSvc
+        .fetch()
+        .pipe(tap((res) => this.venues.set(res)))
+        .subscribe(),
+    );
+    this.subs.add(
+      this.teamSvc
+        .fetch()
+        .pipe(tap((res) => this.teams.set(res)))
+        .subscribe(),
+    );
   }
 
   ngAfterViewInit() {}
@@ -119,7 +139,7 @@ export class ManageFixturesPageComponent implements OnInit, AfterViewInit, OnDes
   }
 
   private updateTableData() {
-    return this.matchSvc.fetch().pipe(
+    return this.fixtureSvc.fetch().pipe(
       tap((fixtures) => {
         this.fixtures.set(fixtures);
       }),

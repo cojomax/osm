@@ -1,6 +1,10 @@
 export enum FireStoreCollection {
-  Players = 'players',
-  Fixtures = 'matches', // TODO Rename to 'fixtures'
+  Competitions = 'competitions',
+  Fixtures = 'fixtures',
   Goals = 'goals',
   MatchReports = 'matchReports',
+  Players = 'players',
+  Seasons = 'seasons',
+  Teams = 'teams',
+  Venues = 'venues',
 }

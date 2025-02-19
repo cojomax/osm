@@ -1,7 +1,7 @@
 import { Position } from '../../models/position.enum';
-import { DomainItem } from './domain-item.interface';
+import { Entity } from './entity.interface';
 
-export class Player implements DomainItem {
+export class Player implements Entity {
   constructor(init: Partial<Player>) {
     Object.assign(this, init);
   }

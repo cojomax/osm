@@ -1,6 +1,6 @@
-import { DomainItem } from './domain-item.interface';
+import { Entity } from './entity.interface';
 
-export class Competition implements DomainItem {
+export class Competition implements Entity {
   /** The ID to identify the record. */
   id = '';
 

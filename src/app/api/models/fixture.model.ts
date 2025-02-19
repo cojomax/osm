@@ -1,8 +1,8 @@
 import { Team } from './team.model';
 import { Goal } from './goal.model';
-import { DomainItem } from './domain-item.interface';
+import { Entity } from './entity.interface';
 
-export class Fixture implements DomainItem {
+export class Fixture implements Entity {
   constructor(init: Partial<Fixture>) {
     Object.assign(this, init);
   }

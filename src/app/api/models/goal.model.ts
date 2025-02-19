@@ -1,6 +1,6 @@
-import { DomainItem } from './domain-item.interface';
+import { Entity } from './entity.interface';
 
-export class Goal implements DomainItem {
+export class Goal implements Entity {
   constructor(init: Goal) {
     Object.assign(this, init);
   }

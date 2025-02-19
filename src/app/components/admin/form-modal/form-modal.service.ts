@@ -2,7 +2,7 @@ import { Inject, Injectable, signal } from '@angular/core';
 import { REPOSITORY_SERVICE } from './form-modal.token';
 import { Repository } from '../../../services/repository.interface';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
-import { DomainItem } from '../../../api/models/domain-item.interface';
+import { Entity } from '../../../api/models/entity.interface';
 
 interface ModalState<T> {
   visible: boolean;
@@ -10,9 +10,9 @@ interface ModalState<T> {
 }
 
 @Injectable()
-export class FormModalService<T extends DomainItem> {
+export class FormModalService<T extends Entity> {
   isVisible$: Observable<ModalState<T>>;
-  
+
   private isVisibleSbj = new BehaviorSubject<ModalState<T>>({ visible: false, data: null });
 
   constructor(@Inject(REPOSITORY_SERVICE) private repositorySvc: Repository<T>) {

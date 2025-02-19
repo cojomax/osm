@@ -11,11 +11,15 @@
     </nz-form-control>
   </nz-form-item>
 
-  <!-- Venue -->
+  <!-- TODO Do I need id-venue -->
   <nz-form-item>
-    <nz-form-label [nzSpan]="rowSpan.colOne" nzFor="id-venue"> Venue</nz-form-label>
+    <nz-form-label [nzSpan]="rowSpan.colOne" nzFor="id-venue"> Venue </nz-form-label>
     <nz-form-control [nzSpan]="rowSpan.colTwo" nzErrorTip="Venue is required">
-      <input nz-input id="id-venue" formControlName="venue" type="text" />
+      <nz-input-group>
+        <nz-select nzPlaceHolder="" formControlName="venue">
+          <nz-option *ngFor="let venue of venues()" [nzValue]="venue.id" [nzLabel]="venue.name"></nz-option>
+        </nz-select>
+      </nz-input-group>
     </nz-form-control>
   </nz-form-item>
 
@@ -28,10 +32,15 @@
   </nz-form-item>
 
   <!-- Opponent -->
+  <!-- TODO Do I need id-opponent ? -->
   <nz-form-item>
-    <nz-form-label [nzSpan]="rowSpan.colOne" nzFor="id-opponent"> Opponent</nz-form-label>
+    <nz-form-label [nzSpan]="rowSpan.colOne" nzFor="id-opponent"> Opponent </nz-form-label>
     <nz-form-control [nzSpan]="rowSpan.colTwo" nzErrorTip="Opponent is required">
-      <input nz-input id="id-opponent" formControlName="opponent" type="text" />
+      <nz-input-group>
+        <nz-select nzPlaceHolder="" formControlName="opponent">
+          <nz-option *ngFor="let team of teams()" [nzValue]="team.id" [nzLabel]="team.name"></nz-option>
+        </nz-select>
+      </nz-input-group>
     </nz-form-control>
   </nz-form-item>
 </form>

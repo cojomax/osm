@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NzButtonModule } from '@nz/button';
 import { NzFormModule } from '@nz/form';
@@ -9,6 +9,8 @@ import { NzTimePickerComponent } from '@nz/time-picker';
 import { Subscription, tap } from 'rxjs';
 import { FormComponent } from '../../../../components/form/form.component';
 import { NzDatePickerModule } from '@nz/date-picker';
+import { Team } from '../../../../api/models/team.model';
+import { Venue } from '../../../../api/models/venue.model';
 
 @Component({
   selector: 'app-fixture-form',
@@ -28,6 +30,9 @@ import { NzDatePickerModule } from '@nz/date-picker';
   providers: [{ provide: FormComponent, useExisting: FixtureFormComponent }],
 })
 export class FixtureFormComponent extends FormComponent implements OnInit, OnDestroy {
+  venues = input<Venue[]>([]);
+  teams = input<Team[]>([]);
+
   form!: FormGroup;
 
   private subs = new Subscription();
@@ -44,9 +49,9 @@ export class FixtureFormComponent extends FormComponent implements OnInit, OnDes
       id: [void 0],
       date: [null, Validators.required],
       time: [null],
-      venue: ['', Validators.required],
+      venue: [[], Validators.required],
       competition: ['', Validators.required],
-      opponent: ['', Validators.required],
+      opponent: [[], Validators.required],
 
       // Report details
       // homeScore: [this.data?.homeScore ?? 0, [Validators.min(0), Validators.max(29), Validators.pattern(/^\d+$/)]],

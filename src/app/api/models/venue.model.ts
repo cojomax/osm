@@ -1,12 +1,12 @@
 import { Entity } from './entity.interface';
 
-export class Team implements Entity {
-  constructor(init: Team) {
+export class Venue implements Entity {
+  constructor(init: Partial<Venue>) {
     Object.assign(this, init);
   }
 
   id = '';
 
-  /** The name of the team. */
+  /** The name of the venue. */
   name = '';
 }
