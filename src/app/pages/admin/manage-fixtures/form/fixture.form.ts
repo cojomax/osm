@@ -11,6 +11,7 @@ import { FormComponent } from '../../../../components/form/form.component';
 import { NzDatePickerModule } from '@nz/date-picker';
 import { Team } from '../../../../api/models/team.model';
 import { Venue } from '../../../../api/models/venue.model';
+import { Competition } from '../../../../api/models/competition.model';
 
 @Component({
   selector: 'app-fixture-form',
@@ -32,6 +33,7 @@ import { Venue } from '../../../../api/models/venue.model';
 export class FixtureFormComponent extends FormComponent implements OnInit, OnDestroy {
   venues = input<Venue[]>([]);
   teams = input<Team[]>([]);
+  competitions = input<Competition[]>([]);
 
   form!: FormGroup;
 
@@ -49,9 +51,9 @@ export class FixtureFormComponent extends FormComponent implements OnInit, OnDes
       id: [void 0],
       date: [null, Validators.required],
       time: [null],
-      venue: [[], Validators.required],
-      competition: ['', Validators.required],
-      opponent: [[], Validators.required],
+      venue: [null, Validators.required],
+      competition: [null, Validators.required],
+      opponent: [null, Validators.required],
 
       // Report details
       // homeScore: [this.data?.homeScore ?? 0, [Validators.min(0), Validators.max(29), Validators.pattern(/^\d+$/)]],

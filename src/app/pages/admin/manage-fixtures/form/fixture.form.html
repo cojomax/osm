@@ -15,19 +15,25 @@
   <nz-form-item>
     <nz-form-label [nzSpan]="rowSpan.colOne" nzFor="id-venue"> Venue </nz-form-label>
     <nz-form-control [nzSpan]="rowSpan.colTwo" nzErrorTip="Venue is required">
-      <nz-input-group>
-        <nz-select nzPlaceHolder="" formControlName="venue">
-          <nz-option *ngFor="let venue of venues()" [nzValue]="venue.id" [nzLabel]="venue.name"></nz-option>
-        </nz-select>
-      </nz-input-group>
+      <nz-select nzPlaceHolder="" formControlName="venue">
+        @for (venue of venues(); track venue.id) {
+        <nz-option [nzValue]="venue.id" [nzLabel]="venue.name"></nz-option>
+        }
+      </nz-select>
     </nz-form-control>
   </nz-form-item>
 
-  <!-- Competition -->
+  <!-- TODO Do I need id-competition -->
   <nz-form-item>
-    <nz-form-label [nzSpan]="rowSpan.colOne" nzFor="id-competition"> Competition</nz-form-label>
+    <nz-form-label [nzSpan]="rowSpan.colOne" nzFor="id-competition"> Competition </nz-form-label>
     <nz-form-control [nzSpan]="rowSpan.colTwo" nzErrorTip="Competition is required">
-      <input nz-input id="id-competition" formControlName="competition" type="text" />
+      <nz-select nzPlaceHolder="" formControlName="competition">
+        @for (comp of competitions(); track comp) {
+        <nz-option nzCustomContent [nzValue]="comp.id" [nzLabel]="comp.name">
+          {{ comp.name }} <span class="g-caption">{{ comp.tier ?? '' }}</span>
+        </nz-option>
+        }
+      </nz-select>
     </nz-form-control>
   </nz-form-item>
 
@@ -36,11 +42,11 @@
   <nz-form-item>
     <nz-form-label [nzSpan]="rowSpan.colOne" nzFor="id-opponent"> Opponent </nz-form-label>
     <nz-form-control [nzSpan]="rowSpan.colTwo" nzErrorTip="Opponent is required">
-      <nz-input-group>
-        <nz-select nzPlaceHolder="" formControlName="opponent">
-          <nz-option *ngFor="let team of teams()" [nzValue]="team.id" [nzLabel]="team.name"></nz-option>
-        </nz-select>
-      </nz-input-group>
+      <nz-select nzPlaceHolder="" formControlName="opponent">
+        @for(team of teams(); track team.id) {
+        <nz-option [nzValue]="team.id" [nzLabel]="team.name"></nz-option>
+        }
+      </nz-select>
     </nz-form-control>
   </nz-form-item>
 </form>

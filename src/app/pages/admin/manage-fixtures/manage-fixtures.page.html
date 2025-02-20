@@ -6,5 +6,10 @@
 </app-grid>
 
 <app-form-modal modalTitle="Fixture" (modified)="onModified()">
-  <app-fixture-form [teams]="teams()" [venues]="venues()" (statusChanged)="modalSvc.updateStatus($event)"></app-fixture-form>
+  <app-fixture-form
+    [teams]="teams()"
+    [venues]="venues()"
+    [competitions]="competitions()"
+    (statusChanged)="modalSvc.updateStatus($event)"
+  ></app-fixture-form>
 </app-form-modal>

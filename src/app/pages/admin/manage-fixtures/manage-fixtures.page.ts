@@ -17,6 +17,8 @@ import { VenueService } from '../../../services/venue.service';
 import { TeamService } from '../../../services/team.service';
 import { Venue } from '../../../api/models/venue.model';
 import { Team } from '../../../api/models/team.model';
+import { Competition } from '../../../api/models/competition.model';
+import { CompetitionService } from '../../../services/competition.service';
 
 @Component({
   imports: [NzButtonModule, NzIconModule, NzModalModule, FixtureFormComponent, FormModalComponent, GridComponent],
@@ -28,6 +30,7 @@ export class ManageFixturesPageComponent implements OnInit, AfterViewInit, OnDes
   protected fixtures = signal<Fixture[]>([]);
   protected venues = signal<Venue[]>([]);
   protected teams = signal<Team[]>([]);
+  protected competitions = signal<Competition[]>([]);
   protected selectedFixture = signal<Fixture | null>(null);
 
   private datePipe: DatePipe;
@@ -37,6 +40,7 @@ export class ManageFixturesPageComponent implements OnInit, AfterViewInit, OnDes
 
   constructor(
     protected modalSvc: FormModalService<Fixture>,
+    private competitionSvc: CompetitionService,
     private fixtureSvc: FixtureService,
     private teamSvc: TeamService,
     private venuesSvc: VenueService,
@@ -52,10 +56,18 @@ export class ManageFixturesPageComponent implements OnInit, AfterViewInit, OnDes
         .pipe(tap((res) => this.venues.set(res)))
         .subscribe(),
     );
+
     this.subs.add(
       this.teamSvc
         .fetch()
         .pipe(tap((res) => this.teams.set(res)))
+        .subscribe(),
+    );
+
+    this.subs.add(
+      this.competitionSvc
+        .fetch()
+        .pipe(tap((res) => this.competitions.set(res)))
         .subscribe(),
     );
   }
@@ -79,7 +91,7 @@ export class ManageFixturesPageComponent implements OnInit, AfterViewInit, OnDes
       valueFormatter: (params) => this.datePipe.transform(params.value, 'shortTime') ?? '',
     },
     { field: 'venue' },
-    // { field: 'competition' },
+    { field: 'competition' },
     { field: 'opponent' },
     {
       colId: 'score',
