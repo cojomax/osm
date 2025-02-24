@@ -3,34 +3,34 @@ import { FirebaseDbService } from '../api/firebase/services/firebase.db.service'
 import { FireStoreCollection } from '../api/firebase/db-collection.enum';
 import { StoreConverter } from '../api/firebase/converter.interface';
 import { Repository } from './repository.interface';
-import { SimpleConverter } from '../api/firebase/converters/simple.converter';
-import { Team } from '../api/models/team.model';
+import { NameConverter } from '../api/firebase/converters/name.converter';
+import { Name } from '../api/models/name.model';
 
 const COLLECTION = FireStoreCollection.Teams;
 
 @Injectable({
   providedIn: 'root',
 })
-export class TeamService implements Repository<Team> {
-  private readonly converter: StoreConverter<Team>;
+export class TeamService implements Repository<Name> {
+  private readonly converter: StoreConverter<Name>;
 
   constructor(private _dbSvc: FirebaseDbService) {
-    this.converter = new SimpleConverter();
+    this.converter = new NameConverter();
   }
 
   fetch() {
-    return this._dbSvc.getCollection<Team>(COLLECTION, this.converter);
+    return this._dbSvc.getCollection<Name>(COLLECTION, this.converter);
   }
 
   find(matchId: string) {
-    return this._dbSvc.getDocument<Team>(COLLECTION, matchId, this.converter);
+    return this._dbSvc.getDocument<Name>(COLLECTION, matchId, this.converter);
   }
 
-  create(match: Team) {
+  create(match: Name) {
     return this._dbSvc.createDocument(COLLECTION, match, this.converter);
   }
 
-  update(match: Team) {
+  update(match: Name) {
     return this._dbSvc.updateDocument(COLLECTION, match.id, match, this.converter);
   }
 

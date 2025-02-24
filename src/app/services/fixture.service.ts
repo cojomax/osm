@@ -22,19 +22,19 @@ export class FixtureService implements Repository<Fixture> {
     return this._dbSvc.getCollection<Fixture>(COLLECTION, this.converter);
   }
 
-  find(matchId: string) {
-    return this._dbSvc.getDocument<Fixture>(COLLECTION, matchId, this.converter);
+  find(fixtureId: string) {
+    return this._dbSvc.getDocument<Fixture>(COLLECTION, fixtureId, this.converter);
   }
 
-  create(match: Fixture) {
-    return this._dbSvc.createDocument(COLLECTION, match, this.converter);
+  create(fixture: Fixture) {
+    return this._dbSvc.createDocument(COLLECTION, fixture, this.converter);
   }
 
-  update(match: Fixture) {
-    return this._dbSvc.updateDocument(COLLECTION, match.id, match, this.converter);
+  update(fixture: Fixture) {
+    return this._dbSvc.updateDocument(COLLECTION, fixture.id, fixture, this.converter);
   }
 
-  delete(matchId: string) {
-    return this._dbSvc.deleteDocument(COLLECTION, matchId);
+  delete(fixtureId: string) {
+    return this._dbSvc.deleteDocument(COLLECTION, fixtureId);
   }
 }

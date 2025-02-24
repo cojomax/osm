@@ -1,36 +1,36 @@
 import { Injectable } from '@angular/core';
 import { FirebaseDbService } from '../api/firebase/services/firebase.db.service';
 import { FireStoreCollection } from '../api/firebase/db-collection.enum';
-import { Venue } from '../api/models/venue.model';
+import { Name } from '../api/models/name.model';
 import { StoreConverter } from '../api/firebase/converter.interface';
 import { Repository } from './repository.interface';
-import { SimpleConverter } from '../api/firebase/converters/simple.converter';
+import { NameConverter } from '../api/firebase/converters/name.converter';
 
 const COLLECTION = FireStoreCollection.Venues;
 
 @Injectable({
   providedIn: 'root',
 })
-export class VenueService implements Repository<Venue> {
-  private readonly converter: StoreConverter<Venue>;
+export class VenueService implements Repository<Name> {
+  private readonly converter: StoreConverter<Name>;
 
   constructor(private _dbSvc: FirebaseDbService) {
-    this.converter = new SimpleConverter();
+    this.converter = new NameConverter();
   }
 
   fetch() {
-    return this._dbSvc.getCollection<Venue>(COLLECTION, this.converter);
+    return this._dbSvc.getCollection<Name>(COLLECTION, this.converter);
   }
 
   find(matchId: string) {
-    return this._dbSvc.getDocument<Venue>(COLLECTION, matchId, this.converter);
+    return this._dbSvc.getDocument<Name>(COLLECTION, matchId, this.converter);
   }
 
-  create(match: Venue) {
+  create(match: Name) {
     return this._dbSvc.createDocument(COLLECTION, match, this.converter);
   }
 
-  update(match: Venue) {
+  update(match: Name) {
     return this._dbSvc.updateDocument(COLLECTION, match.id, match, this.converter);
   }
 

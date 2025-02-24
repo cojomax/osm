@@ -4,7 +4,7 @@ import { NzButtonModule } from '@nz/button';
 import { NzIconModule } from '@nz/icon';
 import { NzModalModule } from '@nz/modal';
 import { Subscription, tap } from 'rxjs';
-import { ColDef } from 'ag-grid-community';
+import { ColDef, ICellRendererParams } from 'ag-grid-community';
 import { FixtureFormComponent } from './form/fixture.form';
 import { Fixture } from '../../../api/models/fixture.model';
 import { FixtureService } from '../../../services/fixture.service';
@@ -15,8 +15,7 @@ import { FormModalService } from '../../../components/admin/form-modal/form-moda
 import { REPOSITORY_SERVICE } from '../../../components/admin/form-modal/form-modal.token';
 import { VenueService } from '../../../services/venue.service';
 import { TeamService } from '../../../services/team.service';
-import { Venue } from '../../../api/models/venue.model';
-import { Team } from '../../../api/models/team.model';
+import { Name } from '../../../api/models/name.model';
 import { Competition } from '../../../api/models/competition.model';
 import { CompetitionService } from '../../../services/competition.service';
 
@@ -28,8 +27,8 @@ import { CompetitionService } from '../../../services/competition.service';
 })
 export class ManageFixturesPageComponent implements OnInit, AfterViewInit, OnDestroy {
   protected fixtures = signal<Fixture[]>([]);
-  protected venues = signal<Venue[]>([]);
-  protected teams = signal<Team[]>([]);
+  protected venues = signal<Name[]>([]);
+  protected teams = signal<Name[]>([]);
   protected competitions = signal<Competition[]>([]);
   protected selectedFixture = signal<Fixture | null>(null);
 
@@ -50,6 +49,7 @@ export class ManageFixturesPageComponent implements OnInit, AfterViewInit, OnDes
 
   ngOnInit() {
     this.subs.add(this.updateTableData().subscribe());
+
     this.subs.add(
       this.venuesSvc
         .fetch()
@@ -60,7 +60,7 @@ export class ManageFixturesPageComponent implements OnInit, AfterViewInit, OnDes
     this.subs.add(
       this.teamSvc
         .fetch()
-        .pipe(tap((res) => this.teams.set(res)))
+        .pipe(tap((res) => this.teams.set(res.sort((a, b) => a.name.localeCompare(b.name)))))
         .subscribe(),
     );
 
@@ -90,9 +90,12 @@ export class ManageFixturesPageComponent implements OnInit, AfterViewInit, OnDes
       cellDataType: 'date',
       valueFormatter: (params) => this.datePipe.transform(params.value, 'shortTime') ?? '',
     },
-    { field: 'venue' },
-    { field: 'competition' },
-    { field: 'opponent' },
+    { field: 'venue.name' },
+    {
+      field: 'competition',
+      cellRenderer: (params: ICellRendererParams<Competition>) => `${params.value?.name} ${params.value?.tier}`,
+    },
+    { field: 'opponent.name' },
     {
       colId: 'score',
       headerName: 'Score',
@@ -141,8 +144,8 @@ export class ManageFixturesPageComponent implements OnInit, AfterViewInit, OnDes
     this.openModal();
   }
 
-  protected onEditClick(matchId: string) {
-    this.openModal(this.fixtures().find((f) => f.id === matchId)!);
+  protected onEditClick(id: string) {
+    this.openModal(this.fixtures().find((f) => f.id === id)!);
   }
 
   protected openModal(fixture: Fixture | null = null) {

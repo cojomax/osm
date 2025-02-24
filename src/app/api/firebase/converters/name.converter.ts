@@ -1,6 +1,6 @@
 import { StoreConverter } from '../converter.interface';
 
-export class SimpleConverter implements StoreConverter<{ id: string; name: string }> {
+export class NameConverter implements StoreConverter<{ id: string; name: string }> {
   toFirestore(item: { name: string }) {
     return {
       date: item.name,

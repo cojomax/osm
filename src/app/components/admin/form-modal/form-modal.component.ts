@@ -36,21 +36,21 @@ export class FormModalComponent<T> implements OnInit, OnDestroy {
   protected isSubmitting = computed(() => this.formState() === 'submit');
   protected isDeleting = computed(() => this.formState() === 'delete');
   protected isFormProcessing = computed(() => this.isSubmitting() || this.isDeleting());
-  protected isEditForm = computed(() => !!this.formSvc.formData());
+  protected isEditForm = computed(() => !!this.formModalSvc.formData());
   protected modalTitleTxt = computed(() => `${this.isEditForm() ? 'Edit' : 'Add'} ${this.modalTitle()}`);
-  protected isValid = computed(() => this.formSvc.formIsValid());
+  protected isValid = computed(() => this.formModalSvc.formIsValid());
 
-  private formState = computed(() => this.formSvc.formState());
+  private formState = computed(() => this.formModalSvc.formState());
 
   private subs = new Subscription();
 
   @Output() modified = new EventEmitter<unknown>();
 
-  constructor(protected formSvc: FormModalService<Entity>) {}
+  constructor(protected formModalSvc: FormModalService<Entity>) {}
 
   ngOnInit() {
     this.subs.add(
-      this.formSvc.isVisible$.subscribe((payload) => {
+      this.formModalSvc.isVisible$.subscribe((payload) => {
         const { visible, data } = payload;
         // Initialize the form state and optionally fill with data.
         this.formComponent?.reset(data);
@@ -65,7 +65,7 @@ export class FormModalComponent<T> implements OnInit, OnDestroy {
 
   protected onSubmit() {
     this.subs.add(
-      this.formSvc
+      this.formModalSvc
         .submitForm(this.formComponent.form.value, this.isEditForm())
         .pipe(
           tap(() => {
@@ -78,7 +78,7 @@ export class FormModalComponent<T> implements OnInit, OnDestroy {
 
   protected onDelete() {
     this.subs.add(
-      this.formSvc
+      this.formModalSvc
         .deleteItem()
         .pipe(
           tap(() => {
@@ -90,10 +90,10 @@ export class FormModalComponent<T> implements OnInit, OnDestroy {
   }
 
   protected onCancel() {
-    this.formSvc.closeModal();
+    this.formModalSvc.closeModal();
   }
 
   protected onAfterClose() {
-    this.formSvc.destroy();
+    this.formModalSvc.destroy();
   }
 }

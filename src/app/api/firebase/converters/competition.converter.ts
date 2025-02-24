@@ -18,6 +18,7 @@ export class CompetitionConverter implements StoreConverter<Competition> {
       name: comp['name'],
       tier: comp['tier'],
       format: comp['format'],
+      iteration: comp['iteration'],
     });
   }
 }

@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, input, OnDestroy, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component, computed, EventEmitter, input, OnDestroy, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NzButtonModule } from '@nz/button';
 import { NzFormModule } from '@nz/form';
 import { NzInputModule } from '@nz/input';
@@ -9,8 +9,7 @@ import { NzTimePickerComponent } from '@nz/time-picker';
 import { Subscription, tap } from 'rxjs';
 import { FormComponent } from '../../../../components/form/form.component';
 import { NzDatePickerModule } from '@nz/date-picker';
-import { Team } from '../../../../api/models/team.model';
-import { Venue } from '../../../../api/models/venue.model';
+import { Name } from '../../../../api/models/name.model';
 import { Competition } from '../../../../api/models/competition.model';
 
 @Component({
@@ -26,16 +25,53 @@ import { Competition } from '../../../../api/models/competition.model';
     NzInputModule,
     NzSelectModule,
     NzTimePickerComponent,
+    FormsModule,
   ],
   // Must be provided to work in the form modal component.
   providers: [{ provide: FormComponent, useExisting: FixtureFormComponent }],
 })
 export class FixtureFormComponent extends FormComponent implements OnInit, OnDestroy {
-  venues = input<Venue[]>([]);
-  teams = input<Team[]>([]);
+  venues = input<Name[]>([]);
+  teams = input<Name[]>([]);
   competitions = input<Competition[]>([]);
 
+  venueOptions = computed(() =>
+    this.venues()
+      .sort((a, b) => a.name.localeCompare(b.name))
+      .map((venue) => ({ label: venue.name, value: venue })),
+  );
+
+  teamOptions = computed(() =>
+    this.teams()
+      .sort((a, b) => a.name.localeCompare(b.name))
+      .map((team) => ({ label: team.name, value: team })),
+  );
+
+  competitionOptions = computed(() =>
+    this.competitions()
+      .map((competition) => {
+        let option = '';
+
+        if (competition.format === 'League') {
+          option = `${competition.tier}`;
+        }
+
+        if (competition.format === 'Cup') {
+          option = `${competition.name} ${competition.tier}`;
+        }
+
+        if (competition.format === 'Exhibition') {
+          option = competition.name;
+        }
+
+        return { label: option, value: competition };
+      })
+      .sort((a, b) => a.label.localeCompare(b.label)),
+  );
+
   form!: FormGroup;
+
+  protected test = new Date();
 
   private subs = new Subscription();
 
@@ -79,5 +115,9 @@ export class FixtureFormComponent extends FormComponent implements OnInit, OnDes
 
   ngOnDestroy() {
     this.subs.unsubscribe();
+  }
+
+  protected compareByIdFn(a: Name | Competition, b: Name | Competition) {
+    return a && b ? a.id === b.id : a === b;
   }
 }

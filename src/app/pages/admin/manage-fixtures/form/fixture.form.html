@@ -15,9 +15,9 @@
   <nz-form-item>
     <nz-form-label [nzSpan]="rowSpan.colOne" nzFor="id-venue"> Venue </nz-form-label>
     <nz-form-control [nzSpan]="rowSpan.colTwo" nzErrorTip="Venue is required">
-      <nz-select nzPlaceHolder="" formControlName="venue">
-        @for (venue of venues(); track venue.id) {
-        <nz-option [nzValue]="venue.id" [nzLabel]="venue.name"></nz-option>
+      <nz-select nzPlaceHolder="Select a venue" formControlName="venue" [compareWith]="compareByIdFn">
+        @for (venue of venueOptions(); track venue.value.id) {
+        <nz-option [nzValue]="venue.value" [nzLabel]="venue.label"></nz-option>
         }
       </nz-select>
     </nz-form-control>
@@ -27,11 +27,9 @@
   <nz-form-item>
     <nz-form-label [nzSpan]="rowSpan.colOne" nzFor="id-competition"> Competition </nz-form-label>
     <nz-form-control [nzSpan]="rowSpan.colTwo" nzErrorTip="Competition is required">
-      <nz-select nzPlaceHolder="" formControlName="competition">
-        @for (comp of competitions(); track comp) {
-        <nz-option nzCustomContent [nzValue]="comp.id" [nzLabel]="comp.name">
-          {{ comp.name }} <span class="g-caption">{{ comp.tier ?? '' }}</span>
-        </nz-option>
+      <nz-select nzPlaceHolder="Select a competition" formControlName="competition" [compareWith]="compareByIdFn">
+        @for (comp of competitionOptions(); track comp.value.id) {
+        <nz-option [nzValue]="comp.value" [nzLabel]="comp.label"></nz-option>
         }
       </nz-select>
     </nz-form-control>
@@ -42,9 +40,9 @@
   <nz-form-item>
     <nz-form-label [nzSpan]="rowSpan.colOne" nzFor="id-opponent"> Opponent </nz-form-label>
     <nz-form-control [nzSpan]="rowSpan.colTwo" nzErrorTip="Opponent is required">
-      <nz-select nzPlaceHolder="" formControlName="opponent">
-        @for(team of teams(); track team.id) {
-        <nz-option [nzValue]="team.id" [nzLabel]="team.name"></nz-option>
+      <nz-select nzPlaceHolder="Select an opponent" formControlName="opponent" [compareWith]="compareByIdFn">
+        @for(team of teamOptions(); track team.value.id) {
+        <nz-option [nzValue]="team.value" [nzLabel]="team.label"></nz-option>
         }
       </nz-select>
     </nz-form-control>

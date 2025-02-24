@@ -1,6 +1,7 @@
-import { Team } from './team.model';
 import { Goal } from './goal.model';
 import { Entity } from './entity.interface';
+import { Competition } from './competition.model';
+import { Name } from './name.model';
 
 export class Fixture implements Entity {
   constructor(init: Partial<Fixture>) {
@@ -14,13 +15,12 @@ export class Fixture implements Entity {
   // TODO Merge into one
   time: Date | null = null;
 
-  venue: string | null = null;
+  venue: Name | null = null;
 
   /** Details of the competition for which the fixture is scheduled. */
-  // TODO Change this to an ID for Competition type.
-  competition = '';
+  competition: Competition | null = null;
 
-  opponent: Team | null = null;
+  opponent: Name | null = null;
 
   homeScore: number | null = null;
 
