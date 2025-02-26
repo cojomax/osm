@@ -1,11 +1,12 @@
 import { StoreConverter } from '../converter.interface';
 import { Fixture } from '../../models/fixture.model';
+import { getIsoDate, getIsoTime } from '../../../shared/utility/date.utility';
 
 export class FixtureConverter implements StoreConverter<Fixture> {
   toFirestore(fixture: Fixture) {
     return {
-      date: fixture.date,
-      time: fixture.time,
+      date: getIsoDate(fixture.date),
+      time: getIsoTime(fixture.time),
       venue: this.toPojo(fixture.venue),
       competition: this.toPojo(fixture.competition),
       opponent: this.toPojo(fixture.opponent),
@@ -16,8 +17,8 @@ export class FixtureConverter implements StoreConverter<Fixture> {
     const match = snapshot.data();
     return new Fixture({
       id: snapshot.id,
-      date: match['date']?.toDate(),
-      time: match['time']?.toDate(),
+      date: new Date(match['date']),
+      time: new Date(`${match['date']},${match['time']}`),
       venue: match['venue'],
       competition: match['competition'],
       opponent: match['opponent'],

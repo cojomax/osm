@@ -20,15 +20,11 @@
     <nz-form-item>
       <nz-form-label [nzSpan]="rowSpan.colOne" nzFor="id-position"> Position </nz-form-label>
       <nz-form-control [nzSpan]="rowSpan.colTwo" nzErrorTip="Position is required">
-        <nz-input-group>
           <nz-select nzPlaceHolder="" formControlName="position">
-            <nz-option
-              *ngFor="let position of positionOptions"
-              [nzValue]="position.value"
-              [nzLabel]="position.label"
-            ></nz-option>
+            @for(position of positionOptions; track position.value) {
+            <nz-option [nzValue]="position.value" [nzLabel]="position.label"></nz-option>
+            }
           </nz-select>
-        </nz-input-group>
       </nz-form-control>
     </nz-form-item>
 
