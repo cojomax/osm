@@ -1,4 +1,5 @@
 import { Entity } from './entity.interface';
+import { Player } from './player.model';
 
 export class Goal implements Entity {
   constructor(init: Goal) {
@@ -7,9 +8,11 @@ export class Goal implements Entity {
 
   id = '';
 
-  /** The ID of the player that scored the goal. */
-  scoredBy = '';
+  /** The player that scored the goal. */
+  scored: Pick<Player, 'id' | 'firstName' | 'lastName'> | null = null;
 
-  /** The ID of the player that assisted the goal, if any. */
-  assistedBy: string | undefined;
+  /** The player that assisted the goal, if any. */
+  assisted: Pick<Player, 'id' | 'firstName' | 'lastName'> | null = null;
+
+  minute: number | null = null;
 }

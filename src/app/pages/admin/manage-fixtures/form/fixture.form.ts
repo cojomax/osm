@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed, EventEmitter, input, OnDestroy, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component, computed, EventEmitter, inject, input, OnDestroy, OnInit, Output } from '@angular/core';
+import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NzButtonModule } from '@nz/button';
 import { NzFormModule } from '@nz/form';
 import { NzInputModule } from '@nz/input';
@@ -11,6 +11,9 @@ import { FormComponent } from '../../../../components/form/form.component';
 import { NzDatePickerModule } from '@nz/date-picker';
 import { Name } from '../../../../api/models/name.model';
 import { Competition } from '../../../../api/models/competition.model';
+import { Fixture } from '../../../../api/models/fixture.model';
+import { NzIconModule } from '@nz/icon';
+import { Player } from '../../../../api/models/player.model';
 
 @Component({
   selector: 'app-fixture-form',
@@ -22,6 +25,7 @@ import { Competition } from '../../../../api/models/competition.model';
     NzButtonModule,
     NzDatePickerModule,
     NzFormModule,
+    NzIconModule,
     NzInputModule,
     NzSelectModule,
     NzTimePickerComponent,
@@ -34,6 +38,7 @@ export class FixtureFormComponent extends FormComponent implements OnInit, OnDes
   venues = input<Name[]>([]);
   teams = input<Name[]>([]);
   competitions = input<Competition[]>([]);
+  players = input<Player[]>([]);
 
   venueOptions = computed(() =>
     this.venues()
@@ -45,6 +50,12 @@ export class FixtureFormComponent extends FormComponent implements OnInit, OnDes
     this.teams()
       .sort((a, b) => a.name.localeCompare(b.name))
       .map((team) => ({ label: team.name, value: team })),
+  );
+
+  playerOptions = computed(() =>
+    this.players()
+      .sort((a, b) => a.lastName.localeCompare(b.lastName))
+      .map((player) => ({ label: `${player.firstName} ${player.lastName}`, value: player })),
   );
 
   competitionOptions = computed(() =>
@@ -71,28 +82,30 @@ export class FixtureFormComponent extends FormComponent implements OnInit, OnDes
 
   form!: FormGroup;
 
-  protected test = new Date();
-
   private subs = new Subscription();
 
   /** Emitted when the form status changes. */
   @Output() statusChanged = new EventEmitter<boolean>();
 
-  constructor(private _fb: FormBuilder) {
-    super();
-  }
+  private _fb = inject(FormBuilder);
 
   ngOnInit() {
     this.form = this._fb.group({
-      id: [void 0],
+      id: [''],
       date: [null, Validators.required],
       time: [null],
       venue: [null, Validators.required],
       competition: [null, Validators.required],
       opponent: [null, Validators.required],
 
+      goals: this._fb.array([
+        this._fb.group({
+          scored: [null],
+          assisted: [null],
+        }),
+      ]),
+
       // Report details
-      // homeScore: [this.data?.homeScore ?? 0, [Validators.min(0), Validators.max(29), Validators.pattern(/^\d+$/)]],
       // opponentScore: [
       //   this.data?.opponentScore ?? 0,
       //   [Validators.min(0), Validators.max(29), Validators.pattern(/^\d+$/)],
@@ -117,7 +130,51 @@ export class FixtureFormComponent extends FormComponent implements OnInit, OnDes
     this.subs.unsubscribe();
   }
 
-  protected compareByIdFn(a: Name | Competition, b: Name | Competition) {
+  // TODO Signal? Type?
+  protected get goals() {
+    return this.form?.get('goals') as FormArray;
+  }
+
+  protected onAddGoalGroup(e?: MouseEvent) {
+    this.goals.push(
+      this._fb.group({
+        scored: [null],
+        assisted: [null],
+      }),
+    );
+  }
+
+  protected onRemoveGoalGroup(index: number, e: MouseEvent) {
+    if (this.goals.length !== 1) {
+      this.goals.removeAt(index);
+    }
+  }
+
+  protected compareByIdFn(a: Name | Competition | Player, b: Name | Competition | Player) {
     return a && b ? a.id === b.id : a === b;
+  }
+
+  override reset(fixture?: Fixture) {
+    // this.goals?.clear();
+    const emptyGoals = [this._fb.group({ scored: null, assisted: null })];
+    const test: FormGroup[] =
+      fixture?.goals.map((g) =>
+        this._fb.group({
+          scored: [g.scored],
+          assisted: [g.assisted],
+        }),
+      ) ?? emptyGoals;
+
+    this.form?.reset({
+      id: fixture?.id,
+      date: fixture?.date ?? null,
+      time: fixture?.time ?? null,
+      venue: fixture?.venue ?? null,
+      competition: fixture?.competition ?? null,
+      opponent: fixture?.opponent ?? null,
+      // TODO Figure out types...
+      // FIXME Not loading existing goals..
+      goals: emptyGoals,
+    });
   }
 }

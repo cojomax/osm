@@ -23,11 +23,15 @@
     </nz-form-control>
   </nz-form-item>
 
-  <!-- TODO Do I need id-competition -->
   <nz-form-item>
     <nz-form-label [nzSpan]="rowSpan.colOne" nzFor="id-competition"> Competition </nz-form-label>
     <nz-form-control [nzSpan]="rowSpan.colTwo" nzErrorTip="Competition is required">
-      <nz-select nzPlaceHolder="Select a competition" formControlName="competition" [compareWith]="compareByIdFn">
+      <nz-select
+        id="id-competition"
+        nzPlaceHolder="Select a competition"
+        formControlName="competition"
+        [compareWith]="compareByIdFn"
+      >
         @for (comp of competitionOptions(); track comp.value.id) {
         <nz-option [nzValue]="comp.value" [nzLabel]="comp.label"></nz-option>
         }
@@ -47,4 +51,62 @@
       </nz-select>
     </nz-form-control>
   </nz-form-item>
+
+  <!--  Goals -->
+  <!--  <nz-form-item>-->
+  <!--    <nz-form-label [nzSpan]="rowSpan.colOne" nzFor="x"> Goals </nz-form-label>-->
+  <!--    &lt;!&ndash; FIXME track value?  &ndash;&gt;-->
+  <!--    @for(goal of goals.controls; track goal; let i = $index) {-->
+  <!--    <nz-form-control [nzSpan]="rowSpan.colTwo">-->
+  <!--      <input nz-input [id]="'goal-' + i" [formControlName]="i" type="number" />-->
+  <!--    </nz-form-control>-->
+  <!--    }-->
+  <!--  </nz-form-item>-->
+
+  <div formArrayName="goals">
+    @for (goal of goals.controls; track goal; let i = $index) {
+    <nz-form-item>
+      @if(i === 0) {
+      <nz-form-label [nzSpan]="rowSpan.colOne" nzFor="id-goals"> Goals </nz-form-label>
+      }
+      <nz-form-control [nzSpan]="rowSpan.colTwo" [nzOffset]="i === 0 ? 0 : rowSpan.colOne" [formGroupName]="i">
+        <div class="goals-control">
+          <div>
+            <nz-select nzPlaceHolder="Scored" formControlName="scored" [compareWith]="compareByIdFn">
+              @for(scorer of playerOptions(); track scorer.value.id) {
+              <nz-option [nzValue]="scorer.value" [nzLabel]="scorer.label"></nz-option>
+              }
+            </nz-select>
+            <nz-select nzPlaceHolder="Assisted" formControlName="assisted" [compareWith]="compareByIdFn">
+              @for(assistant of playerOptions(); track assistant.value.id) {
+              <nz-option [nzValue]="assistant.value" [nzLabel]="assistant.label"></nz-option>
+              }
+            </nz-select>
+          </div>
+          <span
+            nz-icon
+            nzType="minus-circle-o"
+            class="dynamic-delete-button"
+            (click)="onRemoveGoalGroup(i, $event)"
+          ></span>
+        </div>
+      </nz-form-control>
+      <!--    <div *ngFor="let goal of goals.controls; let i = index" [formGroupName]="i">-->
+      <!--    @for(goal of goals.controls; track goal.value; let i = $index) {-->
+      <!-- The repeated goal template -->
+      <!--    <input type="text" placeholder="Scored" formControlName="scored" />-->
+      <!--    <input type="text" placeholder="Assisted" formControlName="assisted" />-->
+      <!--    </div>-->
+      <!--    }-->
+    </nz-form-item>
+    }
+    <nz-form-item>
+      <nz-form-control [nzSpan]="rowSpan.colTwo" [nzOffset]="rowSpan.colOne">
+        <button nz-button nzType="dashed" class="goals-minus" (click)="onAddGoalGroup($event)">
+          <span nz-icon nzType="plus-circle" nzTheme="outline"></span>
+          Add Goal
+        </button>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
 </form>

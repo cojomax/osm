@@ -11,9 +11,9 @@ export class Fixture implements Entity {
   id = '';
 
   /** The date the match is played on. */
-  date: Date | null = null;
-  // TODO Merge into one
-  time: Date | null = null;
+  date: Date | null = null; // TODO Read model
+
+  time: Date | null = null; // TODO Read model
 
   venue: Name | null = null;
 
@@ -22,17 +22,15 @@ export class Fixture implements Entity {
 
   opponent: Name | null = null;
 
-  homeScore: number | null = null;
-
-  opponentScore: number | null = null;
-
   goals: Goal[] = [];
+
+  opponentGoals: number | null = null;
 
   /** The ID of the player voted man of the match. */
   manOfMatch: string | null = null;
 
   /** The ID of the player voted dick of the day. */
-  dickOfDay: string | null = null;
+  dunceOfDay: string | null = null;
 
   /** The ID of the match report. */
   matchReport: string | null = null;

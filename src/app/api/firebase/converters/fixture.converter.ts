@@ -1,6 +1,7 @@
 import { StoreConverter } from '../converter.interface';
 import { Fixture } from '../../models/fixture.model';
 import { getIsoDate, getIsoTime } from '../../../shared/utility/date.utility';
+import { Goal } from '../../models/goal.model';
 
 export class FixtureConverter implements StoreConverter<Fixture> {
   toFirestore(fixture: Fixture) {
@@ -10,6 +11,7 @@ export class FixtureConverter implements StoreConverter<Fixture> {
       venue: this.toPojo(fixture.venue),
       competition: this.toPojo(fixture.competition),
       opponent: this.toPojo(fixture.opponent),
+      goals: this.mapToGoals(fixture.goals),
     };
   }
 
@@ -22,10 +24,11 @@ export class FixtureConverter implements StoreConverter<Fixture> {
       venue: match['venue'],
       competition: match['competition'],
       opponent: match['opponent'],
+      goals: match['goals'],
     });
   }
 
-  private toPojo<T>(obj: T | null) {
+  private toPojo<T = object>(obj: T | null) {
     if (!obj) {
       return null;
     }
@@ -39,5 +42,23 @@ export class FixtureConverter implements StoreConverter<Fixture> {
     });
 
     return pojo as T;
+  }
+
+  // TODO Add repository layer and/or goal model for this
+  private mapToGoals(goals: Goal[]) {
+    return goals
+      .filter((g) => !!g.scored)
+      .map((goal) => ({
+        scored: {
+          id: goal.scored!.id,
+          firstName: goal.scored!.firstName,
+          lastName: goal.scored!.lastName,
+        },
+        assisted: {
+          id: goal.assisted?.id,
+          firstName: goal.assisted?.firstName,
+          lastName: goal.assisted?.lastName,
+        },
+      }));
   }
 }

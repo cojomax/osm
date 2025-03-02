@@ -18,6 +18,8 @@ import { TeamService } from '../../../services/team.service';
 import { Name } from '../../../api/models/name.model';
 import { Competition } from '../../../api/models/competition.model';
 import { CompetitionService } from '../../../services/competition.service';
+import { Player } from '../../../api/models/player.model';
+import { PlayerService } from '../../../services/player.service';
 
 @Component({
   imports: [NzButtonModule, NzIconModule, NzModalModule, FixtureFormComponent, FormModalComponent, GridComponent],
@@ -30,6 +32,7 @@ export class ManageFixturesPageComponent implements OnInit, AfterViewInit, OnDes
   protected venues = signal<Name[]>([]);
   protected teams = signal<Name[]>([]);
   protected competitions = signal<Competition[]>([]);
+  protected players = signal<Player[]>([]);
   protected selectedFixture = signal<Fixture | null>(null);
 
   private datePipe: DatePipe;
@@ -41,6 +44,7 @@ export class ManageFixturesPageComponent implements OnInit, AfterViewInit, OnDes
     protected modalSvc: FormModalService<Fixture>,
     private competitionSvc: CompetitionService,
     private fixtureSvc: FixtureService,
+    private playerSvc: PlayerService,
     private teamSvc: TeamService,
     private venuesSvc: VenueService,
   ) {
@@ -68,6 +72,13 @@ export class ManageFixturesPageComponent implements OnInit, AfterViewInit, OnDes
       this.competitionSvc
         .fetch()
         .pipe(tap((res) => this.competitions.set(res)))
+        .subscribe(),
+    );
+
+    this.subs.add(
+      this.playerSvc
+        .fetch()
+        .pipe(tap((res) => this.players.set(res)))
         .subscribe(),
     );
   }
@@ -99,7 +110,7 @@ export class ManageFixturesPageComponent implements OnInit, AfterViewInit, OnDes
     {
       colId: 'score',
       headerName: 'Score',
-      valueFormatter: (params) => `${params.data?.homeScore ?? 0} - ${params.data?.opponentScore ?? 0}`,
+      valueFormatter: (params) => `${params.data?.goals?.length ?? 0} - ${params.data?.opponentGoals ?? 0}`,
     },
     {
       colId: 'edit',

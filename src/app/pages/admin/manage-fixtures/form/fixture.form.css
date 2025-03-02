@@ -9,3 +9,32 @@
 nz-date-picker {
   width: 100%;
 }
+
+.goals-control {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.goals-control > div {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  flex-grow: 1;
+}
+
+.goals-control > span {
+  cursor: pointer;
+  font-size: 24px;
+  color: #999;
+  transition: all 0.3s;
+}
+
+.goals-control > span:hover {
+  color: #777;
+}
+
+.goals-minus {
+  width: 90%;
+}
+
