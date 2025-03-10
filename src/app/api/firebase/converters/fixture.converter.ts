@@ -11,20 +11,24 @@ export class FixtureConverter implements StoreConverter<Fixture> {
       venue: this.toPojo(fixture.venue),
       competition: this.toPojo(fixture.competition),
       opponent: this.toPojo(fixture.opponent),
+      homeGoals: fixture.homeGoals,
+      opponentGoals: fixture.opponentGoals,
       goals: this.mapToGoals(fixture.goals),
     };
   }
 
   fromFirestore(snapshot: any): Fixture {
-    const match = snapshot.data();
+    const fixture = snapshot.data();
     return new Fixture({
       id: snapshot.id,
-      date: new Date(match['date']),
-      time: new Date(`${match['date']},${match['time']}`),
-      venue: match['venue'],
-      competition: match['competition'],
-      opponent: match['opponent'],
-      goals: match['goals'],
+      date: new Date(fixture['date']),
+      time: new Date(`${fixture['date']},${fixture['time']}`),
+      venue: fixture['venue'],
+      competition: fixture['competition'],
+      opponent: fixture['opponent'],
+      homeGoals: fixture['homeGoals'],
+      opponentGoals: fixture['opponentGoals'],
+      goals: fixture['goals'],
     });
   }
 
@@ -54,11 +58,13 @@ export class FixtureConverter implements StoreConverter<Fixture> {
           firstName: goal.scored!.firstName,
           lastName: goal.scored!.lastName,
         },
-        assisted: {
-          id: goal.assisted?.id,
-          firstName: goal.assisted?.firstName,
-          lastName: goal.assisted?.lastName,
-        },
+        assisted: !goal.assisted
+          ? null
+          : {
+              id: goal.assisted.id,
+              firstName: goal.assisted.firstName,
+              lastName: goal.assisted.lastName,
+            },
       }));
   }
 }

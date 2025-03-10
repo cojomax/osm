@@ -1,12 +1,20 @@
 import { CommonModule } from '@angular/common';
 import { Component, computed, EventEmitter, inject, input, OnDestroy, OnInit, Output } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormArray,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { NzButtonModule } from '@nz/button';
 import { NzFormModule } from '@nz/form';
 import { NzInputModule } from '@nz/input';
 import { NzSelectModule } from '@nz/select';
 import { NzTimePickerComponent } from '@nz/time-picker';
-import { Subscription, tap } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { FormComponent } from '../../../../components/form/form.component';
 import { NzDatePickerModule } from '@nz/date-picker';
 import { Name } from '../../../../api/models/name.model';
@@ -14,6 +22,7 @@ import { Competition } from '../../../../api/models/competition.model';
 import { Fixture } from '../../../../api/models/fixture.model';
 import { NzIconModule } from '@nz/icon';
 import { Player } from '../../../../api/models/player.model';
+import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
 
 @Component({
   selector: 'app-fixture-form',
@@ -27,6 +36,7 @@ import { Player } from '../../../../api/models/player.model';
     NzFormModule,
     NzIconModule,
     NzInputModule,
+    NzInputNumberModule,
     NzSelectModule,
     NzTimePickerComponent,
     FormsModule,
@@ -82,6 +92,11 @@ export class FixtureFormComponent extends FormComponent implements OnInit, OnDes
 
   form!: FormGroup;
 
+  protected override rowSpan = {
+    colOne: 6,
+    colTwo: 13,
+  };
+
   private subs = new Subscription();
 
   /** Emitted when the form status changes. */
@@ -97,33 +112,18 @@ export class FixtureFormComponent extends FormComponent implements OnInit, OnDes
       venue: [null, Validators.required],
       competition: [null, Validators.required],
       opponent: [null, Validators.required],
-
-      goals: this._fb.array([
-        this._fb.group({
-          scored: [null],
-          assisted: [null],
-        }),
-      ]),
+      homeGoals: [0, [Validators.min(0), Validators.max(19), Validators.pattern(/^\d+$/)]],
+      opponentGoals: [0, [Validators.min(0), Validators.max(19), Validators.pattern(/^\d+$/)]],
+      goals: this._fb.array([]),
 
       // Report details
-      // opponentScore: [
-      //   this.data?.opponentScore ?? 0,
-      //   [Validators.min(0), Validators.max(29), Validators.pattern(/^\d+$/)],
-      // ],
       // manOfMatch: [this.data?.manOfMatch ?? ''],
       // dickOfDay: [this.data?.dickOfDay ?? ''],
       // matchReport: [this.data?.matchReport ?? ''],
     });
 
-    this.subs.add(
-      this.form.statusChanges
-        .pipe(
-          tap(() => {
-            this.statusChanged.emit(this.form.valid);
-          }),
-        )
-        .subscribe(),
-    );
+    this.subs.add(this.form.statusChanges.subscribe(() => this.statusChanged.emit(this.form.valid)));
+    this.subs.add(this.homeGoals?.valueChanges.subscribe(() => this.updateGoalGroup(this.homeGoals?.value)));
   }
 
   ngOnDestroy() {
@@ -135,36 +135,45 @@ export class FixtureFormComponent extends FormComponent implements OnInit, OnDes
     return this.form?.get('goals') as FormArray;
   }
 
-  protected onAddGoalGroup(e?: MouseEvent) {
-    this.goals.push(
+  protected get homeGoals() {
+    return this.form?.get('homeGoals') as FormControl<number> | undefined;
+  }
+
+  protected get oppositionGoals() {
+    return this.form?.get('opponentGoals');
+  }
+
+  protected updateGoalGroup(length: number | undefined) {
+    if (length === void 0) {
+      return;
+    }
+
+    const controls = Array.from({ length }).map(() =>
       this._fb.group({
-        scored: [null],
+        scored: [null, Validators.required],
         assisted: [null],
       }),
     );
+    this.setGoalControls(controls);
   }
 
-  protected onRemoveGoalGroup(index: number, e: MouseEvent) {
-    if (this.goals.length !== 1) {
-      this.goals.removeAt(index);
-    }
-  }
+  // protected onRemoveGoalGroup(index: number, e: MouseEvent) {
+  //   if (this.goals.length !== 1) {
+  //     this.goals.removeAt(index);
+  //   }
+  // }
 
   protected compareByIdFn(a: Name | Competition | Player, b: Name | Competition | Player) {
     return a && b ? a.id === b.id : a === b;
   }
 
-  override reset(fixture?: Fixture) {
-    // this.goals?.clear();
-    const emptyGoals = [this._fb.group({ scored: null, assisted: null })];
-    const test: FormGroup[] =
-      fixture?.goals.map((g) =>
-        this._fb.group({
-          scored: [g.scored],
-          assisted: [g.assisted],
-        }),
-      ) ?? emptyGoals;
+  protected onTimePickerKeydown(e: KeyboardEvent) {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+    }
+  }
 
+  override reset(fixture?: Fixture) {
     this.form?.reset({
       id: fixture?.id,
       date: fixture?.date ?? null,
@@ -172,9 +181,20 @@ export class FixtureFormComponent extends FormComponent implements OnInit, OnDes
       venue: fixture?.venue ?? null,
       competition: fixture?.competition ?? null,
       opponent: fixture?.opponent ?? null,
-      // TODO Figure out types...
-      // FIXME Not loading existing goals..
-      goals: emptyGoals,
+      homeGoals: fixture?.homeGoals ?? 0,
+      opponentGoals: fixture?.opponentGoals ?? 0,
     });
+
+    const goalControlGroups = fixture?.goals?.map((g) =>
+      this._fb.group({
+        scored: [g.scored],
+        assisted: [g.assisted],
+      }),
+    );
+    this.setGoalControls(goalControlGroups ?? []);
+  }
+
+  private setGoalControls(controls: FormGroup[]) {
+    this.form?.setControl('goals', this._fb.array(controls));
   }
 }

@@ -1,26 +1,11 @@
-/* :host {
-    display: block;
-    width: 80%;
-    height: var(--page-height);
-    margin: var(--space-md) auto 0;
-    background-color: white;
-} */
-
-nz-date-picker {
-  width: 100%;
+nz-input-number {
+  width: 120px;
 }
 
 .goals-control {
   display: flex;
-  align-items: center;
-  gap: var(--space-xs);
-}
-
-.goals-control > div {
-  display: flex;
   flex-direction: column;
   gap: var(--space-xs);
-  flex-grow: 1;
 }
 
 .goals-control > span {

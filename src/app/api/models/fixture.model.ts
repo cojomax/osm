@@ -22,9 +22,11 @@ export class Fixture implements Entity {
 
   opponent: Name | null = null;
 
-  goals: Goal[] = [];
+  homeGoals = 0;
 
-  opponentGoals: number | null = null;
+  opponentGoals = 0;
+
+  goals: Goal[] = [];
 
   /** The ID of the player voted man of the match. */
   manOfMatch: string | null = null;
