@@ -12,12 +12,13 @@ import { GridComponent } from '../../../components/grid/grid.component';
 import { REPOSITORY_SERVICE } from '../../../components/admin/form-modal/form-modal.token';
 import { FormModalComponent } from '../../../components/admin/form-modal/form-modal.component';
 import { FormModalService } from '../../../components/admin/form-modal/form-modal.service';
+import { LegendRenderer } from './renderers/legend-renderer.component';
 
 @Component({
-  imports: [CommonModule, NzButtonModule, NzIconModule, GridComponent, PlayerFormComponent, FormModalComponent],
   templateUrl: './players.page.html',
   styleUrl: './players.page.css',
   providers: [FormModalService, { provide: REPOSITORY_SERVICE, useExisting: PlayerService }],
+  imports: [CommonModule, FormModalComponent, GridComponent, NzButtonModule, NzIconModule, PlayerFormComponent],
 })
 export class PlayersPageComponent implements OnInit, AfterViewInit, OnDestroy {
   protected players = signal<Player[]>([]);
@@ -53,7 +54,11 @@ export class PlayersPageComponent implements OnInit, AfterViewInit, OnDestroy {
       headerName: '#',
       width: 50,
     },
-    { field: 'isLegend', headerName: 'Legend' },
+    {
+      field: 'isLegend',
+      headerName: 'Legend',
+      cellRenderer: LegendRenderer,
+    },
     { field: 'firstName' },
     { field: 'lastName' },
     { field: 'position' },
