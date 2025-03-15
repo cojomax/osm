@@ -1,8 +1,0 @@
-.layout {
-  display: flex;
-  height: var(--page-height);
-}
-
-.layout app-navigatin-admin {
-  flex-basis: 20%;
-}
