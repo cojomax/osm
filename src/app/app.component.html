@@ -2,42 +2,29 @@
   <app-navigation-top></app-navigation-top>
 </header>
 
-<div [ngSwitch]="viewState">
-  <!-- Admin Outlet -->
-  <ng-container *ngSwitchCase="'admin'">
-    <ng-container *ngTemplateOutlet="admin"></ng-container>
-  </ng-container>
-  <!-- Login Outlet -->
-  <ng-container *ngSwitchCase="'login'">
-    <ng-container *ngTemplateOutlet="login"></ng-container>
-  </ng-container>
-  <!-- Default (Public) Outlet -->
-  <ng-container *ngSwitchDefault>
-    <ng-container *ngTemplateOutlet="public"></ng-container>
-  </ng-container>
-</div>
-
-<ng-template #public>
-  <nav class="nav nav-public">
-    <a routerLink="/">
-      <img src="assets/osm-transparent.png" alt="app-logo" />
-    </a>
-    <app-navigation-main></app-navigation-main>
-  </nav>
-  <router-outlet />
-</ng-template>
-
-<ng-template #admin>
-  <nav class="nav nav-admin">
-    <a routerLink="/">
-      <img src="assets/osm-transparent.png" alt="app-logo" />
-    </a>
-  </nav>
-  <app-admin-shell>
-    <router-outlet />
-  </app-admin-shell>
-</ng-template>
-
-<ng-template #login>
-  <router-outlet />
-</ng-template>
+<main>
+  @switch (viewState) {
+    @case ('admin') {
+      <nav class="nav nav-admin">
+        <a routerLink="/">
+          <img src="assets/osm-transparent.png" alt="app-logo" />
+        </a>
+      </nav>
+      <app-admin-shell>
+        <router-outlet />
+      </app-admin-shell>
+    }
+    @case ('login') {
+      <router-outlet />
+    }
+    @default {
+      <nav class="nav nav-public">
+        <a routerLink="/">
+          <img src="assets/osm-transparent.png" alt="app-logo" />
+        </a>
+        <app-navigation-main></app-navigation-main>
+      </nav>
+      <router-outlet />
+    }
+  }
+</main>
