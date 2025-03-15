@@ -9,9 +9,6 @@ import { NzMenuModule } from '@nz/menu';
   styleUrls: ['./navigation-admin.component.css'],
 })
 export class NavigationAdminComponent {
-  /**
-   *
-   */
   constructor(private _router: Router) {}
 
   protected onNavigate(route: string) {

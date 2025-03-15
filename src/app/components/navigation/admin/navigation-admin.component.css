@@ -1,4 +1,4 @@
-:host {
-    display: block;
-    height: var(--page-height);
+:host ul {
+  background-color: var(--color-light);
+  border: none;
 }
