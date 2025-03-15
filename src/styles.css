@@ -1,40 +1,27 @@
 /* You can add global styles to this file, and also import other style files */
 
-@import "./theme/osm-variables.css";
+@import './theme/osm-variables.css';
 
 /* Core Data Grid CSS */
-@import "ag-grid-community/styles/ag-grid.css";
+@import 'ag-grid-community/styles/ag-grid.css';
 /* Quartz Theme Specific CSS */
-@import "ag-grid-community/styles/ag-theme-quartz.css";
+@import 'ag-grid-community/styles/ag-theme-quartz.css';
 
 * {
   /* Reset */
   box-sizing: border-box;
 }
 
-html, body, p {
+html,
+body,
+p {
   font-size: var(--font-size);
-  font-family: var(--font-family), serif ;
+  font-family: var(--font-family), serif;
 }
-
-/* html {
-  --ant-font-size-base: var(--font-size);
-  --ant-font-family: var(--font-family);
-} */
 
 body {
   margin: 0;
-
-  /* Font */
-  /* color: var(--font-primary); */
-  /* font-family: Roboto, "Helvetica Neue", sans-serif; */
-
-   background-color: var(--color-primary);
-}
-
-html,
-body {
-  height: 100%;
+  background-color: var(--color-light);
 }
 
 h1,
@@ -57,3 +44,12 @@ a {
   text-decoration: none;
   color: var(--font-secondary);
 }
+
+/*==============================*/
+/* NG ZORRO Class Interferences */
+
+nz-card.osm-full-width .ant-card-body {
+  width: 100%;
+}
+
+/*==============================*/

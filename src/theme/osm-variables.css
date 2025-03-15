@@ -4,16 +4,17 @@
   --color-primary: #1d1e2c;
   --color-secondary: #ddb967;
   --color-tertiary: #7bbeed;
-  --color-light: #e1e1e1;
+  --color-light: #f4f4f4;
 
   /* Fonts */
-  --font-primary: var(--color-light);
+  --font-primary: var(--color-primary);
   --font-secondary: var(--color-secondary);
   --font-tertiary: var(--color-tertiary);
-  --font-color-alt: white;
+  --font-alt: var(--color-light);
   --font-size-sm: 12px;
   --font-size: 16px;
   --font-size-lg: 24px;
+  --font-size-xlg: 30px;
   --font-family: 'Raleway', sans-serif;
 
   /* Spacing */
