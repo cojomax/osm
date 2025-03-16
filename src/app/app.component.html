@@ -2,8 +2,8 @@
   <app-navigation-top></app-navigation-top>
 </header>
 
-<main>
-  @switch (viewState) {
+<main [ngClass]="viewState()">
+  @switch (viewState()) {
     @case ('admin') {
       <app-admin-shell>
         <router-outlet />

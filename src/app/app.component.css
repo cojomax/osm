@@ -11,7 +11,9 @@ header > app-navigation-top {
 
 main {
   flex-grow: 1;
-  /* Change this for mobile. */
+}
+
+main.admin {
   overflow: hidden;
 }
 

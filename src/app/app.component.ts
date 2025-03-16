@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NavigationEnd, Router, RouterModule, RouterOutlet } from '@angular/router';
 import { NzLayoutModule } from '@nz/layout';
@@ -27,7 +27,7 @@ type ViewState = 'public' | 'admin' | 'login';
   styleUrl: './app.component.css',
 })
 export class AppComponent implements OnInit {
-  protected viewState: ViewState = 'public';
+  protected viewState = signal<ViewState>('public');
 
   constructor(
     private router: Router,
@@ -40,7 +40,7 @@ export class AppComponent implements OnInit {
         const isAdmin = event.urlAfterRedirects.substring(0, 6) === `/${this.routeSvc.routes.admin}`;
         const isLogin = event.urlAfterRedirects.substring(0, 6) === `/${this.routeSvc.routes.login}`;
 
-        this.viewState = !isAdmin && !isLogin ? 'public' : isAdmin ? 'admin' : 'login';
+        this.viewState.set(!isAdmin && !isLogin ? 'public' : isAdmin ? 'admin' : 'login');
       }
     });
 
