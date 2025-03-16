@@ -1,6 +1,10 @@
+ag-grid-angular {
+  height: calc(100% - 48px);
+}
+
 .top {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  padding: var(--space-md);
+  padding: var(--space-sm) 0;
 }
