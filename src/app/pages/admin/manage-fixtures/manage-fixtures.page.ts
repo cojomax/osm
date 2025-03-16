@@ -22,6 +22,7 @@ import { Player } from '../../../api/models/player.model';
 import { PlayerService } from '../../../services/player.service';
 
 @Component({
+  selector: 'osm-manage-fixtures',
   imports: [NzButtonModule, NzIconModule, NzModalModule, FixtureFormComponent, FormModalComponent, GridComponent],
   templateUrl: './manage-fixtures.page.html',
   styleUrl: './manage-fixtures.page.css',
