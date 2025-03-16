@@ -1,3 +1,8 @@
+.osm-container > nz-divider {
+  font-size: var(--font-size-xlg);
+  margin: var(--space-xxl) 0;
+}
+
 .carousel {
     display: flex;
     gap: var(--space-md);
@@ -9,7 +14,7 @@
 }
 
 .swiper-container {
-  padding: 0 120px;
+  padding: 0 80px;
 }
 
 @media (max-width: 768px) {
