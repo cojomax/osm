@@ -1,31 +1,27 @@
-<div class="banner-top">
-  <div class="container desktop">
-    <span *ngIf="session.firebaseUser"> Logged in as: {{ session.firebaseUser.email }} </span>
-    <span class="g-spacer"></span>
+<div class="container desktop">
+  <span *ngIf="session.firebaseUser"> Logged in as: {{ session.firebaseUser.email }} </span>
+  <span class="g-spacer"></span>
 
-    <ng-container *ngIf="hasAdminAccess"><a routerLink="/admin/players">Admin</a>|</ng-container>
+  @if (hasAdminAccess) {
+    <a nz-button nzType="link" class="g-link-secondary" routerLink="/admin/players">Admin</a>|
+  }
 
-    <ng-container *ngIf="session.isActive; else login">
-      <a (click)="onLogout()">Log Out</a>
-    </ng-container>
-
-    <ng-template #login>
-      <a routerLink="/login">Log In</a>
-    </ng-template>
-  </div>
-
-  <div class="container mobile">
-    <button nz-button nzType="link" nzSize="large" (click)="onMenuBtnClick()">
-      <nz-icon nzType="menu" nzTheme="outline"></nz-icon>
-    </button>
-    <span class="g-spacer"></span>
-    <a routerLink="/">
-      <img src="assets/osm-transparent.png" alt="app-logo" />
-    </a>
-  </div>
+  @if (session.isActive) {
+    <a nz-button nzType="link" class="g-link-secondary" (click)="onLogout()">Log Out</a>
+  } @else {
+    <a nz-button nzType="link" class="g-link-secondary" routerLink="/login">Log In</a>
+  }
 </div>
 
+<div class="container mobile">
+  <button nz-button nzType="link" nzSize="large" (click)="onMenuBtnClick()">
+    <nz-icon nzType="menu" nzTheme="outline"></nz-icon>
+  </button>
+  <span class="g-spacer"></span>
+  <a routerLink="/">
+    <img src="assets/osm-transparent.png" alt="app-logo" />
+  </a>
+</div>
 <ng-template #drawerTmpl>
   <app-navigation-main></app-navigation-main>
 </ng-template>
-

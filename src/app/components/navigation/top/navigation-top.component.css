@@ -1,17 +1,7 @@
 :host {
-  --banner-size-mobile: 88px;
-  --banner-size-desktop: 44px;
-}
-
-.banner-top {
-  width: 100%;
-  height: var(--banner-size-desktop);
-  background-color: var(--color-tertiary);
-  color: white;
-}
-
-.banner-top a {
-  color: white;
+  display: block;
+  background-color: var(--color-primary);
+  color: var(--color-secondary)
 }
 
 .container {

@@ -27,10 +27,6 @@ import { tap } from 'rxjs';
   ],
 })
 export class NavigationTopComponent implements OnInit {
-  // protected selectedRole = UserRole.undefined;
-  // protected user: User | null = null;
-  // protected userRole = UserRole;
-
   private drawerRef = signal<NzDrawerRef | undefined>(void 0);
 
   @ViewChild('drawerTmpl') drawerTmpl!: TemplateRef<any>;

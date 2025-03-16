@@ -52,4 +52,8 @@ nz-card.osm-full-width .ant-card-body {
   width: 100%;
 }
 
+a[nztype="link"].g-link-secondary {
+  color: var(--color-secondary);
+}
+
 /*==============================*/
