@@ -6,15 +6,31 @@ import { NzCardModule } from '@nz/card';
 import { DatePipe } from '@angular/common';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { ActivatedRoute } from '@angular/router';
+import { NzDividerComponent } from 'ng-zorro-antd/divider';
+
+const MONTHS = new Map<number, string>([
+  [0, 'January'],
+  [1, 'February'],
+  [2, 'March'],
+  [3, 'April'],
+  [4, 'May'],
+  [5, 'June'],
+  [6, 'July'],
+  [7, 'August'],
+  [8, 'September'],
+  [9, 'October'],
+  [10, 'November'],
+  [11, 'December'],
+]);
 
 @Component({
   selector: 'app-fixtures',
   templateUrl: './fixtures.page.html',
   styleUrl: './fixtures.page.css',
-  imports: [DatePipe, NzCardModule, NzTagModule],
+  imports: [DatePipe, NzCardModule, NzTagModule, NzDividerComponent],
 })
 export class FixturesPageComponent implements OnInit {
-  protected fixtures = signal<Fixture[]>([]);
+  protected fixtures = signal<Map<string, Fixture[]>>(new Map());
 
   protected showFixtures = signal(false);
 
@@ -47,7 +63,13 @@ export class FixturesPageComponent implements OnInit {
                   : (b.date?.getTime() ?? 0) - (a.date?.getTime() ?? 0),
               );
 
-            this.fixtures.set(list);
+            list.forEach((f) => {
+              const month = MONTHS.get(f.date!.getMonth())!;
+              if (!this.fixtures().get(month)) {
+                this.fixtures().set(month, []);
+              }
+              this.fixtures().get(month)!.push(f);
+            });
           }),
         )
         .subscribe(),

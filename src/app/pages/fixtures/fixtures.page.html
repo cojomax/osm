@@ -1,29 +1,43 @@
 <div class="osm-container">
-  <ul>
-    @for (fixture of fixtures(); track fixture.id) {
-    <li>
-      <nz-card class="osm-full-width">
-        <div class="card-container">
-          <section>
-            <p class="g-uppercase">
-              {{ fixture.date | date:'MMM d, y' }} <span class="competition"> {{ fixture.competition?.tier }} </span>
-            </p>
-            <p class="team-names">Old Speckled Men</p>
-            <p class="team-names">{{ fixture.opponent?.name }}</p>
-            <p class="g-uppercase venue">{{ fixture.venue?.name }}</p>
-          </section>
-          @if (showFixtures()) {
-          <nz-tag [nzColor]="'#7bbeed'" class="time-display">
-            <p>{{ fixture.time | date: 'HH:mm' }}</p>
-          </nz-tag>
-          } @else {
-          <nz-tag [nzColor]="getScoreColor(fixture.homeGoals, fixture.opponentGoals)" class="time-display">
-            <p>{{ fixture.homeGoals }} - {{ fixture.opponentGoals }}</p>
-          </nz-tag>
-          }
-        </div>
-      </nz-card>
-    </li>
-    }
-  </ul>
+  @for (month of fixtures().keys(); track month) {
+    <nz-divider [nzText]="month" nzOrientation="left" class="g-divider-large"></nz-divider>
+    <ul>
+      @for (fixture of fixtures().get(month); track fixture.id) {
+      <li>
+        <nz-card class="osm-full-width">
+          <div class="card-container">
+            <div>
+              <svg xmlns="http://www.w3.org/2000/svg" width="90" height="90" viewBox="0 0 32 32">
+                <circle cx="17" cy="28" r="2" fill="#1d1e2c" />
+                <path fill="#000" d="M8 20.586L13.586 15L15 16.414L9.414 22z" />
+                <path
+                  fill="#1d1e2c"
+                  d="M28 16.584L19.414 8H6v2h12.586l3 3L6 28.586L7.414 30L23 14.415L26.584 18L23 21.586L24.414 23L28 19.416a2.004 2.004 0 0 0 0-2.832M24.5 9A3.5 3.5 0 1 1 28 5.5A3.504 3.504 0 0 1 24.5 9m0-5A1.5 1.5 0 1 0 26 5.5A1.5 1.5 0 0 0 24.5 4"
+                />
+              </svg>
+              <section>
+                <p class="g-uppercase">
+                  {{ fixture.date | date:'MMM d, y' }}
+                  <span class="competition"> {{ fixture.competition?.tier }} </span>
+                </p>
+                <p class="team-names">Old Speckled Men</p>
+                <p class="team-names">{{ fixture.opponent?.name }}</p>
+                <p class="g-uppercase venue">{{ fixture.venue?.name }}</p>
+              </section>
+            </div>
+            @if (showFixtures()) {
+            <nz-tag [nzColor]="'#7bbeed'" class="time-display">
+              <p>{{ fixture.time | date: 'HH:mm' }}</p>
+            </nz-tag>
+            } @else {
+            <nz-tag [nzColor]="getScoreColor(fixture.homeGoals, fixture.opponentGoals)" class="time-display">
+              <p>{{ fixture.homeGoals }} - {{ fixture.opponentGoals }}</p>
+            </nz-tag>
+            }
+          </div>
+        </nz-card>
+      </li>
+      }
+    </ul>
+  }
 </div>

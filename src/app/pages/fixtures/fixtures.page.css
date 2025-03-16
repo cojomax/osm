@@ -1,0 +1,66 @@
+:host > div.osm-container > ul {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xxl);
+}
+
+ul > li {
+  width: 85%;
+}
+
+ul > li > nz-card {
+  display: flex;
+  align-items: center;
+  color: var(--font-primary);
+  font-size: var(--font-size);
+  /*text-transform: uppercase;*/
+  padding: var(--space-md) var(--space-lg);
+  background-color: #fff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+}
+
+ul > li > nz-card .card-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+ul > li > nz-card .card-container > div {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xxl);
+}
+
+.competition {
+  padding: 0 12px;
+  color: var(--font-alt);
+  font-weight: 300;
+}
+
+.venue {
+  color: var(--font-alt);
+  font-weight: 500;
+}
+
+.team-names {
+  /*color: var(--color-);*/
+  font-size: var(--font-size-xlg);
+  font-weight: 500;
+}
+
+.team-names + .team-names {
+  color: var(--color-secondary);
+}
+
+.time-display {
+  padding: var(--space-sm) var(--space-md);
+  vertical-align: middle;
+}
+
+.time-display > p {
+  font-size: var(--font-size-lg);
+  line-height: var(--font-size-xlg);
+}
