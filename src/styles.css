@@ -56,4 +56,9 @@ a[nztype="link"].g-link-secondary {
   color: var(--color-secondary);
 }
 
+nz-divider[nzorientation="left"].g-divider-large {
+  font-size: var(--font-size-xlg);
+  margin: var(--space-xxl) 0;
+}
+
 /*==============================*/
