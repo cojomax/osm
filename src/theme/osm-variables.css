@@ -10,12 +10,12 @@
   --font-primary: var(--color-primary);
   --font-secondary: var(--color-secondary);
   --font-tertiary: var(--color-tertiary);
-  --font-alt: var(--color-light);
+  --font-alt: #828282;
   --font-size-sm: 12px;
   --font-size: 16px;
   --font-size-lg: 24px;
   --font-size-xlg: 30px;
-  --font-family: 'Raleway', sans-serif;
+  --font-family: 'Montserrat', sans-serif;
 
   /* Spacing */
   --space-xs: 4px;
@@ -26,6 +26,8 @@
   --space-xxl: 52px;
 
   /* Constants */
+  --banner-size-mobile: 88px;
+  --banner-size-desktop: 44px;
   --page-offset-vertical: 176px;
   --page-height: calc(100vh - var(--page-offset-vertical));
 }
