@@ -1,9 +1,29 @@
-<p>fixtures works!</p>
-
-<ul>
-  @for (fixture of fixtures(); track fixture.id) {
+<div class="osm-container">
+  <ul>
+    @for (fixture of fixtures(); track fixture.id) {
     <li>
-      {{ fixture.opponent }}
+      <nz-card class="osm-full-width">
+        <div class="card-container">
+          <section>
+            <p class="g-uppercase">
+              {{ fixture.date | date:'MMM d, y' }} <span class="competition"> {{ fixture.competition?.tier }} </span>
+            </p>
+            <p class="team-names">Old Speckled Men</p>
+            <p class="team-names">{{ fixture.opponent?.name }}</p>
+            <p class="g-uppercase venue">{{ fixture.venue?.name }}</p>
+          </section>
+          @if (showFixtures()) {
+          <nz-tag [nzColor]="'#7bbeed'" class="time-display">
+            <p>{{ fixture.time | date: 'HH:mm' }}</p>
+          </nz-tag>
+          } @else {
+          <nz-tag [nzColor]="getScoreColor(fixture.homeGoals, fixture.opponentGoals)" class="time-display">
+            <p>{{ fixture.homeGoals }} - {{ fixture.opponentGoals }}</p>
+          </nz-tag>
+          }
+        </div>
+      </nz-card>
     </li>
-  }
-</ul>
+    }
+  </ul>
+</div>

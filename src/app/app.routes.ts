@@ -12,9 +12,10 @@ export const routes: Routes = [
   { path: '', component: HomePageComponent },
   { path: 'login', component: LoginPageComponent },
   // { path: 'register', component: RegisterPageComponent },
-  // { path: 'match-report', component: MatchReportPageComponent },z
+  // { path: 'match-report', component: MatchReportPageComponent },
   { path: 'team', component: TeamPageComponent },
   { path: 'fixtures', component: FixturesPageComponent },
+  { path: 'results', component: FixturesPageComponent },
   {
     path: 'admin',
     children: [
