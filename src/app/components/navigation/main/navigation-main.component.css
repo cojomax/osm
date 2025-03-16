@@ -9,7 +9,7 @@ a {
   position: relative;
   font-size: 1.1rem;
   color: var(--font-primary);
-  text-transform: uppercase;
+  /*text-transform: uppercase;*/
   padding: 0 var(--space-md) var(--space-md);
 }
 
