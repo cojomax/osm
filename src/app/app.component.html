@@ -5,11 +5,6 @@
 <main>
   @switch (viewState) {
     @case ('admin') {
-      <nav class="nav nav-admin">
-        <a routerLink="/">
-          <img src="assets/osm-transparent.png" alt="app-logo" />
-        </a>
-      </nav>
       <app-admin-shell>
         <router-outlet />
       </app-admin-shell>

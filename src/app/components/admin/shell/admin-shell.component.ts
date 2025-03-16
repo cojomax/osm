@@ -1,26 +1,56 @@
 import { Component } from '@angular/core';
-import { NavigationAdminComponent } from '../../navigation/admin/navigation-admin.component';
+import { NzMenuModule } from 'ng-zorro-antd/menu';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-admin-shell',
-  imports: [NavigationAdminComponent],
+  imports: [NzMenuModule, RouterModule],
   styles: `
-    .nav-container {
-      padding: 0 var(--space-md);
+    :host {
+      display: block;
+      height: 100%;
     }
 
-    .content-container {
-      height: 100%;
-      padding: 0 var(--space-lg);
+    a {
+      position: fixed;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    img {
+      width: 100px;
+      margin-top: -28px;
+    }
+
+    ul {
+      background-color: var(--color-light);
+      border: none;
+      padding: 0 12px;
+    }
+
+    .osm-container {
+      height: calc(100% - var(--banner-size-desktop));
     }
   `,
   template: `
-    <div class="nav-container">
-      <app-navigation-admin></app-navigation-admin>
-    </div>
-    <div class="content-container">
+    <a routerLink="/">
+      <img src="assets/osm-transparent.png" alt="app-logo" />
+    </a>
+
+    <ul nz-menu nzMode="horizontal">
+      <li nz-menu-item nzMatchRouter routerLink="/admin/players" (click)="onNavigate('players')">Players</li>
+      <li nz-menu-item nzMatchRouter routerLink="/admin/fixtures" (click)="onNavigate('fixtures')">Fixtures</li>
+    </ul>
+
+    <div class="osm-container">
       <ng-content></ng-content>
     </div>
   `,
 })
-export class AdminShellComponent {}
+export class AdminShellComponent {
+  constructor(private _router: Router) {}
+
+  protected onNavigate(route: string) {
+    this._router.navigate([`/admin/${route}`]);
+  }
+}
