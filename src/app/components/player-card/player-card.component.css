@@ -5,7 +5,6 @@
 section {
   display: flex;
   align-items: flex-start;
-  /* width: 100%; */
 }
 
 p {
@@ -28,8 +27,8 @@ p {
 }
 
 .number {
-  font-family: "Russo One";
   font-size: 3rem;
+  font-weight: bold;
 }
 
 .name {
@@ -38,25 +37,22 @@ p {
 
 .position {
   text-transform: uppercase;
-  font-weight: 200;
+  font-weight: 300;
 }
 
 .season {
   text-transform: uppercase;
-  color: gray;
-  padding-left: var(--space-md);
-  margin: var(--space-lg) 0 var(--space-md);
+  color: var(--font-alt);
+  margin: var(--space-md) 0 var(--space-md) var(--space-md);
 }
 
 .data-display {
   display: flex;
   flex-direction: column;
   gap: var(--space-sm);
-  /* font-size: 1rem; */
 }
 
 .data-display > p {
-  /* border: 1px solid rgba(0, 0, 0, 0.06); */
-  padding: var(--space-md);
-  /* margin-bottom: var(--space-sm); */
+  font-weight: 400;
+  padding: var(--space-xs);
 }

@@ -2,13 +2,13 @@
   <section class="spaced">
     <div class="details">
       <p class="number">
-        {{ player?.squadNumber }}
+        {{ player()?.squadNumber }}
       </p>
       <p class="name">
-        {{ player?.fullName }}
+        {{ player()?.fullName }}
       </p>
       <p class="position">
-        {{ player?.position }}
+        {{ player()?.position }}
       </p>
     </div>
     <span class="space"></span>
@@ -17,7 +17,7 @@
   <p class="season">Season 2024-25</p>
 
   <!-- Dynamic template for each position -->
-  <ng-container [ngSwitch]="player?.position">
+  <ng-container [ngSwitch]="player()?.position">
     <!-- Goalkeeper -->
     <ng-container *ngSwitchCase="goalkeeper">
       <ng-container *ngTemplateOutlet="goalkeeper"></ng-container>

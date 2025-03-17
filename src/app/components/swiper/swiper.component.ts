@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 import { IS_MOBILE } from '../../services/tokens/device-detection.token';
 
 @Component({
-  selector: 'app-swiper',
+  selector: 'osm-swiper',
   templateUrl: './swiper.component.html',
   styleUrls: ['./swiper.component.css'],
   imports: [CommonModule, PlayerCardComponent],
