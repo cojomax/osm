@@ -9,7 +9,7 @@
   display: inline-block;
   top: var(--space-lg);
   padding: var(--space-lg) var(--space-xl);
-  background-color: white;
+  background-color: var(--color-light);
 }
 
 .container h1 {
@@ -55,7 +55,7 @@ form .form-input input:focus {
 button[type="submit"] {
   padding: var(--space-md);
   background-color: var(--color-primary);
-  color: var(--font-color-alt);
+  color: var(--font-alt);
   margin-top: var(--space-lg);
   width: 100%;
   border: none;
