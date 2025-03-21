@@ -1,33 +1,36 @@
 :host {
   display: block;
-  background-color: var(--color-primary);
-  color: var(--color-secondary)
 }
 
 .container {
   align-items: center;
-  height: 100%;
+  color: var(--color-secondary);
+  background-color: var(--color-primary);
 }
 
 .desktop {
+  height: 100%;
   display: flex;
   gap: var(--space-sm);
   padding: 0 var(--space-lg);
 }
 
 .mobile {
+  height: var(--banner-size-mobile);
   display: none;
 }
 
 .mobile button {
   height: var(--banner-size-mobile);
   font-size: var(--font-size-lg);
+  color: var(--color-secondary);
 }
 
 @media (max-width: 768px) {
-  .banner-top {
+  :host {
     height: var(--banner-size-mobile);
   }
+
   .desktop {
     display: none;
   }
@@ -38,6 +41,6 @@
   }
 
   img {
-    width: 50px;
+    width: 60px;
   }
 }

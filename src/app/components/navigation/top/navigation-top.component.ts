@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Inject, OnInit, signal, TemplateRef, ViewChild } from '@angular/core';
+import { Component, inject, Inject, OnInit, signal, TemplateRef, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { EventType, Router, RouterModule } from '@angular/router';
 import { NzSelectModule } from 'ng-zorro-antd/select';
@@ -10,6 +10,7 @@ import { NzButtonModule } from '@nz/button';
 import { NzDrawerModule, NzDrawerRef, NzDrawerService } from 'ng-zorro-antd/drawer';
 import { NavigationMainComponent } from '../main/navigation-main.component';
 import { tap } from 'rxjs';
+import { IS_MOBILE } from '../../../services/tokens/device-detection.token';
 
 @Component({
   selector: 'app-navigation-top',
@@ -27,6 +28,8 @@ import { tap } from 'rxjs';
   ],
 })
 export class NavigationTopComponent implements OnInit {
+  protected isMobile = inject(IS_MOBILE);
+
   private drawerRef = signal<NzDrawerRef | undefined>(void 0);
 
   @ViewChild('drawerTmpl') drawerTmpl!: TemplateRef<any>;
