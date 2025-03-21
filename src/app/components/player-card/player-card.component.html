@@ -19,53 +19,13 @@
   </section>
   <p class="season">Season 2024-25</p>
 
-  <!-- Dynamic template for each position -->
-  <ng-container [ngSwitch]="player()?.position">
-    <!-- Goalkeeper -->
-    <ng-container *ngSwitchCase="goalkeeper">
-      <ng-container *ngTemplateOutlet="goalkeeper"></ng-container>
-    </ng-container>
-
-    <!-- All other outfield players -->
-    <ng-container *ngSwitchDefault>
-      <ng-container *ngTemplateOutlet="outfield"></ng-container>
-    </ng-container>
-  </ng-container>
+  @for (stat of bestStats(); track stat) {
+    <span class="data-display">
+      <p class="spaced">
+        {{ stat?.label }}
+        <span class="space"></span>
+        <span>{{ stat?.value }}</span>
+      </p>
+    </span>
+  }
 </nz-card>
-
-<ng-template #goalkeeper>
-  <div class="data-display">
-    <p class="spaced">
-      Appearances
-      <span class="space"></span>
-      <span>3</span>
-    </p>
-  </div>
-
-  <div class="data-display">
-    <p>Clean Sheets</p>
-    <p>0</p>
-  </div>
-</ng-template>
-
-<ng-template #outfield>
-  <div class="data-display">
-    <p class="spaced">
-      Appearances
-      <span class="space"></span>
-      <span> 9 </span>
-    </p>
-
-    <p class="spaced">
-      Assists
-      <span class="space"></span>
-      <span> 3 </span>
-    </p>
-
-    <p class="spaced">
-      Goals
-      <span class="space"></span>
-      <span> 0 </span>
-    </p>
-  </div>
-</ng-template>
