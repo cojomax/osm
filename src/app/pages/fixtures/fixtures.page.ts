@@ -1,12 +1,13 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { FixtureService } from '../../services/fixture.service';
 import { Fixture } from '../../api/models/fixture.model';
 import { Subscription, tap } from 'rxjs';
 import { NzCardModule } from '@nz/card';
-import { DatePipe } from '@angular/common';
+import { DatePipe, NgClass, NgOptimizedImage, NgTemplateOutlet } from '@angular/common';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { ActivatedRoute } from '@angular/router';
 import { NzDividerComponent } from 'ng-zorro-antd/divider';
+import { IS_MOBILE } from 'src/app/services/tokens/device-detection.token';
 
 const MONTHS = new Map<number, string>([
   [0, 'January'],
@@ -27,14 +28,21 @@ const MONTHS = new Map<number, string>([
   selector: 'app-fixtures',
   templateUrl: './fixtures.page.html',
   styleUrl: './fixtures.page.css',
-  imports: [DatePipe, NzCardModule, NzTagModule, NzDividerComponent],
+  imports: [DatePipe, NzCardModule, NzTagModule, NzDividerComponent, NgTemplateOutlet, NgClass, NgOptimizedImage],
 })
 export class FixturesPageComponent implements OnInit {
   protected fixtures = signal<Map<string, Fixture[]>>(new Map());
 
   protected showFixtures = signal(false);
+  protected showResults = signal(false);
 
-  private showResults = signal(false);
+  protected icon = computed(() => {
+    const fileName = this.showFixtures() ? 'pitch-primary' : 'football-primary';
+    return `/assets/icons/${fileName}.svg`;
+  });
+
+  protected isMobile = inject(IS_MOBILE);
+
   private subs = new Subscription();
 
   constructor(
