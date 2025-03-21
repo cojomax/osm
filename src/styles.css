@@ -48,7 +48,7 @@ a {
 /*==============================*/
 /* NG ZORRO Class Interferences */
 
-nz-card.osm-full-width .ant-card-body {
+nz-card.g-full-width .ant-card-body {
   width: 100%;
 }
 
