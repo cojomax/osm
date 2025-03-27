@@ -2,16 +2,16 @@
   <section class="spaced">
     <div class="details">
       <p class="number">
-        {{ player()?.squadNumber }}
+        {{ playerStatistic().player.squadNumber }}
       </p>
       <p class="name">
-        {{ player()?.firstName }}
+        {{ playerStatistic().player.firstName }}
       </p>
       <p class="name">
-        {{ player()?.lastName }}
+        {{ playerStatistic().player.lastName }}
       </p>
       <p class="position">
-        {{ player()?.position }}
+        {{ playerStatistic().player.position }}
       </p>
     </div>
     <span class="space"></span>
@@ -19,10 +19,10 @@
   </section>
   <p class="season">Season 2024-25</p>
 
-  @for (stat of bestStats(); track stat) {
+  @for (stat of playerStatistic().statistics; track stat) {
     <span class="data-display">
       <p class="spaced">
-        {{ stat?.label }}
+        {{ stat?.type }}
         <span class="space"></span>
         <span>{{ stat?.value }}</span>
       </p>
