@@ -21,7 +21,13 @@
   <nz-form-item>
     <nz-form-label [nzSpan]="rowSpan.colOne" nzFor="id-venue"> Venue </nz-form-label>
     <nz-form-control [nzSpan]="rowSpan.colTwo" nzErrorTip="Venue is required">
-      <nz-select nzPlaceHolder="Select a venue" formControlName="venue" [compareWith]="compareByIdFn">
+      <nz-select
+        nzShowSearch
+        nzAllowClear
+        nzPlaceHolder="Select a venue"
+        formControlName="venue"
+        [compareWith]="compareByIdFn"
+      >
         @for (venue of venueOptions(); track venue.value.id) {
         <nz-option [nzValue]="venue.value" [nzLabel]="venue.label"></nz-option>
         }
@@ -34,6 +40,8 @@
     <nz-form-control [nzSpan]="rowSpan.colTwo" nzErrorTip="Competition is required">
       <nz-select
         id="id-competition"
+        nzShowSearch
+        nzAllowClear
         nzPlaceHolder="Select a competition"
         formControlName="competition"
         [compareWith]="compareByIdFn"
@@ -51,6 +59,8 @@
     <nz-form-control [nzSpan]="rowSpan.colTwo" nzErrorTip="Opponent is required">
       <nz-select
         id="id-opponent"
+        nzShowSearch
+        nzAllowClear
         nzPlaceHolder="Select an opponent"
         formControlName="opponent"
         [compareWith]="compareByIdFn"
@@ -66,7 +76,7 @@
   <nz-form-item>
     <nz-form-label [nzSpan]="rowSpan.colOne"> Score </nz-form-label>
     <nz-form-control [nzSpan]="7">
-      <nz-input-number formControlName="homeGoals" nzMin="0" nzMax="19" >
+      <nz-input-number formControlName="homeGoals" nzMin="0" nzMax="19">
         <span nzInputAddonBefore>OSM</span>
       </nz-input-number>
     </nz-form-control>
@@ -86,17 +96,29 @@
       }
       <nz-form-control [nzSpan]="rowSpan.colTwo" [nzOffset]="i === 0 ? 0 : rowSpan.colOne" [formGroupName]="i">
         <div class="goals-control">
-            <nz-select nzPlaceHolder="Scored" formControlName="scored" [compareWith]="compareByIdFn">
-              @for(scorer of playerOptions(); track scorer.value.id) {
-              <nz-option [nzValue]="scorer.value" [nzLabel]="scorer.label"></nz-option>
-              }
-            </nz-select>
-            <nz-select nzPlaceHolder="Assisted" formControlName="assisted" [compareWith]="compareByIdFn">
-              @for(assistant of playerOptions(); track assistant.value.id) {
-              <nz-option [nzValue]="assistant.value" [nzLabel]="assistant.label"></nz-option>
-              }
-            </nz-select>
-          </div>
+          <nz-select
+            nzShowSearch
+            nzAllowClear
+            nzPlaceHolder="Scored"
+            formControlName="scored"
+            [compareWith]="compareByIdFn"
+          >
+            @for(scorer of playerOptions(); track scorer.value.id) {
+            <nz-option [nzValue]="scorer.value" [nzLabel]="scorer.label"></nz-option>
+            }
+          </nz-select>
+          <nz-select
+            nzShowSearch
+            nzAllowClear
+            nzPlaceHolder="Assisted"
+            formControlName="assisted"
+            [compareWith]="compareByIdFn"
+          >
+            @for(assistant of playerOptions(); track assistant.value.id) {
+            <nz-option [nzValue]="assistant.value" [nzLabel]="assistant.label"></nz-option>
+            }
+          </nz-select>
+        </div>
       </nz-form-control>
     </nz-form-item>
     }
