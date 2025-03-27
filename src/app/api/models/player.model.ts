@@ -34,4 +34,8 @@ export class Player implements Entity {
   get fullName() {
     return `${this.firstName} ${this.lastName}`;
   }
+
+  get isOwnGoal() {
+    return this.firstName === 'Own' && this.lastName === 'Goal';
+  }
 }

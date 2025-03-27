@@ -64,8 +64,8 @@ export class FixtureFormComponent extends FormComponent implements OnInit, OnDes
 
   playerOptions = computed(() =>
     this.players()
-      .sort((a, b) => a.lastName.localeCompare(b.lastName))
-      .map((player) => ({ label: `${player.firstName} ${player.lastName}`, value: player })),
+      .sort((a, b) => (a.isOwnGoal ? 1 : a.lastName.localeCompare(b.lastName)))
+      .map((p) => ({ label: p.isOwnGoal ? `(${p.fullName})` : `${p.fullName}`, value: p })),
   );
 
   competitionOptions = computed(() =>
