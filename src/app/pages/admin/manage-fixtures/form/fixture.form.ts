@@ -109,7 +109,7 @@ export class FixtureFormComponent extends FormComponent implements OnInit, OnDes
       id: [''],
       date: [null, Validators.required],
       time: [null],
-      venue: [null, Validators.required],
+      venue: [null],
       competition: [null, Validators.required],
       opponent: [null, Validators.required],
       homeGoals: [0, [Validators.min(0), Validators.max(19), Validators.pattern(/^\d+$/)]],

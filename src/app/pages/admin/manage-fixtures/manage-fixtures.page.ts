@@ -94,7 +94,6 @@ export class ManageFixturesPageComponent implements OnInit, AfterViewInit, OnDes
     {
       field: 'date',
       cellDataType: 'date',
-      width: 250,
       valueFormatter: (params) => this.datePipe.transform(params.value, 'fullDate') ?? '',
     },
     {
@@ -111,11 +110,17 @@ export class ManageFixturesPageComponent implements OnInit, AfterViewInit, OnDes
     {
       colId: 'score',
       headerName: 'Score',
-      valueFormatter: (params) => `${params.data?.goals?.length ?? 0} - ${params.data?.opponentGoals ?? 0}`,
+      sortable: false,
+      valueFormatter: (params) =>
+        params.data?.date! > new Date()
+          ? ''
+          : `${params.data?.goals?.length ?? 0} - ${params.data?.opponentGoals ?? 0}`,
     },
     {
       colId: 'edit',
       maxWidth: 150,
+      sortable: false,
+      width: 100,
       cellRenderer: EditButtonComponent,
       cellRendererParams: {
         onEdit: this.onEditClick.bind(this),

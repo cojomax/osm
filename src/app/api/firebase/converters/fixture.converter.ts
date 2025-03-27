@@ -22,7 +22,7 @@ export class FixtureConverter implements StoreConverter<Fixture> {
     return new Fixture({
       id: snapshot.id,
       date: new Date(fixture['date']),
-      time: new Date(`${fixture['date']},${fixture['time']}`),
+      time: fixture['time'] === null ? null : new Date(`${fixture['date']},${fixture['time']}`),
       venue: fixture['venue'],
       competition: fixture['competition'],
       opponent: fixture['opponent'],
