@@ -100,13 +100,13 @@
     </ng-template>
 
     <ng-template #venue>
-      <p class="g-uppercase">{{ fixture.venue?.name }}</p>
+      <p class="g-uppercase">{{ fixture.venue?.name || 'TBC' }}</p>
     </ng-template>
 
     <ng-template #timeOrScore>
       @if (showFixtures()) {
       <nz-tag [nzColor]="'#7bbeed'" class="time-display">
-        <p>{{ fixture.time | date: 'HH:mm' }}</p>
+        <p>{{ !fixture.time ? 'TBC' : fixture.time | date: 'HH:mm' }}</p>
       </nz-tag>
       } @else {
       <nz-tag [nzColor]="getScoreColor(fixture.homeGoals, fixture.opponentGoals)" class="time-display">
