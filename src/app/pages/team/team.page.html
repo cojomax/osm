@@ -1,31 +1,35 @@
 <div class="osm-container">
-  <!-- Goalkeeper Cards -->
-  <nz-divider nzText="Goalkeepers" nzOrientation="left" class="g-divider-large"></nz-divider>
-  <div class="swiper-container">
-    <osm-swiper [data]="goalkeepers()"></osm-swiper>
-  </div>
+  <nz-spin nzSize="large" [nzSpinning]="isLoading()">
+    @if (!isLoading()) {
+    <!-- Goalkeeper Cards -->
+    <nz-divider nzText="Goalkeepers" nzOrientation="left" class="g-divider-large"></nz-divider>
+    <div class="swiper-container">
+      <osm-swiper [data]="goalkeepers()"></osm-swiper>
+    </div>
 
-  <!-- Defender Cards -->
-  <nz-divider nzText="Defenders" nzOrientation="left" class="g-divider-large"></nz-divider>
-  <div class="swiper-container">
-    <osm-swiper [data]="defenders()"></osm-swiper>
-  </div>
+    <!-- Defender Cards -->
+    <nz-divider nzText="Defenders" nzOrientation="left" class="g-divider-large"></nz-divider>
+    <div class="swiper-container">
+      <osm-swiper [data]="defenders()"></osm-swiper>
+    </div>
 
-  <!-- Midfielder Cards -->
-  <nz-divider nzText="Midfielders" nzOrientation="left" class="g-divider-large"></nz-divider>
-  <div class="swiper-container">
-    <osm-swiper [data]="midfielders()"></osm-swiper>
-  </div>
+    <!-- Midfielder Cards -->
+    <nz-divider nzText="Midfielders" nzOrientation="left" class="g-divider-large"></nz-divider>
+    <div class="swiper-container">
+      <osm-swiper [data]="midfielders()"></osm-swiper>
+    </div>
 
-  <!-- Forward Cards -->
-  <nz-divider nzText="Forwards" nzOrientation="left" class="g-divider-large"></nz-divider>
-  <div class="swiper-container">
-    <osm-swiper [data]="forwards()"></osm-swiper>
-  </div>
+    <!-- Forward Cards -->
+    <nz-divider nzText="Forwards" nzOrientation="left" class="g-divider-large"></nz-divider>
+    <div class="swiper-container">
+      <osm-swiper [data]="forwards()"></osm-swiper>
+    </div>
 
-  <!-- Legend Cards -->
-<!--  <nz-divider nzText="Legends" nzOrientation="left" class="g-divider-large"></nz-divider>-->
-<!--  <div class="swiper-container">-->
-<!--    <osm-swiper [data]="legends"></osm-swiper>-->
-<!--  </div>-->
+    <!-- Legend Cards -->
+    <!--  <nz-divider nzText="Legends" nzOrientation="left" class="g-divider-large"></nz-divider>-->
+    <!--  <div class="swiper-container">-->
+    <!--    <osm-swiper [data]="legends"></osm-swiper>-->
+    <!--  </div>-->
+    }
+  </nz-spin>
 </div>

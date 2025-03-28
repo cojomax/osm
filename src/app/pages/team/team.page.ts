@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, computed, OnInit, signal } from '@angular/core';
 import { NzDividerModule } from '@nz/divider';
-import { forkJoin, map, Subscription, tap } from 'rxjs';
+import { finalize, forkJoin, map, Subscription, tap } from 'rxjs';
 import { Player } from '../../api/models/player.model';
 import { Position } from '../../models/position.enum';
 import { PlayerService } from '../../services/player.service';
@@ -11,13 +11,15 @@ import { PlayerStatistic } from '../../models/player-statistic.model';
 import { Goal } from '../../api/models/goal.model';
 import { Statistic } from '../../models/statistic.model';
 import { StatisticType } from '../../models/statistic-type.enum';
+import { NzSpinComponent } from 'ng-zorro-antd/spin';
 
 @Component({
-  imports: [CommonModule, NzDividerModule, SwiperComponent],
+  imports: [CommonModule, NzDividerModule, SwiperComponent, NzSpinComponent],
   templateUrl: './team.page.html',
   styleUrl: './team.page.css',
 })
 export class TeamPageComponent implements OnInit {
+  protected isLoading = signal(true);
   protected goalkeepers = computed<PlayerStatistic[]>(() =>
     this.mapToPlayerStatistics(this.players(), Position.Goalkeeper),
   );
@@ -53,7 +55,9 @@ export class TeamPageComponent implements OnInit {
           map((fixtures) => fixtures.flatMap((f) => f.goals)),
           tap((goals) => this.goals.set(goals)),
         ),
-      ]).subscribe(),
+      ])
+        .pipe(finalize(() => this.isLoading.set(false)))
+        .subscribe(),
     );
   }
   // goals

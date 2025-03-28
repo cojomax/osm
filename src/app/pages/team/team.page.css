@@ -1,3 +1,7 @@
+.osm-container > nz-spin {
+  top: 100px;
+}
+
 .swiper-container {
   padding: 0 80px;
 }
