@@ -1,12 +1,12 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { FixtureService } from '../../services/fixture.service';
 import { Fixture } from '../../api/models/fixture.model';
-import { DatePipe } from '@angular/common';
+import { DatePipe, NgOptimizedImage } from '@angular/common';
 
 @Component({
   templateUrl: 'home.page.html',
   styleUrl: './home.page.css',
-  imports: [DatePipe],
+  imports: [DatePipe, NgOptimizedImage],
 })
 export class HomePageComponent implements OnInit {
   protected nextFixture = signal<Fixture | null>(null);

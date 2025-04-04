@@ -14,33 +14,3 @@
   gap: var(--space-sm);
   padding: 0 var(--space-lg);
 }
-
-.mobile {
-  height: var(--banner-size-mobile);
-  display: none;
-}
-
-.mobile button {
-  height: var(--banner-size-mobile);
-  font-size: var(--font-size-lg);
-  color: var(--color-secondary);
-}
-
-@media (max-width: 768px) {
-  :host {
-    height: var(--banner-size-mobile);
-  }
-
-  .desktop {
-    display: none;
-  }
-
-  .mobile {
-    display: flex;
-    padding-right: var(--space-md);
-  }
-
-  img {
-    width: 60px;
-  }
-}

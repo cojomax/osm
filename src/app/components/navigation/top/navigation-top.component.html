@@ -1,14 +1,3 @@
-@if (isMobile) {
-  <div class="container mobile">
-    <button nz-button nzType="link" nzSize="large" (click)="onMenuBtnClick()">
-      <nz-icon nzType="menu" nzTheme="outline" />
-    </button>
-    <span class="g-spacer"></span>
-    <a routerLink="/">
-      <img src="assets/osm-transparent.png" alt="app-logo" />
-    </a>
-  </div>
-} @else {
   <div class="container desktop">
     <span *ngIf="session.firebaseUser"> Logged in as: {{ session.firebaseUser.email }} </span>
     <span class="g-spacer"></span>
@@ -22,9 +11,6 @@
     } @else {
       <a nz-button nzType="link" class="g-link-secondary" routerLink="/login">Log In</a>
     }
-  </div>      <nz-icon nzType="menu" nzTheme="outline"></nz-icon>
+  </div>
 
-}
-<ng-template #drawerTmpl>
-  <app-navigation-main></app-navigation-main>
-</ng-template>
+

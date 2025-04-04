@@ -1,25 +1,5 @@
-<header>
-  <app-navigation-top></app-navigation-top>
-</header>
-
-<main [ngClass]="viewState()">
-  @switch (viewState()) {
-    @case ('admin') {
-      <app-admin-shell>
-        <router-outlet />
-      </app-admin-shell>
-    }
-    @case ('login') {
-      <router-outlet />
-    }
-    @default {
-      <nav class="nav nav-public">
-        <a routerLink="/">
-          <img src="assets/osm-transparent.png" alt="app-logo" />
-        </a>
-        <app-navigation-main></app-navigation-main>
-      </nav>
-      <router-outlet />
-    }
-  }
-</main>
+@if (isMobile | async) {
+  <osm-mobile-shell [viewState]="viewState()"></osm-mobile-shell>
+} @else {
+  <osm-desktop-shell [viewState]="viewState()"></osm-desktop-shell>
+}

@@ -3,11 +3,11 @@ import { FixtureService } from '../../services/fixture.service';
 import { Fixture } from '../../api/models/fixture.model';
 import { Subscription, tap } from 'rxjs';
 import { NzCardModule } from '@nz/card';
-import { DatePipe, NgClass, NgOptimizedImage, NgTemplateOutlet } from '@angular/common';
+import { AsyncPipe, DatePipe, NgClass, NgOptimizedImage, NgTemplateOutlet } from '@angular/common';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { ActivatedRoute } from '@angular/router';
 import { NzDividerComponent } from 'ng-zorro-antd/divider';
-import { IS_MOBILE } from 'src/app/services/tokens/device-detection.token';
+import { IS_MOBILE } from '../../services/tokens/is-mobile.token';
 
 const MONTHS = new Map<number, string>([
   [0, 'January'],
@@ -28,7 +28,16 @@ const MONTHS = new Map<number, string>([
   selector: 'app-fixtures',
   templateUrl: './fixtures.page.html',
   styleUrl: './fixtures.page.css',
-  imports: [DatePipe, NzCardModule, NzTagModule, NzDividerComponent, NgTemplateOutlet, NgClass, NgOptimizedImage],
+  imports: [
+    DatePipe,
+    NzCardModule,
+    NzTagModule,
+    NzDividerComponent,
+    NgTemplateOutlet,
+    NgClass,
+    NgOptimizedImage,
+    AsyncPipe,
+  ],
 })
 export class FixturesPageComponent implements OnInit {
   protected fixtures = signal<Map<string, Fixture[]>>(new Map());

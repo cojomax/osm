@@ -1,35 +1,29 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { NavigationEnd, Router, RouterModule, RouterOutlet } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router, RouterModule } from '@angular/router';
 import { NzLayoutModule } from '@nz/layout';
-import { AdminShellComponent } from './components/admin/shell/admin-shell.component';
-import { NavigationMainComponent } from './components/navigation/main/navigation-main.component';
-import { NavigationTopComponent } from './components/navigation/top/navigation-top.component';
 import { RouteService } from './services/route.service';
 import { register } from 'swiper/element/bundle';
+import { MobileShellComponent } from './shared/components/mobile-shell/mobile-shell.component';
+import { IS_MOBILE } from './services/tokens/is-mobile.token';
+import { DesktopShellComponent } from './shared/components/desktop-shell/desktop-shell.component';
 
 type ViewState = 'public' | 'admin' | 'login';
 
 @Component({
   selector: 'app-root',
-  imports: [
-    AdminShellComponent,
-    CommonModule,
-    FormsModule,
-    NavigationMainComponent,
-    NavigationTopComponent,
-    NzLayoutModule,
-    RouterModule,
-    RouterOutlet,
-  ],
+  imports: [CommonModule, FormsModule, NzLayoutModule, RouterModule, MobileShellComponent, DesktopShellComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
 export class AppComponent implements OnInit {
+  protected isMobile = inject(IS_MOBILE);
+  /** @deprecated This needs to read from the user. */
   protected viewState = signal<ViewState>('public');
 
   constructor(
+    private route: ActivatedRoute,
     private router: Router,
     private routeSvc: RouteService,
   ) {}

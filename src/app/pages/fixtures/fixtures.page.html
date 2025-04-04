@@ -1,4 +1,4 @@
-<div [ngClass]="isMobile ? 'container-mobile' : 'container-desktop'" class="osm-container">
+<div [ngClass]="(isMobile | async) ? 'container-mobile' : 'container-desktop'" class="osm-container">
   @for (month of fixtures().keys(); track month) {
   <nz-divider [nzText]="month" nzOrientation="left" class="g-divider-large"></nz-divider>
   <ul>
@@ -10,7 +10,7 @@
         <!-- Mobile -->
         <!------------>
         <!------------>
-        @if(isMobile) {
+        @if(isMobile | async) {
         <div class="card-mobile">
           <section>
             <div class="date-division">

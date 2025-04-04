@@ -11,7 +11,7 @@ import { ngZorroConfig } from 'src/theme/ng-zorro.config';
 import { routes } from './app.routes';
 import { FIREBASE, firebaseFactory } from './services/tokens/firebase-config.token';
 import { SESSION, sessionFactory } from './services/tokens/session.token';
-import { IS_MOBILE } from './services/tokens/device-detection.token';
+import { IS_MOBILE, isMobileFactory } from './services/tokens/is-mobile.token';
 
 registerLocaleData(en);
 
@@ -29,6 +29,9 @@ export const appConfig: ApplicationConfig = {
     // Custom Providers
     { provide: SESSION, useFactory: sessionFactory },
     { provide: FIREBASE, useFactory: firebaseFactory },
-    { provide: IS_MOBILE, useFactory: () => window.innerWidth < 768 },
+    {
+      provide: IS_MOBILE,
+      useFactory: isMobileFactory,
+    },
   ],
 };
