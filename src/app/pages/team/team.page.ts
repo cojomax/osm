@@ -20,6 +20,7 @@ import { NzSpinComponent } from 'ng-zorro-antd/spin';
 })
 export class TeamPageComponent implements OnInit {
   protected isLoading = signal(true);
+
   protected goalkeepers = computed<PlayerStatistic[]>(() =>
     this.mapToPlayerStatistics(this.players(), Position.Goalkeeper),
   );
