@@ -1,15 +1,15 @@
-@if (isMobile()) {
+@if (isMobile | async) {
   <swiper-container space-between="25" pagination-dynamic-bullets="true" slides-per-view="auto" centered-slides="true">
     <ng-container *ngTemplateOutlet="slide"></ng-container>
   </swiper-container>
 } @else {
-  <swiper-container space-between="25" pagination-dynamic-bullets="true" slides-per-view="3">
+  <swiper-container space-between="25" pagination-dynamic-bullets="true" slides-per-view="auto">
     <ng-container *ngTemplateOutlet="slide"></ng-container>
   </swiper-container>
 }
 
 <ng-template #slide>
-  <swiper-slide class="slide" *ngFor="let datum of data()">
+  <swiper-slide *ngFor="let datum of data()">
     <osm-player-card [playerStatistic]="datum"></osm-player-card>
   </swiper-slide>
 </ng-template>
