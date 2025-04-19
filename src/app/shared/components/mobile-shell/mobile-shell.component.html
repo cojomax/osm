@@ -1,0 +1,39 @@
+<header>
+    <button nz-button nzType="link" nzSize="large" (click)="onMenuBtnClick()">
+      <nz-icon nzType="menu" nzTheme="outline" />
+    </button>
+    <span class="g-spacer"></span>
+    <a routerLink="/">
+      <img src="assets/osm-transparent.png" alt="app-logo" />
+    </a>
+</header>
+
+<!--[ngClass]="viewState()"-->
+<main >
+  {{ header() }}
+  <router-outlet />
+
+<!--  @switch (viewState()) {-->
+<!--    @case ('admin') {-->
+<!--      <app-admin-shell>-->
+<!--        <router-outlet />-->
+<!--      </app-admin-shell>-->
+<!--    }-->
+<!--    @case ('login') {-->
+<!--      <router-outlet />-->
+<!--    }-->
+<!--    @default {-->
+<!--      <nav class="nav nav-public">-->
+<!--        <a routerLink="/">-->
+<!--          <img src="assets/osm-transparent.png" alt="app-logo" />-->
+<!--        </a>-->
+<!--        <app-navigation-main></app-navigation-main>-->
+<!--      </nav>-->
+<!--      <router-outlet />-->
+<!--    }-->
+<!--  }-->
+</main>
+
+<ng-template #drawerTmpl>
+  <app-navigation-main></app-navigation-main>
+</ng-template>

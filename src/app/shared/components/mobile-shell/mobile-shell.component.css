@@ -1,0 +1,19 @@
+header {
+  display: flex;
+  align-items: center;
+  color: var(--color-secondary);
+  padding-right: var(--space-md);
+  height: var(--banner-size-mobile);
+  background-color: var(--color-primary);
+
+  button {
+    height: var(--banner-size-mobile);
+    font-size: var(--font-size-lg);
+    color: var(--color-secondary);
+  }
+
+  img {
+    width: 60px;
+  }
+}
+

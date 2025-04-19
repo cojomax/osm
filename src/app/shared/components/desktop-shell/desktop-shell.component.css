@@ -1,0 +1,45 @@
+:host {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+}
+
+header > app-navigation-top {
+  width: 100%;
+  height: var(--banner-size-desktop);
+}
+
+main {
+  flex-grow: 1;
+}
+
+main.admin {
+  overflow: hidden;
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav-public {
+  height: 132px;
+}
+
+.nav-admin {
+  height: 72px;
+}
+
+img {
+  width: 100px;
+  margin-top: -28px;
+}
+
+@media (max-width: 768px) {
+  nav.nav {
+    display: none;
+  }
+}
