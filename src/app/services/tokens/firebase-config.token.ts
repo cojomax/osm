@@ -2,16 +2,16 @@ import { InjectionToken } from '@angular/core';
 import { FirebaseApp, initializeApp } from 'firebase/app';
 import { Auth, getAuth } from 'firebase/auth';
 import { Firestore, getFirestore } from 'firebase/firestore/lite';
-import { environment } from '../../../environments/environment.development';
+import { environment } from '../../../environments/environment';
 
 export const firebaseFactory = () => {
-    const app = initializeApp(environment.firebaseConfig);
-    // Initialize Firebase Authentication and get a reference to the service
-    const auth = getAuth(app);
-    // Initialize Cloud Firestore and get a reference to the service
-    const db = getFirestore(app);
+  const app = initializeApp(environment.firebaseConfig);
+  // Initialize Firebase Authentication and get a reference to the service
+  const auth = getAuth(app);
+  // Initialize Cloud Firestore and get a reference to the service
+  const db = getFirestore(app);
 
-    return new Firebase(app, auth, db);
+  return new Firebase(app, auth, db);
 };
 
 export class Firebase {
@@ -22,6 +22,4 @@ export class Firebase {
   ) {}
 }
 
-export const FIREBASE = new InjectionToken<Firebase>(
-  'firebase-config',
-);  
+export const FIREBASE = new InjectionToken<Firebase>('firebase-config');
