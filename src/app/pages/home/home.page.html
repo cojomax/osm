@@ -18,8 +18,8 @@
       class="fixture-icon"
       alt="fixture-icon" />
     <div id="match-details">
-      <span class="team away">{{ nextFixture()?.opponent?.name }}</span>
       <span class="team home">Old Speckled Men</span>
+      <span class="team away">{{ nextFixture()?.opponent?.name }}</span>
       <span class="details venue"> {{ nextFixture()?.venue?.name }} </span>
       <span class="details date">{{ nextFixture()?.date | date:'MMM d, y' }} {{ nextFixture()?.time | date:'HH:mm' }}</span>
       <span class="details competition"> {{ nextFixture()?.competition?.tier }}</span>
