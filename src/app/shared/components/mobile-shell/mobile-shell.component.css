@@ -1,3 +1,10 @@
+:host {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+}
+
 header {
   display: flex;
   align-items: center;
@@ -15,5 +22,14 @@ header {
   img {
     width: 60px;
   }
+}
+
+main {
+  flex-grow: 1;
+}
+
+footer {
+  text-align: center;
+  padding: var(--space-sm) 0;
 }
 
