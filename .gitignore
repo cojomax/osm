@@ -43,6 +43,3 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
-
-# For now
-/src/environments/
