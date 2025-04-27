@@ -14,6 +14,7 @@ import { StatisticType } from '../../models/statistic-type.enum';
 import { NzSpinComponent } from 'ng-zorro-antd/spin';
 
 @Component({
+  selector: 'osm-team',
   imports: [CommonModule, NzDividerModule, SwiperComponent, NzSpinComponent],
   templateUrl: './team.page.html',
   styleUrl: './team.page.css',
