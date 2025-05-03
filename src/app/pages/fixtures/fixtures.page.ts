@@ -5,7 +5,7 @@ import { Subscription, tap } from 'rxjs';
 import { NzCardModule } from '@nz/card';
 import { AsyncPipe, DatePipe, NgClass, NgOptimizedImage, NgTemplateOutlet } from '@angular/common';
 import { NzTagModule } from 'ng-zorro-antd/tag';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { NzDividerComponent } from 'ng-zorro-antd/divider';
 import { IS_MOBILE } from '../../services/tokens/is-mobile.token';
 
@@ -37,6 +37,7 @@ const MONTHS = new Map<number, string>([
     NgClass,
     NgOptimizedImage,
     AsyncPipe,
+    RouterLink,
   ],
 })
 export class FixturesPageComponent implements OnInit {

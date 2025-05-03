@@ -4,7 +4,7 @@
   <ul>
     @for (fixture of fixtures().get(month); track fixture.id) {
     <li>
-      <nz-card>
+      <nz-card [routerLink]="['/results', fixture.id]">
         <!------------>
         <!------------>
         <!-- Mobile -->
