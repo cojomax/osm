@@ -94,6 +94,7 @@ export class ManageFixturesPageComponent implements OnInit, AfterViewInit, OnDes
     {
       field: 'date',
       cellDataType: 'date',
+      sort: 'desc',
       valueFormatter: (params) => this.datePipe.transform(params.value, 'fullDate') ?? '',
     },
     {
