@@ -45,6 +45,10 @@ a {
   color: var(--font-secondary);
 }
 
+footer {
+  font-size: var(--font-size-sm);
+}
+
 /*==============================*/
 /* NG ZORRO Class Interferences */
 
