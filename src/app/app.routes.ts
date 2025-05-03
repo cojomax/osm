@@ -7,14 +7,14 @@ import { PageNotFoundPageComponent } from './pages/not-found/not-found.page';
 import { TeamPageComponent } from './pages/team/team.page';
 import { ManageFixturesPageComponent } from './pages/admin/manage-fixtures/manage-fixtures.page';
 import { FixturesPageComponent } from './pages/fixtures/fixtures.page';
+import { MatchReportPageComponent } from './pages/match-report/match-report-page.component';
 
 export const routes: Routes = [
   { path: '', component: HomePageComponent },
   { path: 'login', component: LoginPageComponent, title: 'Login' },
-  // { path: 'register', component: RegisterPageComponent },
-  // { path: 'match-report', component: MatchReportPageComponent },
   { path: 'team', component: TeamPageComponent, title: 'Team', data: { header: 'Team' } },
   { path: 'fixtures', component: FixturesPageComponent, title: 'Fixtures', data: { header: 'Fixtures' } },
+  { path: 'results/:id', component: MatchReportPageComponent, title: 'Match Report' },
   { path: 'results', component: FixturesPageComponent, title: 'Results', data: { header: 'Results' } },
   {
     path: 'admin',
