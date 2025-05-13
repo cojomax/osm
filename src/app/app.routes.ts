@@ -19,6 +19,7 @@ export const routes: Routes = [
   {
     path: 'admin',
     title: 'Admin',
+    canMatch: [canAccessAdmin],
     children: [
       { path: 'players/:id', component: PlayerDetailsPageComponent },
       { path: 'players', component: PlayersPageComponent },
