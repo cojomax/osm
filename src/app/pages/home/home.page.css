@@ -16,6 +16,10 @@
   padding-top: var(--space-xl);
 }
 
+h1 {
+  text-transform: uppercase;
+}
+
 #match-details {
   display: flex;
   flex-direction: column;
@@ -27,11 +31,6 @@
 #banner {
   display: flex;
 }
-
-/*img {*/
-/*  object-fit: cover;*/
-/*  object-position: top;*/
-/*}*/
 
 .fixture-icon {
   width: 80px;

@@ -25,6 +25,11 @@
   --space-xl: 40px;
   --space-xxl: 52px;
 
+  --gutter-xl: 200px;
+  --gutter-lg: 120px;
+  --gutter-md: 90px;
+  --gutter-sm: 40px;
+
   /* Constants */
   --banner-size-mobile: 88px;
   --banner-size-desktop: 44px;

@@ -3,7 +3,7 @@ import { FixtureService } from '../../services/fixture.service';
 import { Fixture } from '../../api/models/fixture.model';
 import { Subscription, tap } from 'rxjs';
 import { NzCardModule } from '@nz/card';
-import { AsyncPipe, DatePipe, NgClass, NgOptimizedImage, NgTemplateOutlet } from '@angular/common';
+import { AsyncPipe, DatePipe, NgClass, NgOptimizedImage, NgTemplateOutlet, UpperCasePipe } from '@angular/common';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { NzDividerComponent } from 'ng-zorro-antd/divider';
@@ -38,6 +38,7 @@ const MONTHS = new Map<number, string>([
     NgOptimizedImage,
     AsyncPipe,
     RouterLink,
+    UpperCasePipe,
   ],
 })
 export class FixturesPageComponent implements OnInit {

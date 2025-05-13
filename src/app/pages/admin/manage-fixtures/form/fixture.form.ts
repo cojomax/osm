@@ -24,6 +24,9 @@ import { NzIconModule } from '@nz/icon';
 import { Player } from '../../../../api/models/player.model';
 import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
 
+// FIXME The venue, competition, and opponent fields are not being prepopulated.
+// TODO Add MotM, DoD, Match Report. Separate form?
+
 @Component({
   selector: 'app-fixture-form',
   templateUrl: './fixture.form.html',

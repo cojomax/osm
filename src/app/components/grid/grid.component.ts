@@ -5,7 +5,7 @@ import { NzButtonComponent } from 'ng-zorro-antd/button';
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-grid',
+  selector: 'osm-grid',
   imports: [AgGridAngular, NzButtonComponent],
   templateUrl: './grid.component.html',
   styleUrl: './grid.component.css',

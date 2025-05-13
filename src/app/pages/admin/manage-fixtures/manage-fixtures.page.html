@@ -1,9 +1,9 @@
-<app-grid [colDefs]="colDefs" [data]="fixtures()" (add)="onAdd()">
+<osm-grid [colDefs]="colDefs" [data]="fixtures()" (add)="onAdd()">
   <span add-button>
     <span nz-icon nzType="user-add"></span>
     Fixture
   </span>
-</app-grid>
+</osm-grid>
 
 <app-form-modal modalTitle="Fixture" (modified)="onModified()">
   <app-fixture-form
