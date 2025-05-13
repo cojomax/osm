@@ -23,7 +23,7 @@ export class FixtureService implements Repository<Fixture> {
   }
 
   find(fixtureId: string) {
-    return this._dbSvc.getDocument<Fixture>(COLLECTION, fixtureId, this.converter);
+    return this._dbSvc.getDocuments<Fixture>(COLLECTION, fixtureId, this.converter);
   }
 
   create(fixture: Fixture) {

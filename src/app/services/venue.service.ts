@@ -23,7 +23,7 @@ export class VenueService implements Repository<Name> {
   }
 
   find(matchId: string) {
-    return this._dbSvc.getDocument<Name>(COLLECTION, matchId, this.converter);
+    return this._dbSvc.getDocuments<Name>(COLLECTION, matchId, this.converter);
   }
 
   create(match: Name) {

@@ -1,6 +1,16 @@
 import { Inject, Injectable } from '@angular/core';
-import { collection, deleteDoc, doc, DocumentSnapshot, getDoc, getDocs, setDoc } from 'firebase/firestore/lite';
-import { from, map } from 'rxjs';
+import {
+  collection,
+  deleteDoc,
+  doc,
+  DocumentSnapshot,
+  getDoc,
+  getDocs,
+  query,
+  setDoc,
+  where,
+} from 'firebase/firestore/lite';
+import { from, map, Observable } from 'rxjs';
 import { FIREBASE, Firebase } from '../../../services/tokens/firebase-config.token';
 import { StoreConverter } from '../converter.interface';
 import { FireStoreCollection } from '../db-collection.enum';
@@ -26,9 +36,21 @@ export class FirebaseDbService {
     return from(setDoc(ref, item));
   }
 
-  getDocument<T>(collectionName: string, id: string, converter: any) {
-    const docRef = doc(this._firebase.db, collectionName, id);
-    return from(getDoc(docRef.withConverter(converter))).pipe(map((d: DocumentSnapshot) => d.data() as T));
+  getDocuments<T>(collectionName: string, ids: string, converter: any): Observable<T>;
+  getDocuments<T>(collectionName: string, ids: string[], converter: any): Observable<T[]>;
+  getDocuments<T>(collectionName: string, ids: string | string[], converter: any): Observable<T | T[]> {
+    if (!ids || !ids.length) {
+      throw new Error('No value for parameter: id');
+    }
+
+    if (typeof ids === 'string') {
+      const docRef = doc(this._firebase.db, collectionName, ids);
+      return from(getDoc(docRef.withConverter(converter))).pipe(map((d: DocumentSnapshot) => d.data() as T));
+    }
+
+    const collectionRef = collection(this._firebase.db, collectionName);
+    const q = query(collectionRef, where('__name__', 'in', ids));
+    return from(getDocs(q)).pipe(map((querySnapshot) => querySnapshot.docs.map((doc) => doc.data() as T)));
   }
 
   updateDocument<T>(collectionName: FireStoreCollection, id: string, item: T, converter: StoreConverter<T>) {

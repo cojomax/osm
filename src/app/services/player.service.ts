@@ -22,8 +22,12 @@ export class PlayerService implements Repository<Player> {
     return this._dbSvc.getCollection<Player>(COLLECTION, this.converter);
   }
 
-  find(playerId: string) {
-    return this._dbSvc.getDocument<Player>(COLLECTION, playerId, this.converter);
+  find(playerIds: string) {
+    return this._dbSvc.getDocuments<Player>(COLLECTION, playerIds, this.converter);
+  }
+
+  findMany(playerIds: string[]) {
+    return this._dbSvc.getDocuments<Player>(COLLECTION, playerIds, this.converter);
   }
 
   create(player: Player) {

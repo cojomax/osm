@@ -23,7 +23,7 @@ export class CompetitionService implements Repository<Competition> {
   }
 
   find(matchId: string) {
-    return this._dbSvc.getDocument<Competition>(COLLECTION, matchId, this.converter);
+    return this._dbSvc.getDocuments<Competition>(COLLECTION, matchId, this.converter);
   }
 
   create(match: Competition) {
