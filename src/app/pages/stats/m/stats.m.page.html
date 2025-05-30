@@ -7,11 +7,28 @@
 
   <div id="stats-container">
     <section>
+      <h2>Performance</h2>
+
+      <ul>
+        <li><span>Position</span> 5th</li>
+        <li><span>Played</span> {{ page.seasonStats()?.gamesPlayed | dash }}</li>
+        <li><span>Won</span> {{ page.seasonStats()?.gamesWon | dash }}</li>
+        <li><span>Lost</span> {{ page.seasonStats()?.gamesLost | dash }}</li>
+        <li><span>Drawn</span> {{ page.seasonStats()?.gamesDrawn | dash }}</li>
+        <li><span>Points</span> {{ page.seasonPoints() }}</li>
+        <li><span>Scored</span> {{ page.seasonStats()?.goalsScored | dash }}</li>
+        <li><span>Conceded</span> {{ page.seasonStats()?.goalsConceded | dash }}</li>
+        <li><span>Difference</span> {{ page.seasonStats()?.goalDifference | dash }}</li>
+        <li><span>Clean Sheets</span>  {{ page.seasonStats()?.cleanSheets | dash }}</li>
+      </ul>
+    </section>
+
+    <section>
       <h2>Goals</h2>
 
       <ol>
         @for (scorer of topScorers(); track scorer.id; let idx = $index) {
-          <li><span> {{ idx + 1 }} {{ scorer.name }} </span>{{ scorer.goals }}</li>
+        <li><span> {{ idx + 1 }} {{ scorer.name }} </span>{{ scorer.goals }}</li>
         }
       </ol>
     </section>
@@ -20,7 +37,7 @@
       <h2>Assists</h2>
       <ol>
         @for (assistant of topAssistants(); track assistant.id; let idx = $index) {
-          <li><span> {{ idx + 1 }} {{ assistant.name }} </span>{{ assistant.assists }}</li>
+        <li><span> {{ idx + 1 }} {{ assistant.name }} </span>{{ assistant.assists }}</li>
         }
       </ol>
     </section>
@@ -29,7 +46,7 @@
       <h2>Contributions</h2>
       <ol>
         @for (contributor of topContributions(); track contributor.id; let idx = $index) {
-          <li><span> {{ idx + 1 }} {{ contributor.name }} </span>{{ contributor.contributions }}</li>
+        <li><span> {{ idx + 1 }} {{ contributor.name }} </span>{{ contributor.contributions }}</li>
         }
       </ol>
     </section>

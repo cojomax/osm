@@ -22,11 +22,9 @@ export class StatsPageComponent implements OnInit {
   protected isLoading = signal(true);
   protected seasonStats = signal<SeasonStats | null>(null);
   protected playerData = signal<any>(null);
-  protected seasonPoints = computed(() => {
-    const wins = this.seasonStats()?.gamesWon ?? 0;
-    const draws = this.seasonStats()?.gamesDrawn ?? 0;
-    return wins * 3 + draws;
-  });
+  protected seasonPoints = computed(
+    () => (this.seasonStats()?.gamesWon ?? 0) * 3 + (this.seasonStats()?.gamesDrawn ?? 0),
+  );
 
   protected isMobile = inject(IS_MOBILE);
   protected autoSizeStrategy: SizeColumnsToFitGridStrategy | SizeColumnsToContentStrategy = { type: 'fitGridWidth' };

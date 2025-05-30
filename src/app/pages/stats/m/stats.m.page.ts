@@ -3,10 +3,13 @@ import { SeasonStats } from 'src/app/models/season-stats.model';
 import { StatsPageService } from '../stats-page.service';
 import { FormsModule } from '@angular/forms';
 import { NzOptionComponent, NzSelectComponent } from 'ng-zorro-antd/select';
+import { DashIfEmptyPipe } from '../../../shared/pipes/dash-if-empty.pipe';
+import { DecimalPipe } from '@angular/common';
+import { NzStatisticComponent } from 'ng-zorro-antd/statistic';
 
 @Component({
   selector: 'osm-stats',
-  imports: [FormsModule, NzOptionComponent, NzSelectComponent],
+  imports: [FormsModule, NzOptionComponent, NzSelectComponent, DashIfEmptyPipe, DecimalPipe, NzStatisticComponent],
   templateUrl: './stats.m.page.html',
   styleUrl: './stats.m.page.css',
 })
