@@ -8,8 +8,9 @@ import { TeamPageComponent } from './pages/team/team.page';
 import { ManageFixturesPageComponent } from './pages/admin/manage-fixtures/manage-fixtures.page';
 import { FixturesPageComponent } from './pages/fixtures/fixtures.page';
 import { MatchReportPage } from './pages/match-report/match-report.page';
-import { StatsPageComponent } from './pages/stats/stats.page';
 import { canAccessAdmin } from './shared/guards/can-access-admin.guard';
+import { StatsLoaderComponent } from './pages/stats/stats-loader.component';
+import { mobileResolver } from './services/mobile.resolver';
 
 export const routes: Routes = [
   { path: '', component: HomePageComponent },
@@ -18,7 +19,13 @@ export const routes: Routes = [
   { path: 'fixtures', component: FixturesPageComponent, title: 'Fixtures', data: { header: 'Fixtures' } },
   { path: 'results/:id', component: MatchReportPage, title: 'Match Report' },
   { path: 'results', component: FixturesPageComponent, title: 'Results', data: { header: 'Results' } },
-  { path: 'stats', component: StatsPageComponent, title: 'Stats', data: { header: 'Stats' } },
+  {
+    path: 'stats',
+    component: StatsLoaderComponent,
+    resolve: { mobile: mobileResolver },
+    title: 'Stats',
+    data: { header: 'Stats' },
+  },
   {
     path: 'admin',
     title: 'Admin',
