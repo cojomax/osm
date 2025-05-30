@@ -30,6 +30,10 @@
   --gutter-md: 90px;
   --gutter-sm: 40px;
 
+  /* Border */
+  --border: 1px solid #d9d9d9;
+  --border-radius: 8px;
+
   /* Constants */
   --banner-size-mobile: 88px;
   --banner-size-desktop: 44px;
