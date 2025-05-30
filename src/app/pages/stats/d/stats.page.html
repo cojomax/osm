@@ -1,0 +1,39 @@
+desktop
+<main class="osm-container">
+  <h1>2024/25 Season</h1>
+
+  <nz-spin nzSize="large" [nzSpinning]="isLoading()"> </nz-spin>
+
+  <section class="summary">
+    <ul>
+      <li><nz-statistic nzTitle="Played" [nzValue]="seasonStats()?.gamesPlayed | dash"></nz-statistic></li>
+      <li><nz-statistic nzTitle="Won" [nzValue]="seasonStats()?.gamesWon | dash"></nz-statistic></li>
+      <li><nz-statistic nzTitle="Lost" [nzValue]="seasonStats()?.gamesLost | dash"></nz-statistic></li>
+      <li><nz-statistic nzTitle="Drawn" [nzValue]="seasonStats()?.gamesDrawn | dash"></nz-statistic></li>
+      <li><nz-statistic nzTitle="Points" [nzValue]="seasonPoints() | dash"></nz-statistic></li>
+      <li><nz-statistic nzTitle="Position" [nzValue]="'5th'"></nz-statistic></li>
+
+      <li>
+        <nz-statistic
+          nzTitle="Win %"
+          nzSuffix="%"
+          [nzValue]="((((seasonStats()?.winPercentage || 0) * 100) | number:'1.0-0') ?? undefined) | dash"
+        ></nz-statistic>
+      </li>
+      <li><nz-statistic nzTitle="Scored" [nzValue]="seasonStats()?.goalsScored | dash"></nz-statistic></li>
+      <li><nz-statistic nzTitle="Conceded" [nzValue]="seasonStats()?.goalsConceded | dash"></nz-statistic></li>
+      <li><nz-statistic nzTitle="Difference" [nzValue]="seasonStats()?.goalDifference | dash"></nz-statistic></li>
+      <li><nz-statistic nzTitle="Clean Sheets" [nzValue]="seasonStats()?.cleanSheets | dash"></nz-statistic></li>
+    </ul>
+  </section>
+
+  <section class="grid">
+    <ag-grid-angular
+      class="ag-theme-quartz"
+      [autoSizeStrategy]="autoSizeStrategy"
+      [rowData]="playerData()"
+      [columnDefs]="colDefs"
+      (gridReady)="onGridReady($event)"
+    />
+  </section>
+</main>

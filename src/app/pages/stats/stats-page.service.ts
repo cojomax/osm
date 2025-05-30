@@ -4,11 +4,11 @@ import { FixtureService } from '../../services/fixture.service';
 import { PlayerService } from '../../services/player.service';
 import { StatsService } from '../../services/stats.service';
 import { SeasonStats } from '../../models/season-stats.model';
-import { StatsPageComponent } from './d/stats.page';
 import { StatsMPageComponent } from './m/stats.m.page';
 import { Data } from '@angular/router';
 import { SeasonService } from '../../services/season.service';
 import { SelectOption } from '../../models/option.model';
+import { StatsPageComponent } from './d/stats.page';
 
 @Injectable()
 export class StatsPageService {
