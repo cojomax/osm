@@ -1,0 +1,37 @@
+<main class="osm-container">
+  <nz-select nzPlaceHolder="Select a competition">
+    @for (season of page.seasons(); track season.value) {
+    <nz-option [nzValue]="season.value" [nzLabel]="season.label"></nz-option>
+    }
+  </nz-select>
+
+  <div id="stats-container">
+    <section>
+      <h2>Goals</h2>
+
+      <ol>
+        @for (scorer of topScorers(); track scorer.id; let idx = $index) {
+          <li><span> {{ idx + 1 }} {{ scorer.name }} </span>{{ scorer.goals }}</li>
+        }
+      </ol>
+    </section>
+
+    <section>
+      <h2>Assists</h2>
+      <ol>
+        @for (assistant of topAssistants(); track assistant.id; let idx = $index) {
+          <li><span> {{ idx + 1 }} {{ assistant.name }} </span>{{ assistant.assists }}</li>
+        }
+      </ol>
+    </section>
+
+    <section>
+      <h2>Contributions</h2>
+      <ol>
+        @for (contributor of topContributions(); track contributor.id; let idx = $index) {
+          <li><span> {{ idx + 1 }} {{ contributor.name }} </span>{{ contributor.contributions }}</li>
+        }
+      </ol>
+    </section>
+  </div>
+</main>
