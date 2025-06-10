@@ -1,54 +1,36 @@
 <main class="osm-container">
-  <nz-select nzPlaceHolder="Select a competition">
-    @for (season of page.seasons(); track season.value) {
-    <nz-option [nzValue]="season.value" [nzLabel]="season.label"></nz-option>
-    }
-  </nz-select>
+  <!--  <nz-select nzPlaceHolder="Select a competition" [ngModel]="selectedSeason" >-->
+  <!--    @for (season of page.seasons(); track season.value) {-->
+  <!--    <nz-option [nzValue]="season.value" [nzLabel]="season.label"></nz-option>-->
+  <!--    }-->
+  <!--  </nz-select>-->
+  <p>2024/25</p>
 
   <div id="stats-container">
     <section>
       <h2>Performance</h2>
 
-      <ul>
-        <li><span>Position</span> 5th</li>
-        <li><span>Played</span> {{ page.seasonStats()?.gamesPlayed | dash }}</li>
-        <li><span>Won</span> {{ page.seasonStats()?.gamesWon | dash }}</li>
-        <li><span>Lost</span> {{ page.seasonStats()?.gamesLost | dash }}</li>
-        <li><span>Drawn</span> {{ page.seasonStats()?.gamesDrawn | dash }}</li>
-        <li><span>Points</span> {{ page.seasonPoints() }}</li>
-        <li><span>Scored</span> {{ page.seasonStats()?.goalsScored | dash }}</li>
-        <li><span>Conceded</span> {{ page.seasonStats()?.goalsConceded | dash }}</li>
-        <li><span>Difference</span> {{ page.seasonStats()?.goalDifference | dash }}</li>
-        <li><span>Clean Sheets</span>  {{ page.seasonStats()?.cleanSheets | dash }}</li>
-      </ul>
+      <osm-stats-table [data]="seasonStats"></osm-stats-table>
+      <a nz-button nzType="link" [routerLink]="['./' , 'performance']">See Full List</a>
     </section>
 
     <section>
       <h2>Goals</h2>
 
-      <ol>
-        @for (scorer of topScorers(); track scorer.id; let idx = $index) {
-        <li><span> {{ idx + 1 }} {{ scorer.name }} </span>{{ scorer.goals }}</li>
-        }
-      </ol>
+      <osm-stats-table [data]="page.topScorersStats()" [ordered]="true"></osm-stats-table>
+      <a nz-button nzType="link" [routerLink]="['./' , 'goals']">See Full List</a>
     </section>
 
     <section>
       <h2>Assists</h2>
-      <ol>
-        @for (assistant of topAssistants(); track assistant.id; let idx = $index) {
-        <li><span> {{ idx + 1 }} {{ assistant.name }} </span>{{ assistant.assists }}</li>
-        }
-      </ol>
+      <osm-stats-table [data]="page.topAssistantsStats()" [ordered]="true"></osm-stats-table>
+      <a nz-button nzType="link" [routerLink]="['./' , 'assists']">See Full List</a>
     </section>
 
     <section>
       <h2>Contributions</h2>
-      <ol>
-        @for (contributor of topContributions(); track contributor.id; let idx = $index) {
-        <li><span> {{ idx + 1 }} {{ contributor.name }} </span>{{ contributor.contributions }}</li>
-        }
-      </ol>
+      <osm-stats-table [data]="page.topContributionsStats()" [ordered]="true"></osm-stats-table>
+      <a nz-button nzType="link" [routerLink]="['./' , 'contributions']">See Full List</a>
     </section>
   </div>
 </main>

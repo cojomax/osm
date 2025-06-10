@@ -1,51 +1,41 @@
-import { Component, computed, inject, OnInit, signal } from '@angular/core';
-import { SeasonStats } from 'src/app/models/season-stats.model';
+import { Component, effect, inject } from '@angular/core';
 import { StatsPageService } from '../stats-page.service';
 import { FormsModule } from '@angular/forms';
-import { NzOptionComponent, NzSelectComponent } from 'ng-zorro-antd/select';
-import { DashIfEmptyPipe } from '../../../shared/pipes/dash-if-empty.pipe';
-import { DecimalPipe } from '@angular/common';
-import { NzStatisticComponent } from 'ng-zorro-antd/statistic';
+import { Stat, StatsPageState } from '../stats-page.state';
+import { StatsTableComponent } from '../../../components/stats-table/stats-table.component';
+import { NzButtonComponent } from 'ng-zorro-antd/button';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'osm-stats',
-  imports: [FormsModule, NzOptionComponent, NzSelectComponent, DashIfEmptyPipe, DecimalPipe, NzStatisticComponent],
+  imports: [FormsModule, StatsTableComponent, NzButtonComponent, RouterModule],
   templateUrl: './stats.m.page.html',
   styleUrl: './stats.m.page.css',
 })
-export class StatsMPageComponent implements OnInit {
-  topScorers = computed(() =>
-    this.page
-      .playerData()
-      .sort((a: any, b: any) => (a.goals < b.goals ? 1 : -1))
-      .filter((p: any, i: number) => !!p.goals && i <= 2),
-  );
+export class StatsMPageComponent {
+  protected selectedSeason = '';
 
-  topAssistants = computed(() =>
-    this.page
-      .playerData()
-      .sort((a: any, b: any) => (a.assists < b.assists ? 1 : -1))
-      .filter((p: any, i: number) => !!p.assists && i <= 2),
-  );
-
-  topContributions = computed(() =>
-    this.page
-      .playerData()
-      .sort((a: any, b: any) => (a.contributions < b.contributions ? 1 : -1))
-      .filter((p: any, i: number) => !!p.contributions && i <= 2),
-  );
-
-  protected isLoading = signal(true);
-  protected seasonStats = signal<SeasonStats | null>(null);
-  protected seasonPoints = computed(() => {
-    const wins = this.seasonStats()?.gamesWon ?? 0;
-    const draws = this.seasonStats()?.gamesDrawn ?? 0;
-    return wins * 3 + draws;
-  });
-
-  protected page = inject(StatsPageService);
+  protected svc = inject(StatsPageService);
+  protected page = inject(StatsPageState);
 
   // TODO Season object is supposed to contain an aggregation of the season stats.
 
-  ngOnInit() {}
+  constructor() {
+    effect(() => {
+      this.selectedSeason = this.svc.seasons().at(1)?.value ?? '';
+    });
+  }
+
+  protected seasonStats: Array<Stat> = [
+    { stat: 'Position', value: '5th' },
+    { stat: 'Played', value: this.svc.seasonStats()?.gamesPlayed },
+    { stat: 'Won', value: this.svc.seasonStats()?.gamesWon },
+    { stat: 'Lost', value: this.svc.seasonStats()?.gamesLost },
+    { stat: 'Drawn', value: this.svc.seasonStats()?.gamesDrawn },
+    { stat: 'Points', value: this.svc.seasonPoints() },
+    { stat: 'Scored', value: this.svc.seasonStats()?.goalsScored },
+    { stat: 'Conceded', value: this.svc.seasonStats()?.goalsConceded },
+    { stat: 'Difference', value: this.svc.seasonStats()?.goalDifference },
+    { stat: 'Clean Sheets', value: this.svc.seasonStats()?.cleanSheets },
+  ];
 }
