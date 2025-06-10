@@ -11,8 +11,9 @@ import { MatchReportPage } from './pages/match-report/match-report.page';
 import { canAccessAdmin } from './shared/guards/can-access-admin.guard';
 import { StatsLoaderComponent } from './pages/stats/stats-loader.component';
 import { mobileResolver } from './services/mobile.resolver';
+import { StatsMDetailsPageComponent } from './pages/stats/m/details/stats-details.m.page';
 
-export const routes: Routes = [
+export const ROUTES: Routes = [
   { path: '', component: HomePageComponent },
   { path: 'login', component: LoginPageComponent, title: 'Login' },
   { path: 'team', component: TeamPageComponent, title: 'Team', data: { header: 'Team' } },
@@ -21,10 +22,14 @@ export const routes: Routes = [
   { path: 'results', component: FixturesPageComponent, title: 'Results', data: { header: 'Results' } },
   {
     path: 'stats',
-    component: StatsLoaderComponent,
-    resolve: { mobile: mobileResolver },
     title: 'Stats',
+    resolve: { mobile: mobileResolver },
     data: { header: 'Stats' },
+    // FIXME May also have to be a loader at child level?
+    children: [
+      { path: ':category', component: StatsMDetailsPageComponent },
+      { path: '', component: StatsLoaderComponent },
+    ],
   },
   {
     path: 'admin',
