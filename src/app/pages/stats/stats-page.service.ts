@@ -9,10 +9,10 @@ import { Data } from '@angular/router';
 import { SeasonService } from '../../services/season.service';
 import { SelectOption } from '../../models/option.model';
 import { StatsPageComponent } from './d/stats.page';
+import { StatsPageState } from './stats-page.state';
 
 @Injectable()
 export class StatsPageService {
-  playerData = signal<any>([]);
   seasonStats = signal<SeasonStats | null>(null);
   headerTxt = signal('');
 
@@ -23,6 +23,7 @@ export class StatsPageService {
 
   // protected isMobile = inject(IS_MOBILE);
 
+  private state = inject(StatsPageState);
   private statsSvc = inject(StatsService);
   private seasonSvc = inject(SeasonService);
   private playerSvc = inject(PlayerService);
@@ -65,7 +66,7 @@ export class StatsPageService {
         this.seasonStats.set(this.statsSvc.generateSeasonStats(seasonResults));
 
         const playerStats = this.statsSvc.generatePlayerStats(seasonResults);
-        this.playerData.set(
+        this.state.playerData.set(
           res[1]
             .filter((p) => !p.isLegend && p.squadNumber)
             .map((p) => ({
