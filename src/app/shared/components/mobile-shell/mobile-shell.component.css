@@ -1,17 +1,16 @@
 :host {
-  height: 100dvh;
-  display: flex;
-  flex-direction: column;
-  overflow: auto;
+  /*height: 100dvh;*/
 }
 
 header {
+  position: sticky;
   display: flex;
   align-items: center;
   color: var(--color-secondary);
   padding-right: var(--space-md);
   height: var(--banner-size-mobile);
   background-color: var(--color-primary);
+  width: 100%;
 
   button {
     height: var(--banner-size-mobile);
@@ -25,11 +24,15 @@ header {
 }
 
 main {
-  flex-grow: 1;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
 }
 
 footer {
   text-align: center;
+  margin-top: var(--space-lg);
   padding: var(--space-sm) 0;
 }
 
