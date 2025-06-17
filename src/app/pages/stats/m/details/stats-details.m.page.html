@@ -1,0 +1,15 @@
+<div class="g-m-container">
+  <a nz-button nzType="link" routerLink="/stats">
+    <nz-icon nzType="arrow-left"></nz-icon>
+    Back
+  </a>
+
+  <div class="stats-container">
+    <section>
+      <h2>{{ pageTitle() | titlecase }}</h2>
+      <p>2024/25</p>
+
+      <osm-stats-table [data]="data()"></osm-stats-table>
+    </section>
+  </div>
+</div>
