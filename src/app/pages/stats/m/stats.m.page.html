@@ -1,4 +1,4 @@
-<main class="osm-container">
+<main class="g-m-container">
   <!--  <nz-select nzPlaceHolder="Select a competition" [ngModel]="selectedSeason" >-->
   <!--    @for (season of page.seasons(); track season.value) {-->
   <!--    <nz-option [nzValue]="season.value" [nzLabel]="season.label"></nz-option>-->
@@ -6,31 +6,45 @@
   <!--  </nz-select>-->
   <p>2024/25</p>
 
-  <div id="stats-container">
+  <div class="stats-container">
     <section>
       <h2>Performance</h2>
 
       <osm-stats-table [data]="seasonStats"></osm-stats-table>
-      <a nz-button nzType="link" [routerLink]="['./' , 'performance']">See Full List</a>
     </section>
 
     <section>
       <h2>Goals</h2>
 
       <osm-stats-table [data]="page.topScorersStats()" [ordered]="true"></osm-stats-table>
-      <a nz-button nzType="link" [routerLink]="['./' , 'goals']">See Full List</a>
+      <div class="full-list-nav">
+        <a nz-button nzType="link" [routerLink]="['./' , 'goals']">
+          See Full List
+          <nz-icon nzType="arrow-right"></nz-icon>
+        </a>
+      </div>
     </section>
 
     <section>
       <h2>Assists</h2>
       <osm-stats-table [data]="page.topAssistantsStats()" [ordered]="true"></osm-stats-table>
-      <a nz-button nzType="link" [routerLink]="['./' , 'assists']">See Full List</a>
+      <div class="full-list-nav">
+        <a nz-button nzType="link" [routerLink]="['./' , 'assists']">
+          See Full List
+          <nz-icon nzType="arrow-right"></nz-icon>
+        </a>
+      </div>
     </section>
 
     <section>
       <h2>Contributions</h2>
       <osm-stats-table [data]="page.topContributionsStats()" [ordered]="true"></osm-stats-table>
-      <a nz-button nzType="link" [routerLink]="['./' , 'contributions']">See Full List</a>
+      <div class="full-list-nav">
+        <a nz-button nzType="link" [routerLink]="['./' , 'contributions']">
+          See Full List
+          <nz-icon nzType="arrow-right"></nz-icon>
+        </a>
+      </div>
     </section>
   </div>
 </main>

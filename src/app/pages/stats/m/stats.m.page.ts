@@ -5,10 +5,11 @@ import { Stat, StatsPageState } from '../stats-page.state';
 import { StatsTableComponent } from '../../../components/stats-table/stats-table.component';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
 import { RouterModule } from '@angular/router';
+import { NzIconDirective } from 'ng-zorro-antd/icon';
 
 @Component({
   selector: 'osm-stats',
-  imports: [FormsModule, StatsTableComponent, NzButtonComponent, RouterModule],
+  imports: [FormsModule, StatsTableComponent, NzButtonComponent, RouterModule, NzIconDirective],
   templateUrl: './stats.m.page.html',
   styleUrl: './stats.m.page.css',
 })
