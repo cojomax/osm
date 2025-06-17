@@ -11,7 +11,9 @@ import { SelectOption } from '../../models/option.model';
 import { StatsPageComponent } from './d/stats.page';
 import { StatsPageState } from './stats-page.state';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class StatsPageService {
   seasonStats = signal<SeasonStats | null>(null);
   headerTxt = signal('');

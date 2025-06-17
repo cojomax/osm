@@ -2,7 +2,9 @@ import { computed, Injectable, signal } from '@angular/core';
 
 export type Stat = { stat: string; value: string | number | undefined };
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class StatsPageState {
   playerData = signal<any>([]);
 
@@ -20,7 +22,7 @@ export class StatsPageState {
   topAssistantsStats = computed(() =>
     this.topAssistants().map((t: any) => ({
       stat: t.name,
-      value: t.goals,
+      value: t.assists,
     })),
   );
 
@@ -29,7 +31,7 @@ export class StatsPageState {
   topContributionsStats = computed(() =>
     this.topContributions().map((t: any) => ({
       stat: t.name,
-      value: t.goals,
+      value: t.contributions,
     })),
   );
 
@@ -55,7 +57,7 @@ export class StatsPageState {
   assistantStats = computed<Stat[]>(() =>
     this.assistants().map((s: any) => ({
       stat: s.name,
-      value: s.goals,
+      value: s.assists,
     })),
   );
 
@@ -68,7 +70,7 @@ export class StatsPageState {
   contributorStats = computed<Stat[]>(() =>
     this.contributors().map((s: any) => ({
       stat: s.name,
-      value: s.goals,
+      value: s.contributions,
     })),
   );
 }

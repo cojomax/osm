@@ -7,12 +7,12 @@ import { StatsPageService } from './stats-page.service';
   selector: 'osm-stats-loader',
   template: `<ng-container *ngComponentOutlet="component"></ng-container>`,
   imports: [NgComponentOutlet],
-  providers: [StatsPageService],
 })
 export class StatsLoaderComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private statsPageSvc = inject(StatsPageService);
-  protected component = inject(StatsPageService).initComponent(this.route.snapshot.data);
+
+  protected component = this.statsPageSvc.initComponent(this.route.snapshot.data);
 
   ngOnInit() {
     this.statsPageSvc.initPage().subscribe();
