@@ -3,6 +3,10 @@
   padding: var(--space-lg);
 }
 
+.g-m-container {
+  padding: var(--space-md);
+}
+
 .spaced {
   display: flex;
 }

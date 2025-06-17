@@ -1,9 +1,8 @@
-:host {
-  /*height: 100dvh;*/
-}
-
 header {
-  position: sticky;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
   display: flex;
   align-items: center;
   color: var(--color-secondary);
@@ -11,6 +10,7 @@ header {
   height: var(--banner-size-mobile);
   background-color: var(--color-primary);
   width: 100%;
+  /*overflow: hidden;*/
 
   button {
     height: var(--banner-size-mobile);
@@ -23,11 +23,16 @@ header {
   }
 }
 
+#main-container {
+  margin-top: var(--banner-size-mobile);
+  height: calc(100vh - var(--banner-size-mobile));
+  overflow: auto;
+
+}
+
 main {
-  height: 100dvh;
   display: flex;
   flex-direction: column;
-  overflow: auto;
 }
 
 footer {
