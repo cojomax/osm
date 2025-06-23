@@ -19,7 +19,7 @@ import { FormModalService } from './form-modal.service';
 import { FormComponent } from '../../form/form.component';
 
 @Component({
-  selector: 'app-form-modal',
+  selector: 'osm-form-modal',
   imports: [NzModalModule, NzButtonComponent, CommonModule, NzModalFooterDirective],
   templateUrl: './form-modal.component.html',
 })

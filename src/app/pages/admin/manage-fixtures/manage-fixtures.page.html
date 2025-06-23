@@ -1,3 +1,9 @@
+<nz-select [ngStyle]="{ 'width.px': 200}" (ngModelChange)="onSeasonSelected($event)" [ngModel]="selectedSeason">
+  @for(season of seasons(); track season.id) {
+  <nz-option [nzValue]="season.id" [nzLabel]="season.name"></nz-option>
+  }
+</nz-select>
+
 <osm-grid [colDefs]="colDefs" [data]="fixtures()" (add)="onAdd()">
   <span add-button>
     <span nz-icon nzType="user-add"></span>
@@ -5,12 +11,12 @@
   </span>
 </osm-grid>
 
-<app-form-modal modalTitle="Fixture" (modified)="onModified()">
-  <app-fixture-form
+<osm-form-modal modalTitle="Fixture" (modified)="onModified()">
+  <osm-fixture-form
     [teams]="teams()"
     [venues]="venues()"
     [competitions]="competitions()"
     [players]="players()"
     (statusChanged)="modalSvc.updateStatus($event)"
-  ></app-fixture-form>
-</app-form-modal>
+  ></osm-fixture-form>
+</osm-form-modal>

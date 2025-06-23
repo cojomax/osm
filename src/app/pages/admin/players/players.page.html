@@ -5,6 +5,6 @@
   </span>
 </osm-grid>
 
-<app-form-modal modalTitle="Player" (modified)="onModified()">
+<osm-form-modal modalTitle="Player" (modified)="onModified()">
   <app-player-form (statusChanged)="modalSvc.updateStatus($event)"></app-player-form>
-</app-form-modal>
+</osm-form-modal>

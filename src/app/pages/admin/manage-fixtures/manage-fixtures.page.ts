@@ -1,9 +1,9 @@
-import { DatePipe } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { AfterViewInit, Component, inject, LOCALE_ID, OnDestroy, OnInit, signal, ViewChild } from '@angular/core';
 import { NzButtonModule } from '@nz/button';
 import { NzIconModule } from '@nz/icon';
 import { NzModalModule } from '@nz/modal';
-import { Subscription, tap } from 'rxjs';
+import { mergeMap, Subscription, tap } from 'rxjs';
 import { ColDef, ICellRendererParams } from 'ag-grid-community';
 import { FixtureFormComponent } from './form/fixture.form';
 import { Fixture } from '../../../api/models/fixture.model';
@@ -20,10 +20,26 @@ import { Competition } from '../../../api/models/competition.model';
 import { CompetitionService } from '../../../services/competition.service';
 import { Player } from '../../../api/models/player.model';
 import { PlayerService } from '../../../services/player.service';
+import { NzSelectComponent, NzSelectModule } from 'ng-zorro-antd/select';
+import { Season } from '../../../api/models/season.model';
+import { SeasonService } from '../../../services/season.service';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'osm-manage-fixtures',
-  imports: [NzButtonModule, NzIconModule, NzModalModule, FixtureFormComponent, FormModalComponent, GridComponent],
+  imports: [
+    CommonModule,
+    FixtureFormComponent,
+    FormModalComponent,
+    GridComponent,
+    NzButtonModule,
+    NzIconModule,
+    NzModalModule,
+    NzSelectComponent,
+    NzSelectModule,
+    FormsModule,
+    ReactiveFormsModule,
+  ],
   templateUrl: './manage-fixtures.page.html',
   styleUrl: './manage-fixtures.page.css',
   providers: [FormModalService, { provide: REPOSITORY_SERVICE, useExisting: FixtureService }],
@@ -34,12 +50,17 @@ export class ManageFixturesPageComponent implements OnInit, AfterViewInit, OnDes
   protected teams = signal<Name[]>([]);
   protected competitions = signal<Competition[]>([]);
   protected players = signal<Player[]>([]);
+  protected seasons = signal<Season[]>([]);
   protected selectedFixture = signal<Fixture | null>(null);
+
+  protected selectedSeason = '';
 
   private datePipe: DatePipe;
   private subs = new Subscription();
 
   @ViewChild(FixtureFormComponent) form!: FixtureFormComponent;
+
+  private seasonSvc = inject(SeasonService);
 
   constructor(
     protected modalSvc: FormModalService<Fixture>,
@@ -53,8 +74,6 @@ export class ManageFixturesPageComponent implements OnInit, AfterViewInit, OnDes
   }
 
   ngOnInit() {
-    this.subs.add(this.updateTableData().subscribe());
-
     this.subs.add(
       this.venuesSvc
         .fetch()
@@ -82,12 +101,31 @@ export class ManageFixturesPageComponent implements OnInit, AfterViewInit, OnDes
         .pipe(tap((res) => this.players.set(res)))
         .subscribe(),
     );
+
+    this.subs.add(
+      this.seasonSvc
+        .fetch()
+        .pipe(
+          tap((res) => {
+            const seasons = res.sort((a, b) => (a.startDate!.getTime() < b.startDate!.getTime() ? 1 : -1));
+            this.seasons.set(seasons);
+            this.selectedSeason = seasons[0].id;
+          }),
+          mergeMap(() => this.updateTableData(this.selectedSeason)),
+        )
+        .subscribe(),
+    );
   }
 
   ngAfterViewInit() {}
 
   ngOnDestroy() {
     this.subs.unsubscribe();
+  }
+
+  protected onSeasonSelected(season: string) {
+    this.selectedSeason = season;
+    this.subs.add(this.updateTableData(this.selectedSeason).subscribe());
   }
 
   protected colDefs: ColDef<Fixture>[] = [
@@ -171,8 +209,8 @@ export class ManageFixturesPageComponent implements OnInit, AfterViewInit, OnDes
     this.modalSvc.openModal(this.selectedFixture());
   }
 
-  private updateTableData() {
-    return this.fixtureSvc.fetch().pipe(
+  private updateTableData(seasonId: string) {
+    return this.fixtureSvc.query('season.id', seasonId).pipe(
       tap((fixtures) => {
         this.fixtures.set(fixtures);
       }),
@@ -181,6 +219,6 @@ export class ManageFixturesPageComponent implements OnInit, AfterViewInit, OnDes
 
   protected onModified() {
     // TODO Try add this to where updates are made
-    this.subs.add(this.updateTableData().subscribe());
+    this.subs.add(this.updateTableData(this.selectedSeason).subscribe());
   }
 }

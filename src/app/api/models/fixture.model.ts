@@ -10,6 +10,8 @@ export class Fixture implements Entity {
 
   id = '';
 
+  season: Name | null = null;
+
   /** The date the match is played on. */
   date: Date | null = null; // TODO Read model
 

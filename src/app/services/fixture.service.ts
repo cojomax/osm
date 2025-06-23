@@ -26,6 +26,10 @@ export class FixtureService implements Repository<Fixture> {
     return this._dbSvc.getDocuments<Fixture>(COLLECTION, fixtureId, this.converter);
   }
 
+  query(field: string, query: string) {
+    return this._dbSvc.queryDocuments<Fixture>(COLLECTION, this.converter, { field, query });
+  }
+
   create(fixture: Fixture) {
     return this._dbSvc.createDocument(COLLECTION, fixture, this.converter);
   }

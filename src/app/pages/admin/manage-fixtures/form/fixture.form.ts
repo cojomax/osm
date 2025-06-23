@@ -28,7 +28,7 @@ import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
 // TODO Add MotM, DoD, Match Report. Separate form?
 
 @Component({
-  selector: 'app-fixture-form',
+  selector: 'osm-fixture-form',
   templateUrl: './fixture.form.html',
   styleUrl: './fixture.form.css',
   imports: [

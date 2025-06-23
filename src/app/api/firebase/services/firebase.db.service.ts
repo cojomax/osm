@@ -53,6 +53,15 @@ export class FirebaseDbService {
     return from(getDocs(q)).pipe(map((querySnapshot) => querySnapshot.docs.map((doc) => doc.data() as T)));
   }
 
+  queryDocuments<T>(collectionName: string, converter: any, search: { field: string; query: string }): Observable<T[]> {
+    const q = query(
+      collection(this._firebase.db, collectionName).withConverter(converter),
+      where(search.field, '==', search.query),
+    );
+
+    return from(getDocs(q)).pipe(map((querySnapshot) => querySnapshot.docs.map((doc) => doc.data() as T)));
+  }
+
   updateDocument<T>(collectionName: FireStoreCollection, id: string, item: T, converter: StoreConverter<T>) {
     if (!id) {
       throw new Error('No value for parameter: id');
