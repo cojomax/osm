@@ -1,0 +1,23 @@
+@if (ordered()) {
+  <ol>
+    <ng-container *ngTemplateOutlet="list"></ng-container>
+  </ol>
+} @else {
+  <ul>
+    <ng-container *ngTemplateOutlet="list"></ng-container>
+  </ul>
+}
+
+<ng-template #list>
+  @for (datum of data(); track datum.stat; let idx = $index) {
+    <li>
+      <span>
+        @if (ordered()) {
+          {{ idx + 1 }}
+        }
+        {{ datum.stat }}
+      </span>
+      {{ datum.value | dash }}
+    </li>
+  }
+</ng-template>

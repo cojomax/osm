@@ -1,0 +1,19 @@
+ol, ul {
+  padding: 0;
+  border: var(--border);
+  border-radius: var(--border-radius);
+
+  li {
+    display: flex;
+    justify-content: space-between;
+    list-style: none;
+    border-radius: var(--border-radius) var(--border-radius) 0 0;
+    padding: var(--space-sm) var(--space-sm);
+  }
+
+  li:first-child {
+    font-size: 1.2em;
+    padding: var(--space-md) var(--space-sm);
+    background-color: var(--color-secondary);
+  }
+}

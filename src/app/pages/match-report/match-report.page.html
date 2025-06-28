@@ -1,0 +1,115 @@
+@if(isMobile | async) {
+<div class="osm-container">
+  <div class="match-details">
+    {{ fixture()?.date | date:'ccc MMM d, y' }} <br />
+    {{ fixture()?.competition?.name }} {{ fixture()?.competition?.tier }}
+    <br />
+    {{ fixture()?.venue?.name }}
+  </div>
+
+  <div class="m-result">
+    <h1><span class="m-larger">{{ fixture()?.homeGoals }}</span> Old Speckled Men</h1>
+    <h1 class="m-away"><span class="m-larger">{{ fixture()?.opponentGoals }}</span> {{ fixture()?.opponent?.name }}</h1>
+
+    <ul class="goals">
+      @for(goal of fixture()?.goals; track goal.id) {
+      <li>
+        <ng-container *ngTemplateOutlet="scorer; context: { $implicit: goal}"></ng-container>
+        <ng-container *ngTemplateOutlet="assisted; context: { $implicit: goal}"></ng-container>
+      </li>
+      }
+    </ul>
+
+    <div class="m-awards">
+      <nz-statistic nzTitle="Man of the Match" nzValue="Nick Chew"></nz-statistic>
+      <nz-statistic nzTitle="Dick of the Day" nzValue="Joel Rafferty"></nz-statistic>
+    </div>
+
+    <p>
+      In the game week proceeding the death of Pope Francis, the Old Speckled Men were mourning the absence of their own
+      Head of State against Revolution in a mid table battle of mediocrity. Left rudderless by the absence of Kieran Karolak
+      (rumoured to be on a pilgrimage to the Vatican) Steven Harrington, with his own links to the nefarious side of
+      Catholicism, duly stepped up to the plate and chaos ensued.<br /><br />
+      ‘Smite me, oh Mighty Smiter’ screamed David Cornell, pulling up with an Achilles injury mere minutes before the game.
+      ‘Judas! Judas! Judas!’ yelled the Revo faithful, Nick Chew playing the role of pantomime villain. Speckles kicked off
+      and dominated from the start. Chew was unusually wasteful in front of goal, perhaps distracted by his own Mary
+      Magdalene watching on from the stands. Josh Carubia was the one to break the deadlock, 1-0.<br /><br />
+      Chew then came in to his own, completing a hat trick from Ben Thomson and Syf Gordon (2). The satanic goalkeeper
+      suddenly afraid of crosses. Revolution pulled one back before Chew added his fourth, thumping his chest where the
+      sacred Hen lies, any chance of resurrecting a move back to Revs as dead as Francis himself.<br /><br />
+      The self proclaimed Archbishop of Banterbury, Joel Rafferty, received a second yellow for preventing the keeper taking
+      a fee kick and was duly sent packing by the referee. ‘Speckles, wherever you may be, keep your wife from Joel
+      Rafferty’ laughed the Speckles faithful as the centre back sidled up to Chew’s flame in the stands with 20 minutes to
+      go. All that remained was for Revs to score a consolation and Gordon to score from a Joe Chagas assist. Chagas would
+      later regret contributing, last seen being led to the toilets by Father Harrington as a reward. Speckles 6 - 2
+      Revolution.
+    </p>
+  </div>
+</div>
+
+} @else {
+<section class="osm-container">
+  <div class="match-details">
+    {{ fixture()?.date | date:'ccc MMM d, y' }} <br />
+    {{ fixture()?.competition?.name }} {{ fixture()?.competition?.tier }}
+    <br />
+    {{ fixture()?.venue?.name }}
+  </div>
+
+  <div class="score">
+    <h1 [ngStyle]="{ 'margin-bottom': '16px' }">
+      Old Speckled Men
+      <span class="larger">{{ fixture()?.homeGoals }} &#45; {{ fixture()?.opponentGoals }}</span>
+      <span class="away">{{ fixture()?.opponent?.name }} </span>
+    </h1>
+    <!-- List of goal scorers and assists -->
+    <ul class="goals">
+      @for(goal of fixture()?.goals; track goal.id) {
+      <li>
+        <ng-container *ngTemplateOutlet="scorer; context: { $implicit: goal}"></ng-container>
+        <ng-container *ngTemplateOutlet="assisted; context: { $implicit: goal}"></ng-container>
+      </li>
+      }
+    </ul>
+  </div>
+</section>
+
+<section class="osm-container match-report">
+  <div class="awards">
+    <nz-statistic nzTitle="Man of the Match" nzValue="Nick Chew"></nz-statistic>
+    <nz-statistic nzTitle="Dick of the Day" nzValue="Joel Rafferty"></nz-statistic>
+  </div>
+
+  In the game week proceeding the death of Pope Francis, the Old Speckled Men were mourning the absence of their own
+  Head of State against Revolution in a mid table battle of mediocrity. Left rudderless by the absence of Kieran Karolak
+  (rumoured to be on a pilgrimage to the Vatican) Steven Harrington, with his own links to the nefarious side of
+  Catholicism, duly stepped up to the plate and chaos ensued.<br /><br />
+  ‘Smite me, oh Mighty Smiter’ screamed David Cornell, pulling up with an Achilles injury mere minutes before the game.
+  ‘Judas! Judas! Judas!’ yelled the Revo faithful, Nick Chew playing the role of pantomime villain. Speckles kicked off
+  and dominated from the start. Chew was unusually wasteful in front of goal, perhaps distracted by his own Mary
+  Magdalene watching on from the stands. Josh Carubia was the one to break the deadlock, 1-0.<br /><br />
+  Chew then came in to his own, completing a hat trick from Ben Thomson and Syf Gordon (2). The satanic goalkeeper
+  suddenly afraid of crosses. Revolution pulled one back before Chew added his fourth, thumping his chest where the
+  sacred Hen lies, any chance of resurrecting a move back to Revs as dead as Francis himself.<br /><br />
+  The self proclaimed Archbishop of Banterbury, Joel Rafferty, received a second yellow for preventing the keeper taking
+  a fee kick and was duly sent packing by the referee. ‘Speckles, wherever you may be, keep your wife from Joel
+  Rafferty’ laughed the Speckles faithful as the centre back sidled up to Chew’s flame in the stands with 20 minutes to
+  go. All that remained was for Revs to score a consolation and Gordon to score from a Joe Chagas assist. Chagas would
+  later regret contributing, last seen being led to the toilets by Father Harrington as a reward. Speckles 6 - 2
+  Revolution.
+</section>
+}
+
+<ng-template #scorer let-goal>
+  <div class="goal">
+    <img ngSrc="/assets/icons/football-secondary.svg" width="20" height="20" alt="football-svg" />
+    {{ goal.scored?.firstName }} {{ goal.scored?.lastName }}
+  </div>
+</ng-template>
+
+<ng-template #assisted let-goal>
+  <div class="goal">
+    <img ngSrc="/assets/icons/boot-secondary.svg" width="20" height="20" alt="boot-svg" />
+    {{ goal.assisted?.firstName }} {{ goal.assisted?.lastName }}
+  </div>
+</ng-template>
