@@ -8,10 +8,10 @@ import { TeamPageComponent } from './pages/team/team.page';
 import { ManageFixturesPageComponent } from './pages/admin/manage-fixtures/manage-fixtures.page';
 import { FixturesPageComponent } from './pages/fixtures/fixtures.page';
 import { MatchReportPage } from './pages/match-report/match-report.page';
-import { canAccessAdmin } from './shared/guards/can-access-admin.guard';
 import { StatsLoaderComponent } from './pages/stats/stats-loader.component';
 import { mobileResolver } from './services/mobile.resolver';
 import { StatsMDetailsPageComponent } from './pages/stats/m/details/stats-details.m.page';
+import { canActivate } from '@angular/fire/auth-guard';
 
 export const ROUTES: Routes = [
   { path: '', component: HomePageComponent },
@@ -34,7 +34,7 @@ export const ROUTES: Routes = [
   {
     path: 'admin',
     title: 'Admin',
-    canMatch: [canAccessAdmin],
+    canActivate: [canActivate],
     children: [
       { path: 'players/:id', component: PlayerDetailsPageComponent },
       { path: 'players', component: PlayersPageComponent },

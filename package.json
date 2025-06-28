@@ -15,6 +15,7 @@
     "@angular/common": "^19.1.4",
     "@angular/compiler": "^19.1.4",
     "@angular/core": "^19.1.4",
+    "@angular/fire": "^20.0.1",
     "@angular/forms": "^19.1.4",
     "@angular/platform-browser": "^19.1.4",
     "@angular/platform-browser-dynamic": "^19.1.4",
@@ -41,6 +42,7 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
+    "papaparse": "^5.5.3",
     "prettier": "^3.3.3",
     "typescript": "~5.5.2"
   }
