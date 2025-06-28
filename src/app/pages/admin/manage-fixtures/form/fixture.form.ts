@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, computed, EventEmitter, inject, input, OnDestroy, OnInit, Output } from '@angular/core';
 import {
   FormArray,
@@ -32,7 +31,6 @@ import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
   templateUrl: './fixture.form.html',
   styleUrl: './fixture.form.css',
   imports: [
-    CommonModule,
     ReactiveFormsModule,
     NzButtonModule,
     NzDatePickerModule,

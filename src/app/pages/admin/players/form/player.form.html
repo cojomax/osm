@@ -1,73 +1,66 @@
-<ng-container *ngIf="form">
-  <form nz-form [formGroup]="form">
-    <!-- First name -->
-    <nz-form-item>
-      <nz-form-label [nzSpan]="rowSpan.colOne" nzFor="id-first-name"> First Name </nz-form-label>
-      <nz-form-control [nzSpan]="rowSpan.colTwo" nzErrorTip="First name is required">
-        <input nz-input id="id-first-name" formControlName="firstName" type="text" />
-      </nz-form-control>
-    </nz-form-item>
-
-    <!-- Last name -->
-    <nz-form-item>
-      <nz-form-label [nzSpan]="rowSpan.colOne" nzFor="id-last-name"> Last Name </nz-form-label>
-      <nz-form-control [nzSpan]="rowSpan.colTwo" nzErrorTip="Last name is required">
-        <input nz-input id="id-last-name" formControlName="lastName" type="text" />
-      </nz-form-control>
-    </nz-form-item>
-
-    <!-- Position -->
-    <nz-form-item>
-      <nz-form-label [nzSpan]="rowSpan.colOne" nzFor="id-position"> Position </nz-form-label>
-      <nz-form-control [nzSpan]="rowSpan.colTwo" nzErrorTip="Position is required">
-          <nz-select nzPlaceHolder="" formControlName="position">
-            @for(position of positionOptions; track position.value) {
-            <nz-option [nzValue]="position.value" [nzLabel]="position.label"></nz-option>
-            }
-          </nz-select>
-      </nz-form-control>
-    </nz-form-item>
-
-    <!-- Squad Number -->
-    <nz-form-item>
-      <nz-form-label [nzSpan]="rowSpan.colOne" nzFor="id-squad-number"> Squad Number </nz-form-label>
-      <nz-form-control [nzSpan]="rowSpan.colTwo" nzErrorTip="Squad number is required">
-        <input nz-input id="id-squad-number" formControlName="squadNumber" type="number" />
-      </nz-form-control>
-    </nz-form-item>
-
-    <!-- Country -->
-    <nz-form-item>
-      <nz-form-label [nzSpan]="rowSpan.colOne" nzFor="id-country"> Country </nz-form-label>
-      <nz-form-control [nzSpan]="rowSpan.colTwo">
-        <input nz-input id="id-country" formControlName="country" type="text" />
-      </nz-form-control>
-    </nz-form-item>
-
-    <!-- D.O.B. -->
-    <nz-form-item>
-      <nz-form-label [nzSpan]="rowSpan.colOne" nzFor="id-dob"> Date of Birth </nz-form-label>
-      <nz-form-control [nzSpan]="rowSpan.colTwo">
-        <nz-date-picker id="id-dob" formControlName="dob"></nz-date-picker>
-      </nz-form-control>
-    </nz-form-item>
-
-    <!-- Height -->
-    <nz-form-item>
-      <nz-form-label [nzSpan]="rowSpan.colOne" nzFor="id-height"> Height </nz-form-label>
-      <nz-form-control [nzSpan]="rowSpan.colTwo" nzErrorTip="Enter a realistic height">
-        <nz-input-group nzSuffix="cm">
-          <input nz-input id="id-height" formControlName="height" type="number" />
-        </nz-input-group>
-      </nz-form-control>
-    </nz-form-item>
-
-    <!-- Legend -->
-    <nz-form-item>
-      <nz-form-label [nzSpan]="rowSpan.colOne" nzFor="id-legend"> Legend Status </nz-form-label>
-      <nz-form-control [nzSpan]="1">
-        <input nz-input id="id-legend" formControlName="isLegend" type="checkbox" />
-      </nz-form-control>
-    </nz-form-item>
-  </form>
-</ng-container>
+@if (form) {
+<form nz-form [formGroup]="form">
+  <!-- First name -->
+  <nz-form-item>
+    <nz-form-label [nzSpan]="rowSpan.colOne" nzFor="id-first-name"> First Name </nz-form-label>
+    <nz-form-control [nzSpan]="rowSpan.colTwo" nzErrorTip="First name is required">
+      <input nz-input id="id-first-name" formControlName="firstName" type="text" />
+    </nz-form-control>
+  </nz-form-item>
+  <!-- Last name -->
+  <nz-form-item>
+    <nz-form-label [nzSpan]="rowSpan.colOne" nzFor="id-last-name"> Last Name </nz-form-label>
+    <nz-form-control [nzSpan]="rowSpan.colTwo" nzErrorTip="Last name is required">
+      <input nz-input id="id-last-name" formControlName="lastName" type="text" />
+    </nz-form-control>
+  </nz-form-item>
+  <!-- Position -->
+  <nz-form-item>
+    <nz-form-label [nzSpan]="rowSpan.colOne" nzFor="id-position"> Position </nz-form-label>
+    <nz-form-control [nzSpan]="rowSpan.colTwo" nzErrorTip="Position is required">
+      <nz-select nzPlaceHolder="" formControlName="position">
+        @for(position of positionOptions; track position.value) {
+        <nz-option [nzValue]="position.value" [nzLabel]="position.label"></nz-option>
+        }
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+  <!-- Squad Number -->
+  <nz-form-item>
+    <nz-form-label [nzSpan]="rowSpan.colOne" nzFor="id-squad-number"> Squad Number </nz-form-label>
+    <nz-form-control [nzSpan]="rowSpan.colTwo" nzErrorTip="Squad number is required">
+      <input nz-input id="id-squad-number" formControlName="squadNumber" type="number" />
+    </nz-form-control>
+  </nz-form-item>
+  <!-- Country -->
+  <nz-form-item>
+    <nz-form-label [nzSpan]="rowSpan.colOne" nzFor="id-country"> Country </nz-form-label>
+    <nz-form-control [nzSpan]="rowSpan.colTwo">
+      <input nz-input id="id-country" formControlName="country" type="text" />
+    </nz-form-control>
+  </nz-form-item>
+  <!-- D.O.B. -->
+  <nz-form-item>
+    <nz-form-label [nzSpan]="rowSpan.colOne" nzFor="id-dob"> Date of Birth </nz-form-label>
+    <nz-form-control [nzSpan]="rowSpan.colTwo">
+      <nz-date-picker id="id-dob" formControlName="dob"></nz-date-picker>
+    </nz-form-control>
+  </nz-form-item>
+  <!-- Height -->
+  <nz-form-item>
+    <nz-form-label [nzSpan]="rowSpan.colOne" nzFor="id-height"> Height </nz-form-label>
+    <nz-form-control [nzSpan]="rowSpan.colTwo" nzErrorTip="Enter a realistic height">
+      <nz-input-group nzSuffix="cm">
+        <input nz-input id="id-height" formControlName="height" type="number" />
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+  <!-- Legend -->
+  <nz-form-item>
+    <nz-form-label [nzSpan]="rowSpan.colOne" nzFor="id-legend"> Legend Status </nz-form-label>
+    <nz-form-control [nzSpan]="1">
+      <input nz-input id="id-legend" formControlName="isLegend" type="checkbox" />
+    </nz-form-control>
+  </nz-form-item>
+</form>
+}

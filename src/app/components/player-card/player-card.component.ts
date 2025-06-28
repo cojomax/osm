@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, input } from '@angular/core';
 import { NzCardModule } from '@nz/card';
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
@@ -6,7 +5,7 @@ import { PlayerStatistic } from '../../models/player-statistic.model';
 
 @Component({
   selector: 'osm-player-card',
-  imports: [NzAvatarModule, CommonModule, NzCardModule],
+  imports: [NzAvatarModule, NzCardModule],
   templateUrl: './player-card.component.html',
   styleUrl: './player-card.component.css',
 })

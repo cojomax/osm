@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import {
   AbstractControl,
@@ -14,12 +13,7 @@ import { tap } from 'rxjs';
 import { FirebaseAuthService } from '../../api/firebase/services/firebase.auth.service';
 
 @Component({
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    ReactiveFormsModule,
-  ],
+  imports: [FormsModule, ReactiveFormsModule, ReactiveFormsModule],
   templateUrl: './register.page.html',
   styleUrl: './register.page.css',
 })
@@ -65,10 +59,7 @@ export class RegisterPageComponent {
     this.registerForm = new FormGroup(
       {
         email: new FormControl('', [Validators.required, Validators.email]),
-        password: new FormControl('', [
-          Validators.required,
-          Validators.minLength(20),
-        ]),
+        password: new FormControl('', [Validators.required, Validators.minLength(20)]),
         passwordConfirm: new FormControl('', [Validators.required]),
       },
       { validators: this.passwordsMatchValidator },
@@ -77,10 +68,7 @@ export class RegisterPageComponent {
 
   protected onSubmit() {
     this._auth
-      .createUserEmailPassword(
-        this.registerForm.value.email,
-        this.registerForm.value.password,
-      )
+      .createUserEmailPassword(this.registerForm.value.email, this.registerForm.value.password)
       .pipe(
         tap(() => {
           this.registerForm.reset();
@@ -89,14 +77,10 @@ export class RegisterPageComponent {
       .subscribe();
   }
 
-  private passwordsMatchValidator: ValidatorFn = (
-    control: AbstractControl,
-  ): ValidationErrors | null => {
+  private passwordsMatchValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
     const password = control.get('password');
     const passwordConfirm = control.get('passwordConfirm');
 
-    return password?.value !== passwordConfirm?.value
-      ? { passwordMismatch: true }
-      : null;
+    return password?.value !== passwordConfirm?.value ? { passwordMismatch: true } : null;
   };
 }

@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, computed, OnInit, signal } from '@angular/core';
 import { NzDividerModule } from '@nz/divider';
 import { finalize, forkJoin, map, Subscription, tap } from 'rxjs';
@@ -15,7 +14,7 @@ import { NzSpinComponent } from 'ng-zorro-antd/spin';
 
 @Component({
   selector: 'osm-team',
-  imports: [CommonModule, NzDividerModule, SwiperComponent, NzSpinComponent],
+  imports: [NzDividerModule, SwiperComponent, NzSpinComponent],
   templateUrl: './team.page.html',
   styleUrl: './team.page.css',
 })

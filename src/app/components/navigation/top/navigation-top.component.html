@@ -1,16 +1,16 @@
-  <div class="container desktop">
-    <span *ngIf="session.firebaseUser"> Logged in as: {{ session.firebaseUser.email }} </span>
-    <span class="g-spacer"></span>
+<div class="container desktop">
+  @if (session.firebaseUser) {
+    <span> Logged in as: {{ session.firebaseUser.email }} </span>
+  }
+  <span class="g-spacer"></span>
 
-<!--    @if (hasAdminAccess) {-->
-<!--      <a nz-button nzType="link" class="g-link-secondary" routerLink="/admin/players">Admin</a>|-->
-<!--    }-->
+  <!--    @if (hasAdminAccess) {-->
+  <!--      <a nz-button nzType="link" class="g-link-secondary" routerLink="/admin/players">Admin</a>|-->
+  <!--    }-->
 
-<!--    @if (session.isActive) {-->
-<!--      <a nz-button nzType="link" class="g-link-secondary" (click)="onLogout()">Log Out</a>-->
-<!--    } @else {-->
-<!--      <a nz-button nzType="link" class="g-link-secondary" routerLink="/login">Log In</a>-->
-<!--    }-->
-  </div>
-
-
+  <!--    @if (session.isActive) {-->
+  <!--      <a nz-button nzType="link" class="g-link-secondary" (click)="onLogout()">Log Out</a>-->
+  <!--    } @else {-->
+  <!--      <a nz-button nzType="link" class="g-link-secondary" routerLink="/login">Log In</a>-->
+  <!--    }-->
+</div>

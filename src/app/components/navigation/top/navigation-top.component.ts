@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit, signal, TemplateRef, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { EventType, Router, RouterModule } from '@angular/router';
@@ -14,7 +13,7 @@ import { tap } from 'rxjs';
   selector: 'app-navigation-top',
   templateUrl: './navigation-top.component.html',
   styleUrl: './navigation-top.component.css',
-  imports: [CommonModule, FormsModule, NzSelectModule, RouterModule, NzButtonModule, NzIconModule, NzDrawerModule],
+  imports: [FormsModule, NzSelectModule, RouterModule, NzButtonModule, NzIconModule, NzDrawerModule],
 })
 export class NavigationTopComponent implements OnInit {
   private drawerRef = signal<NzDrawerRef | undefined>(void 0);

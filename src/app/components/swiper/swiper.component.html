@@ -9,7 +9,9 @@
 }
 
 <ng-template #slide>
-  <swiper-slide *ngFor="let datum of data()">
-    <osm-player-card [playerStatistic]="datum"></osm-player-card>
-  </swiper-slide>
+  @for (datum of data(); track datum) {
+    <swiper-slide>
+      <osm-player-card [playerStatistic]="datum"></osm-player-card>
+    </swiper-slide>
+  }
 </ng-template>

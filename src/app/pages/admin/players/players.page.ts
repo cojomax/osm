@@ -1,4 +1,4 @@
-import { CommonModule, DatePipe } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import { AfterViewInit, Component, inject, LOCALE_ID, OnDestroy, OnInit, signal, ViewChild } from '@angular/core';
 import { NzButtonModule } from '@nz/button';
 import { NzIconModule } from '@nz/icon';
@@ -19,7 +19,7 @@ import { LegendRenderer } from './renderers/legend-renderer.component';
   templateUrl: './players.page.html',
   styleUrl: './players.page.css',
   providers: [FormModalService, { provide: REPOSITORY_SERVICE, useExisting: PlayerService }],
-  imports: [CommonModule, FormModalComponent, GridComponent, NzButtonModule, NzIconModule, PlayerFormComponent],
+  imports: [FormModalComponent, GridComponent, NzButtonModule, NzIconModule, PlayerFormComponent],
 })
 export class PlayersPageComponent implements OnInit, AfterViewInit, OnDestroy {
   protected players = signal<Player[]>([]);

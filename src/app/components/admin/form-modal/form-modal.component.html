@@ -9,17 +9,18 @@
   </ng-container>
 
   <div *nzModalFooter class="spaced">
-    <button
-      nz-button
-      nzDanger
-      nzType="primary"
-      *ngIf="isEditForm()"
-      [nzLoading]="isDeleting()"
-      [disabled]="isFormProcessing()"
-      (click)="onDelete()"
-    >
-      Delete
-    </button>
+    @if (isEditForm()) {
+      <button
+        nz-button
+        nzDanger
+        nzType="primary"
+        [nzLoading]="isDeleting()"
+        [disabled]="isFormProcessing()"
+        (click)="onDelete()"
+      >
+        Delete
+      </button>
+    }
     <span class="space"></span>
     <button nz-button nzType="default" (click)="onCancel()" [disabled]="isFormProcessing()">Cancel</button>
     <button

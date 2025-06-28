@@ -11,7 +11,6 @@ import {
 } from '@angular/core';
 import { NzModalFooterDirective } from 'ng-zorro-antd/modal';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
-import { CommonModule } from '@angular/common';
 import { NzModalModule } from '@nz/modal';
 import { Subscription, tap } from 'rxjs';
 import { Entity } from '../../../api/models/entity.interface';
@@ -20,7 +19,7 @@ import { FormComponent } from '../../form/form.component';
 
 @Component({
   selector: 'osm-form-modal',
-  imports: [NzModalModule, NzButtonComponent, CommonModule, NzModalFooterDirective],
+  imports: [NzModalModule, NzButtonComponent, NzModalFooterDirective],
   templateUrl: './form-modal.component.html',
 })
 export class FormModalComponent<T> implements OnInit, OnDestroy {

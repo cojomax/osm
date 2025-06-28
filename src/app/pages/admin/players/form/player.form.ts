@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NzButtonModule } from '@nz/button';
@@ -14,15 +13,7 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
   selector: 'app-player-form',
   templateUrl: './player.form.html',
   styleUrl: './player.form.css',
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    NzButtonModule,
-    NzDatePickerModule,
-    NzFormModule,
-    NzInputModule,
-    NzSelectModule,
-  ],
+  imports: [ReactiveFormsModule, NzButtonModule, NzDatePickerModule, NzFormModule, NzInputModule, NzSelectModule],
   // Must be provided to work in the form modal component.
   providers: [{ provide: FormComponent, useExisting: PlayerFormComponent }],
 })
