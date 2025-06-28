@@ -3,7 +3,7 @@ import { AfterViewInit, Component, inject, LOCALE_ID, OnDestroy, OnInit, signal,
 import { NzButtonModule } from '@nz/button';
 import { NzIconModule } from '@nz/icon';
 import { NzModalModule } from '@nz/modal';
-import { mergeMap, Subscription, tap } from 'rxjs';
+import { first, mergeMap, Subscription, tap } from 'rxjs';
 import { ColDef, ICellRendererParams } from 'ag-grid-community';
 import { FixtureFormComponent } from './form/fixture.form';
 import { Fixture } from '../../../api/models/fixture.model';
@@ -211,6 +211,7 @@ export class ManageFixturesPageComponent implements OnInit, AfterViewInit, OnDes
 
   private updateTableData(seasonId: string) {
     return this.fixtureSvc.query('season.id', seasonId).pipe(
+      first(),
       tap((fixtures) => {
         this.fixtures.set(fixtures);
       }),

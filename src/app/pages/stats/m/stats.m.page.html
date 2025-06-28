@@ -17,34 +17,28 @@
       <h2>Goals</h2>
 
       <osm-stats-table [data]="page.topScorersStats()" [ordered]="true"></osm-stats-table>
-      <div class="full-list-nav">
-        <a nz-button nzType="link" [routerLink]="['./' , 'goals']">
-          See Full List
-          <nz-icon nzType="arrow-right"></nz-icon>
-        </a>
-      </div>
+      <a nz-button nzType="link" class="full-list-nav" [routerLink]="['./' , 'goals']">
+        See Full List
+        <nz-icon nzType="arrow-right"></nz-icon>
+      </a>
     </section>
 
     <section>
       <h2>Assists</h2>
       <osm-stats-table [data]="page.topAssistantsStats()" [ordered]="true"></osm-stats-table>
-      <div class="full-list-nav">
-        <a nz-button nzType="link" [routerLink]="['./' , 'assists']">
-          See Full List
-          <nz-icon nzType="arrow-right"></nz-icon>
-        </a>
-      </div>
+      <a nz-button nzType="link" class="full-list-nav" [routerLink]="['./' , 'assists']">
+        See Full List
+        <nz-icon nzType="arrow-right"></nz-icon>
+      </a>
     </section>
 
     <section>
       <h2>Contributions</h2>
       <osm-stats-table [data]="page.topContributionsStats()" [ordered]="true"></osm-stats-table>
-      <div class="full-list-nav">
-        <a nz-button nzType="link" [routerLink]="['./' , 'contributions']">
-          See Full List
-          <nz-icon nzType="arrow-right"></nz-icon>
-        </a>
-      </div>
+      <a nz-button nzType="link" class="full-list-nav" [routerLink]="['./' , 'contributions']">
+        See Full List
+        <nz-icon nzType="arrow-right"></nz-icon>
+      </a>
     </section>
   </div>
 </main>

@@ -25,7 +25,7 @@ header {
 
 #main-container {
   margin-top: var(--banner-size-mobile);
-  height: calc(100vh - var(--banner-size-mobile));
+  height: calc(100dvh - var(--banner-size-mobile));
   overflow: auto;
 
 }

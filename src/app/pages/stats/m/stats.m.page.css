@@ -14,6 +14,7 @@
 }
 
 .full-list-nav {
+  display: block;
   border: var(--border);
   border-radius: var(--border-radius);
   text-align: center;
