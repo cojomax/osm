@@ -7,13 +7,13 @@ header {
   align-items: center;
   color: var(--color-secondary);
   padding-right: var(--space-md);
-  height: var(--banner-size-mobile);
+  height: var(--banner-height-mobile);
   background-color: var(--color-primary);
   width: 100%;
   /*overflow: hidden;*/
 
   button {
-    height: var(--banner-size-mobile);
+    height: var(--banner-height-mobile);
     font-size: var(--font-size-lg);
     color: var(--color-secondary);
   }
@@ -24,8 +24,8 @@ header {
 }
 
 #main-container {
-  margin-top: var(--banner-size-mobile);
-  height: calc(100dvh - var(--banner-size-mobile));
+  margin-top: var(--banner-height-mobile);
+  height: calc(100dvh - var(--banner-height-mobile));
   overflow: auto;
 
 }

@@ -7,7 +7,7 @@
 
 header > app-navigation-top {
   width: 100%;
-  height: var(--banner-size-desktop);
+  height: var(--banner-height-desktop);
 }
 
 main {
@@ -26,7 +26,7 @@ main.admin {
 }
 
 .nav-public {
-  height: 132px;
+  height: var(--nav-height-desktop);
 }
 
 .nav-admin {
@@ -46,5 +46,5 @@ img {
 
 footer {
   text-align: center;
-  padding: var(--space-sm) 0;
+  height: var(--footer-height-desktop);
 }

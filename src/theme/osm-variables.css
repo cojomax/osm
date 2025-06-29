@@ -1,5 +1,4 @@
 :root {
-
   /* Colors */
   --color-primary: #1d1e2c;
   --color-secondary: #ddb967;
@@ -35,8 +34,12 @@
   --border-radius: 8px;
 
   /* Constants */
-  --banner-size-mobile: 88px;
-  --banner-size-desktop: 44px;
-  --page-offset-vertical: 176px;
-  --page-height: calc(100vh - var(--page-offset-vertical));
+  --banner-height-mobile: 88px;
+  --banner-height-desktop: 44px;
+  --footer-height-desktop: 20px;
+  --nav-height-desktop: 132px;
+  --page-height-offset-desktop: calc(var(--banner-height-desktop) + var(--nav-height-desktop));
+  /* 20px for the height of the footer. */
+  --page-height-desktop: calc(100vh - var(--page-height-offset-desktop) - 20px);
+  --page-height: calc(100vh - var(--page-height-offset-desktop));
 }

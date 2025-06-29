@@ -29,7 +29,7 @@ import { Router, RouterModule } from '@angular/router';
     }
 
     .osm-container {
-      height: calc(100% - var(--banner-size-desktop));
+      height: calc(100% - var(--banner-height-desktop));
     }
   `,
   template: `
