@@ -7,7 +7,7 @@ import {
   User as FirebaseUser,
 } from 'firebase/auth';
 import { BehaviorSubject, from } from 'rxjs';
-import { FIREBASE } from '../../../services/tokens/firebase-config.token';
+import { Auth } from '@angular/fire/auth';
 
 @Injectable({
   providedIn: 'root',
@@ -15,10 +15,10 @@ import { FIREBASE } from '../../../services/tokens/firebase-config.token';
 export class FirebaseAuthService {
   private _userChangeSubject = new BehaviorSubject<FirebaseUser | null>(null);
 
-  private _firebase = inject(FIREBASE);
+  private auth = inject(Auth);
 
   listenToAuthChanges() {
-    onAuthStateChanged(this._firebase.auth, (user) => {
+    onAuthStateChanged(this.auth, (user) => {
       // See docs for a list of available properties: https://firebase.google.com/docs/reference/js/auth.user
       this._userChangeSubject.next(user);
     });
@@ -29,7 +29,7 @@ export class FirebaseAuthService {
   }
 
   signInEmailAndPassword(email: string, password: string) {
-    return from(signInWithEmailAndPassword(this._firebase.auth, email, password));
+    return from(signInWithEmailAndPassword(this.auth, email, password));
   }
 
   signInGoogle() {
@@ -37,10 +37,10 @@ export class FirebaseAuthService {
   }
 
   createUserEmailPassword(email: string, password: string) {
-    return from(createUserWithEmailAndPassword(this._firebase.auth, email, password));
+    return from(createUserWithEmailAndPassword(this.auth, email, password));
   }
 
   logout() {
-    return from(signOut(this._firebase.auth));
+    return from(signOut(this.auth));
   }
 }

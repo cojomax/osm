@@ -1,28 +1,18 @@
-import { Inject, Injectable } from '@angular/core';
-import {
-  collection,
-  deleteDoc,
-  doc,
-  DocumentSnapshot,
-  getDoc,
-  getDocs,
-  query,
-  setDoc,
-  where,
-} from 'firebase/firestore/lite';
+import { inject, Injectable } from '@angular/core';
+
 import { from, map, Observable } from 'rxjs';
-import { FIREBASE, Firebase } from '../../../services/tokens/firebase-config.token';
 import { StoreConverter } from '../converter.interface';
 import { FireStoreCollection } from '../db-collection.enum';
+import { collection, deleteDoc, doc, Firestore, getDoc, getDocs, query, setDoc, where } from '@angular/fire/firestore';
 
 @Injectable({ providedIn: 'root' })
 export class FirebaseDbService {
-  constructor(@Inject(FIREBASE) private _firebase: Firebase) {}
+  private firestore = inject(Firestore);
 
   //#region Collections
 
   getCollection<T>(name: string, converter: any) {
-    return from(getDocs(collection(this._firebase.db, name).withConverter(converter))).pipe(
+    return from(getDocs(collection(this.firestore, name).withConverter(converter))).pipe(
       map((querySnapshot) => querySnapshot.docs.map((doc) => doc.data() as T)),
     );
   }
@@ -32,7 +22,7 @@ export class FirebaseDbService {
   //#region Documents
 
   createDocument<T>(collectionName: FireStoreCollection, item: T, converter: StoreConverter<T>) {
-    const ref = doc(collection(this._firebase.db, collectionName)).withConverter(converter);
+    const ref = doc(collection(this.firestore, collectionName)).withConverter(converter);
     return from(setDoc(ref, item));
   }
 
@@ -44,18 +34,18 @@ export class FirebaseDbService {
     }
 
     if (typeof ids === 'string') {
-      const docRef = doc(this._firebase.db, collectionName, ids);
-      return from(getDoc(docRef.withConverter(converter))).pipe(map((d: DocumentSnapshot) => d.data() as T));
+      const docRef = doc(this.firestore, collectionName, ids);
+      return from(getDoc(docRef.withConverter(converter))).pipe(map((d) => d.data() as T));
     }
 
-    const collectionRef = collection(this._firebase.db, collectionName);
+    const collectionRef = collection(this.firestore, collectionName);
     const q = query(collectionRef, where('__name__', 'in', ids));
     return from(getDocs(q)).pipe(map((querySnapshot) => querySnapshot.docs.map((doc) => doc.data() as T)));
   }
 
   queryDocuments<T>(collectionName: string, converter: any, search: { field: string; query: string }): Observable<T[]> {
     const q = query(
-      collection(this._firebase.db, collectionName).withConverter(converter),
+      collection(this.firestore, collectionName).withConverter(converter),
       where(search.field, '==', search.query),
     );
 
@@ -69,13 +59,13 @@ export class FirebaseDbService {
 
     this.sanitizeItem(item);
 
-    const ref = doc(collection(this._firebase.db, collectionName), id).withConverter(converter);
+    const ref = doc(collection(this.firestore, collectionName), id).withConverter(converter);
 
     return from(setDoc(ref, item));
   }
 
   deleteDocument(collectionName: FireStoreCollection, id: string) {
-    return from(deleteDoc(doc(this._firebase.db, collectionName, id)));
+    return from(deleteDoc(doc(this.firestore, collectionName, id)));
   }
 
   //#endregion Documents

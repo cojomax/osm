@@ -11,7 +11,7 @@ import { MatchReportPage } from './pages/match-report/match-report.page';
 import { StatsLoaderComponent } from './pages/stats/stats-loader.component';
 import { mobileResolver } from './services/mobile.resolver';
 import { StatsMDetailsPageComponent } from './pages/stats/m/details/stats-details.m.page';
-import { canActivate } from '@angular/fire/auth-guard';
+import { AuthGuard, redirectUnauthorizedTo } from '@angular/fire/auth-guard';
 
 export const ROUTES: Routes = [
   { path: '', component: HomePageComponent },
@@ -31,10 +31,12 @@ export const ROUTES: Routes = [
       { path: '', component: StatsLoaderComponent },
     ],
   },
+  // see https://github.com/angular/angularfire/blob/main/site/src/auth/route-guards.md
   {
     path: 'admin',
     title: 'Admin',
-    canActivate: [canActivate],
+    canActivate: [AuthGuard],
+    data: { authGuardPipe: () => redirectUnauthorizedTo(['/login']) },
     children: [
       { path: 'players/:id', component: PlayerDetailsPageComponent },
       { path: 'players', component: PlayersPageComponent },
