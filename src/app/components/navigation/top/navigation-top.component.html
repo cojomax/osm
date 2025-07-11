@@ -8,9 +8,9 @@
   <!--      <a nz-button nzType="link" class="g-link-secondary" routerLink="/admin/players">Admin</a>|-->
   <!--    }-->
 
-  <!--    @if (session.isActive) {-->
-  <!--      <a nz-button nzType="link" class="g-link-secondary" (click)="onLogout()">Log Out</a>-->
-  <!--    } @else {-->
-  <!--      <a nz-button nzType="link" class="g-link-secondary" routerLink="/login">Log In</a>-->
-  <!--    }-->
+      @if (session.isActive) {
+        <a nz-button nzType="link" class="g-link-secondary" (click)="onLogout()">Log Out</a>
+      } @else {
+        <a nz-button nzType="link" class="g-link-secondary" routerLink="/login">Log In</a>
+      }
 </div>

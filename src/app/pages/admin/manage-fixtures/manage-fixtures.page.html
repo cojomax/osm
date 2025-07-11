@@ -1,6 +1,11 @@
-<nz-select [ngStyle]="{ 'width.px': 200}" (ngModelChange)="onSeasonSelected($event)" [ngModel]="selectedSeason">
+<nz-select
+  [ngStyle]="{ 'width.px': 200}"
+  [compareWith]="compareByIdFn"
+  (ngModelChange)="onSeasonSelected($event)"
+  [ngModel]="selectedSeason"
+>
   @for(season of seasons(); track season.id) {
-  <nz-option [nzValue]="season.id" [nzLabel]="season.name"></nz-option>
+  <nz-option [nzValue]="season" [nzLabel]="season.name"></nz-option>
   }
 </nz-select>
 
@@ -13,6 +18,7 @@
 
 <osm-form-modal modalTitle="Fixture" (modified)="onModified()">
   <osm-fixture-form
+    [season]="selectedSeason"
     [teams]="teams()"
     [venues]="venues()"
     [competitions]="competitions()"

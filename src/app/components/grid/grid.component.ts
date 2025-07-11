@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { AgGridAngular } from 'ag-grid-angular';
-import { ColDef } from 'ag-grid-community';
+import { ColDef, SizeColumnsToFitGridStrategy } from 'ag-grid-community';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
 import { Subscription } from 'rxjs';
 
@@ -17,6 +17,10 @@ export class GridComponent<T> {
   @Output() add = new EventEmitter<void>();
 
   protected selectedItem: T | null = null;
+
+  protected autoSizeStrategy: SizeColumnsToFitGridStrategy = {
+    type: 'fitGridWidth',
+  };
 
   private subs = new Subscription();
 

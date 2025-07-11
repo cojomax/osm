@@ -24,6 +24,7 @@ import { NzSelectComponent, NzSelectModule } from 'ng-zorro-antd/select';
 import { Season } from '../../../api/models/season.model';
 import { SeasonService } from '../../../services/season.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { compareByIdFn } from '../../../shared/utility/form.util';
 
 @Component({
   selector: 'osm-manage-fixtures',
@@ -45,22 +46,24 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   providers: [FormModalService, { provide: REPOSITORY_SERVICE, useExisting: FixtureService }],
 })
 export class ManageFixturesPageComponent implements OnInit, AfterViewInit, OnDestroy {
-  protected fixtures = signal<Fixture[]>([]);
-  protected venues = signal<Name[]>([]);
-  protected teams = signal<Name[]>([]);
-  protected competitions = signal<Competition[]>([]);
-  protected players = signal<Player[]>([]);
-  protected seasons = signal<Season[]>([]);
-  protected selectedFixture = signal<Fixture | null>(null);
+  protected readonly fixtures = signal<Fixture[]>([]);
+  protected readonly venues = signal<Name[]>([]);
+  protected readonly teams = signal<Name[]>([]);
+  protected readonly competitions = signal<Competition[]>([]);
+  protected readonly players = signal<Player[]>([]);
+  protected readonly seasons = signal<Season[]>([]);
+  protected readonly selectedFixture = signal<Fixture | null>(null);
 
-  protected selectedSeason = '';
+  protected selectedSeason: Name | null = null;
 
-  private datePipe: DatePipe;
-  private subs = new Subscription();
+  protected readonly compareByIdFn = compareByIdFn;
+
+  private readonly datePipe: DatePipe;
+  private readonly subs = new Subscription();
 
   @ViewChild(FixtureFormComponent) form!: FixtureFormComponent;
 
-  private seasonSvc = inject(SeasonService);
+  private readonly seasonSvc = inject(SeasonService);
 
   constructor(
     protected modalSvc: FormModalService<Fixture>,
@@ -109,9 +112,9 @@ export class ManageFixturesPageComponent implements OnInit, AfterViewInit, OnDes
           tap((res) => {
             const seasons = res.sort((a, b) => (a.startDate!.getTime() < b.startDate!.getTime() ? 1 : -1));
             this.seasons.set(seasons);
-            this.selectedSeason = seasons[0].id;
+            this.setSeason(seasons[0]);
           }),
-          mergeMap(() => this.updateTableData(this.selectedSeason)),
+          mergeMap(() => this.updateTableData(this.selectedSeason!.id)),
         )
         .subscribe(),
     );
@@ -123,9 +126,9 @@ export class ManageFixturesPageComponent implements OnInit, AfterViewInit, OnDes
     this.subs.unsubscribe();
   }
 
-  protected onSeasonSelected(season: string) {
-    this.selectedSeason = season;
-    this.subs.add(this.updateTableData(this.selectedSeason).subscribe());
+  protected onSeasonSelected(season: Season) {
+    this.setSeason(season);
+    this.subs.add(this.updateTableData(this.selectedSeason!.id).subscribe());
   }
 
   protected colDefs: ColDef<Fixture>[] = [
@@ -220,6 +223,10 @@ export class ManageFixturesPageComponent implements OnInit, AfterViewInit, OnDes
 
   protected onModified() {
     // TODO Try add this to where updates are made
-    this.subs.add(this.updateTableData(this.selectedSeason).subscribe());
+    this.subs.add(this.updateTableData(this.selectedSeason!.id).subscribe());
+  }
+
+  private setSeason(season: Season) {
+    this.selectedSeason = new Name({ id: season.id, name: season.name });
   }
 }

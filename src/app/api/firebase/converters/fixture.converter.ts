@@ -6,6 +6,7 @@ import { Goal } from '../../models/goal.model';
 export class FixtureConverter implements StoreConverter<Fixture> {
   toFirestore(fixture: Fixture) {
     return {
+      season: this.toPojo(fixture.season),
       date: getIsoDate(fixture.date),
       time: getIsoTime(fixture.time),
       venue: this.toPojo(fixture.venue),

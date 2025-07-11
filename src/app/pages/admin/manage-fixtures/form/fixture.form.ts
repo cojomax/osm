@@ -22,6 +22,7 @@ import { Fixture } from '../../../../api/models/fixture.model';
 import { NzIconModule } from '@nz/icon';
 import { Player } from '../../../../api/models/player.model';
 import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
+import { compareByIdFn } from '../../../../shared/utility/form.util';
 
 // FIXME The venue, competition, and opponent fields are not being prepopulated.
 // TODO Add MotM, DoD, Match Report. Separate form?
@@ -46,6 +47,7 @@ import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
   providers: [{ provide: FormComponent, useExisting: FixtureFormComponent }],
 })
 export class FixtureFormComponent extends FormComponent implements OnInit, OnDestroy {
+  season = input<Name | null>();
   venues = input<Name[]>([]);
   teams = input<Name[]>([]);
   competitions = input<Competition[]>([]);
@@ -93,21 +95,24 @@ export class FixtureFormComponent extends FormComponent implements OnInit, OnDes
 
   form!: FormGroup;
 
+  protected readonly compareByIdFn = compareByIdFn;
+
   protected override rowSpan = {
     colOne: 6,
     colTwo: 13,
   };
 
-  private subs = new Subscription();
+  private readonly subs = new Subscription();
 
   /** Emitted when the form status changes. */
   @Output() statusChanged = new EventEmitter<boolean>();
 
-  private _fb = inject(FormBuilder);
+  private readonly fb = inject(FormBuilder);
 
   ngOnInit() {
-    this.form = this._fb.group({
+    this.form = this.fb.group({
       id: [''],
+      season: [null],
       date: [null, Validators.required],
       time: [null],
       venue: [null],
@@ -115,7 +120,7 @@ export class FixtureFormComponent extends FormComponent implements OnInit, OnDes
       opponent: [null, Validators.required],
       homeGoals: [0, [Validators.min(0), Validators.max(19), Validators.pattern(/^\d+$/)]],
       opponentGoals: [0, [Validators.min(0), Validators.max(19), Validators.pattern(/^\d+$/)]],
-      goals: this._fb.array([]),
+      goals: this.fb.array([]),
 
       // Report details
       // manOfMatch: [this.data?.manOfMatch ?? ''],
@@ -150,7 +155,7 @@ export class FixtureFormComponent extends FormComponent implements OnInit, OnDes
     }
 
     const controls = Array.from({ length }).map(() =>
-      this._fb.group({
+      this.fb.group({
         scored: [null, Validators.required],
         assisted: [null],
       }),
@@ -164,10 +169,6 @@ export class FixtureFormComponent extends FormComponent implements OnInit, OnDes
   //   }
   // }
 
-  protected compareByIdFn(a: Name | Competition | Player, b: Name | Competition | Player) {
-    return a && b ? a.id === b.id : a === b;
-  }
-
   protected onTimePickerKeydown(e: KeyboardEvent) {
     if (e.key === 'Enter') {
       e.preventDefault();
@@ -177,6 +178,7 @@ export class FixtureFormComponent extends FormComponent implements OnInit, OnDes
   override reset(fixture?: Fixture) {
     this.form?.reset({
       id: fixture?.id,
+      season: fixture?.season ?? this.season(),
       date: fixture?.date ?? null,
       time: fixture?.time ?? null,
       venue: fixture?.venue ?? null,
@@ -187,7 +189,7 @@ export class FixtureFormComponent extends FormComponent implements OnInit, OnDes
     });
 
     const goalControlGroups = fixture?.goals?.map((g) =>
-      this._fb.group({
+      this.fb.group({
         scored: [g.scored],
         assisted: [g.assisted],
       }),
@@ -196,6 +198,6 @@ export class FixtureFormComponent extends FormComponent implements OnInit, OnDes
   }
 
   private setGoalControls(controls: FormGroup[]) {
-    this.form?.setControl('goals', this._fb.array(controls));
+    this.form?.setControl('goals', this.fb.array(controls));
   }
 }

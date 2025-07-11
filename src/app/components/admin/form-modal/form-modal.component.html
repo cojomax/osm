@@ -1,5 +1,8 @@
 <nz-modal
   [nzTitle]="modalTitleTxt()"
+  [nzClosable]="false"
+  [nzMaskClosable]="false"
+  [nzBodyStyle]="{ maxHeight: '60vh', overflow: 'auto' }"
   (nzOnCancel)="onCancel()"
   (nzAfterClose)="onAfterClose()"
   [(nzVisible)]="isVisible"
