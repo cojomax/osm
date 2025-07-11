@@ -9,12 +9,11 @@ import { DecimalPipe } from '@angular/common';
 import { AgGridAngular } from 'ag-grid-angular';
 import { ColDef, GridReadyEvent, SizeColumnsToContentStrategy, SizeColumnsToFitGridStrategy } from 'ag-grid-community';
 import { IS_MOBILE } from '../../../services/tokens/is-mobile.token';
-import { NzSpinComponent } from 'ng-zorro-antd/spin';
 import { DashIfEmptyPipe } from '../../../shared/pipes/dash-if-empty.pipe';
 
 @Component({
   selector: 'osm-stats',
-  imports: [NzStatisticComponent, AgGridAngular, DecimalPipe, NzSpinComponent, DashIfEmptyPipe],
+  imports: [NzStatisticComponent, AgGridAngular, DecimalPipe, DashIfEmptyPipe],
   templateUrl: './stats.page.html',
   styleUrl: './stats.page.css',
 })

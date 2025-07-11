@@ -14,27 +14,35 @@ import { StatsMDetailsPageComponent } from './pages/stats/m/details/stats-detail
 import { AuthGuard, redirectUnauthorizedTo } from '@angular/fire/auth-guard';
 
 export const ROUTES: Routes = [
-  { path: '', component: HomePageComponent },
   { path: 'login', component: LoginPageComponent, title: 'Login' },
-  { path: 'team', component: TeamPageComponent, title: 'Team', data: { header: 'Team' } },
-  { path: 'fixtures', component: FixturesPageComponent, title: 'Fixtures', data: { header: 'Fixtures' } },
-  { path: 'results/:id', component: MatchReportPage, title: 'Match Report' },
-  { path: 'results', component: FixturesPageComponent, title: 'Results', data: { header: 'Results' } },
   {
-    path: 'stats',
-    title: 'Stats',
+    path: '',
     resolve: { mobile: mobileResolver },
-    data: { header: 'Stats' },
-    // FIXME May also have to be a loader at child level?
+    loadComponent: () => import('./shared/components/shell/shell.component').then((m) => m.ShellComponent),
     children: [
-      { path: ':category', component: StatsMDetailsPageComponent },
-      { path: '', component: StatsLoaderComponent },
+      { path: '', component: HomePageComponent },
+      { path: 'team', component: TeamPageComponent, title: 'Team', data: { header: 'Team' } },
+      { path: 'fixtures', component: FixturesPageComponent, title: 'Fixtures', data: { header: 'Fixtures' } },
+      { path: 'results/:id', component: MatchReportPage, title: 'Match Report' },
+      { path: 'results', component: FixturesPageComponent, title: 'Results', data: { header: 'Results' } },
+      {
+        path: 'stats',
+        title: 'Stats',
+        resolve: { mobile: mobileResolver },
+        data: { header: 'Stats' },
+        // FIXME May also have to be a loader at child level?
+        children: [
+          { path: ':category', component: StatsMDetailsPageComponent },
+          { path: '', component: StatsLoaderComponent },
+        ],
+      },
     ],
   },
-  // see https://github.com/angular/angularfire/blob/main/site/src/auth/route-guards.md
   {
     path: 'admin',
     title: 'Admin',
+    loadComponent: () => import('./components/admin/shell/admin-shell.component').then((m) => m.AdminShellComponent),
+    // see https://github.com/angular/angularfire/blob/main/site/src/auth/route-guards.md
     canActivate: [AuthGuard],
     data: { authGuardPipe: () => redirectUnauthorizedTo(['/login']) },
     children: [

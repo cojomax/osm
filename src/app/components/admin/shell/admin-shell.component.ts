@@ -43,7 +43,7 @@ import { Router, RouterModule } from '@angular/router';
     </ul>
 
     <div class="osm-container">
-      <ng-content></ng-content>
+      <router-outlet />
     </div>
   `,
 })
