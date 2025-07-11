@@ -6,7 +6,7 @@ import { Entity } from '../../../../api/models/entity.interface';
 
 @Component({
   imports: [NzButtonModule],
-  template: '<button nz-button nzType="link" (click)="buttonClicked()">Edit</button>',
+  template: '<button nz-button nzType="dashed" (click)="buttonClicked()">Edit</button>',
 })
 export class EditButtonComponent implements ICellRendererAngularComp {
   @Output() clicked = new EventEmitter<void>();

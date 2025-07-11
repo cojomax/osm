@@ -12,7 +12,7 @@ export class AuthService {
   private session = inject(SESSION);
 
   constructor() {
-    // this.subscribeToUserChanges();
+    this.subscribeToUserChanges();
   }
 
   loginWithPassword(email: string, password: string) {

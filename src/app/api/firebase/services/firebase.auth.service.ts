@@ -17,7 +17,7 @@ export class FirebaseAuthService {
 
   private auth = inject(Auth);
 
-  listenToAuthChanges() {
+  constructor() {
     onAuthStateChanged(this.auth, (user) => {
       // See docs for a list of available properties: https://firebase.google.com/docs/reference/js/auth.user
       this._userChangeSubject.next(user);

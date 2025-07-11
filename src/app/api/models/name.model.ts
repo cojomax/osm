@@ -7,6 +7,6 @@ export class Name implements Entity {
 
   id = '';
 
-  /** The name of the venue. */
+  /** The name of the entity. */
   name = '';
 }
