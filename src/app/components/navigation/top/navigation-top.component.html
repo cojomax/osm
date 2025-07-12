@@ -4,9 +4,9 @@
   }
   <span class="g-spacer"></span>
 
-  <!--    @if (hasAdminAccess) {-->
-  <!--      <a nz-button nzType="link" class="g-link-secondary" routerLink="/admin/players">Admin</a>|-->
-  <!--    }-->
+      @if (hasAdminAccess) {
+        <a nz-button nzType="link" class="g-link-secondary" routerLink="/admin/players">Admin</a>|
+      }
 
       @if (session.isActive) {
         <a nz-button nzType="link" class="g-link-secondary" (click)="onLogout()">Log Out</a>

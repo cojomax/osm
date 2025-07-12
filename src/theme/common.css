@@ -7,16 +7,12 @@
   padding: var(--space-md);
 }
 
-.spaced {
+.g-spaced {
   display: flex;
 }
 
-.spaced.center {
+.g-spaced.center {
   align-items: center;
-}
-
-.spaced .space {
-  flex-grow: 1;
 }
 
 .g-spacer {

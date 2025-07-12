@@ -3,7 +3,7 @@
 </a>
 
 <div class="form-container">
-  <form nz-form action="/login" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+  <form nz-form action="/login" autocomplete="on" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
     <!-- Email -->
     <nz-form-item>
       <nz-form-control>

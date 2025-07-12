@@ -1,5 +1,5 @@
 <nz-card nzHoverable class="container">
-  <section class="spaced">
+  <section class="g-spaced">
     <div class="details">
       <p class="number">
         {{ playerStatistic().player.squadNumber }}
@@ -14,16 +14,16 @@
         {{ playerStatistic().player.position }}
       </p>
     </div>
-    <span class="space"></span>
+    <span class="g-spacer"></span>
     <nz-avatar [nzSize]="64" nzIcon="user"></nz-avatar>
   </section>
   <p class="season">Season 2024-25</p>
 
   @for (stat of playerStatistic().statistics; track stat) {
     <span class="data-display">
-      <p class="spaced">
+      <p class="g-spaced">
         {{ stat?.type }}
-        <span class="space"></span>
+        <span class="g-spacer"></span>
         <span>{{ stat?.value }}</span>
       </p>
     </span>
