@@ -1,19 +1,19 @@
-<nz-select
-  [ngStyle]="{ 'width.px': 200}"
-  [compareWith]="compareByIdFn"
-  (ngModelChange)="onSeasonSelected($event)"
-  [ngModel]="selectedSeason"
->
-  @for(season of seasons(); track season.id) {
-  <nz-option [nzValue]="season" [nzLabel]="season.name"></nz-option>
-  }
-</nz-select>
-
-<osm-grid [colDefs]="colDefs" [data]="fixtures()" (add)="onAdd()">
-  <span add-button>
+<osm-grid [colDefs]="colDefs" [data]="fixtures()">
+  <nz-select
+    extra-left
+    [ngStyle]="{ 'width.px': 200}"
+    [compareWith]="compareByIdFn"
+    (ngModelChange)="onSeasonSelected($event)"
+    [ngModel]="selectedSeason"
+  >
+    @for(season of seasons(); track season.id) {
+    <nz-option [nzValue]="season" [nzLabel]="season.name"></nz-option>
+    }
+  </nz-select>
+  <button extra-right nz-button nzType="primary" (click)="onAdd()">
     <span nz-icon nzType="user-add"></span>
     Fixture
-  </span>
+  </button>
 </osm-grid>
 
 <osm-form-modal modalTitle="Fixture" (modified)="onModified()">

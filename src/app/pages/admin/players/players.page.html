@@ -1,8 +1,8 @@
 <osm-grid [colDefs]="colDefs" [data]="players()" (add)="onAdd()">
-  <span add-button>
+  <button extra-right nz-button nzType="primary" (click)="onAdd()">
     <span nz-icon nzType="user-add"></span>
     Player
-  </span>
+  </button>
 </osm-grid>
 
 <osm-form-modal modalTitle="Player" (modified)="onModified()">

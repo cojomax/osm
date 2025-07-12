@@ -22,6 +22,7 @@ export class FixtureConverter implements StoreConverter<Fixture> {
     const fixture = snapshot.data();
     return new Fixture({
       id: snapshot.id,
+      season: fixture.season,
       date: new Date(fixture['date']),
       time: fixture['time'] === null ? null : new Date(`${fixture['date']},${fixture['time']}`),
       venue: fixture['venue'],

@@ -10,7 +10,7 @@ import { NzDrawerModule, NzDrawerRef, NzDrawerService } from 'ng-zorro-antd/draw
 import { tap } from 'rxjs';
 
 @Component({
-  selector: 'app-navigation-top',
+  selector: 'osm-navigation-top',
   templateUrl: './navigation-top.component.html',
   styleUrl: './navigation-top.component.css',
   imports: [FormsModule, NzSelectModule, RouterModule, NzButtonModule, NzIconModule, NzDrawerModule],

@@ -3,8 +3,5 @@ ag-grid-angular {
 }
 
 .top {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
   padding: var(--space-sm) 0;
 }

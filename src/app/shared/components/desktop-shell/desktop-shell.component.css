@@ -5,7 +5,7 @@
   overflow: auto;
 }
 
-header > app-navigation-top {
+header > osm-navigation-top {
   width: 100%;
   height: var(--banner-height-desktop);
 }
