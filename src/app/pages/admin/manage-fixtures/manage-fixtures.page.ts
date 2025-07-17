@@ -110,9 +110,8 @@ export class ManageFixturesPageComponent implements OnInit, AfterViewInit, OnDes
         .fetch()
         .pipe(
           tap((res) => {
-            const seasons = res.sort((a, b) => (a.startDate!.getTime() < b.startDate!.getTime() ? 1 : -1));
-            this.seasons.set(seasons);
-            this.setSeason(seasons[0]);
+            this.seasons.set(res);
+            this.setSeason(res[0]);
           }),
           mergeMap(() => this.updateTableData(this.selectedSeason!.id)),
         )

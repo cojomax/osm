@@ -21,12 +21,8 @@
     "experimentalDecorators": true,
     "moduleResolution": "bundler",
     "importHelpers": true,
-    "target": "ES2022",
+    "target": "es2023",
     "module": "ES2022",
-    "lib": [
-      "ES2022",
-      "dom"
-    ],
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

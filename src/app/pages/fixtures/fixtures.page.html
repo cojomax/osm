@@ -1,10 +1,21 @@
 <div [ngClass]="(isMobile | async) ? 'container-mobile' : 'container-desktop'" class="osm-container">
+  <nz-select
+    [ngStyle]="{ 'width': '100%'}"
+    [compareWith]="compareByIdFn"
+    (ngModelChange)="onSeasonSelected($event)"
+    [ngModel]="selectedSeason"
+  >
+    @for(season of state.seasons(); track season.id) {
+    <nz-option [nzValue]="season" [nzLabel]="season.name"></nz-option>
+    }
+  </nz-select>
+
   @for (month of fixtures().keys(); track month) {
   <nz-divider [nzText]="month" nzOrientation="left" class="g-divider-large"></nz-divider>
   <ul>
     @for (fixture of fixtures().get(month); track fixture.id) {
     <li>
-<!--      [routerLink]="['/results', fixture.id]"-->
+      <!--      [routerLink]="['/results', fixture.id]"-->
       <nz-card>
         <!------------>
         <!------------>
@@ -22,20 +33,8 @@
           </section>
 
           <section class="team-names">
-
-            <img
-              [ngSrc]="icon()"
-              width="64"
-              height="64"
-              alt="fixture-icon"
-            />
-            <img
-              [ngSrc]="icon()"
-              class="icon-transform"
-              width="64"
-              height="64"
-              alt="fixture-icon"
-            />
+            <img [ngSrc]="icon()" width="64" height="64" alt="fixture-icon" />
+            <img [ngSrc]="icon()" class="icon-transform" width="64" height="64" alt="fixture-icon" />
             <section>
               <ng-container *ngTemplateOutlet="homeTeam"></ng-container>
               <ng-container *ngTemplateOutlet="opponentTeam"></ng-container>
@@ -54,20 +53,8 @@
         <!------------->
         <div class="card-desktop">
           <div>
-            <img
-              [ngSrc]="icon()"
-              class="icon-rotate"
-              width="64"
-              height="64"
-              alt="fixture-icon"
-            />
-            <img
-              [ngSrc]="icon()"
-              class="icon-transform"
-              width="64"
-              height="64"
-              alt="fixture-icon"
-            />
+            <img [ngSrc]="icon()" class="icon-rotate" width="64" height="64" alt="fixture-icon" />
+            <img [ngSrc]="icon()" class="icon-transform" width="64" height="64" alt="fixture-icon" />
             <section>
               <div class="date-division">
                 <ng-container *ngTemplateOutlet="date"></ng-container>
@@ -117,12 +104,10 @@
     </ng-template>
     }
   </ul>
-  }
-
-  @if (!this.fixtures().size) {
-    <div style="text-align: center; margin-top: 100px;">
-      <h1>{{ 'Season Break' | uppercase }}</h1>
-      <p>View our performance from the 2024/25 season <a routerLink="/stats">here</a></p>
-    </div>
+  } @if (!this.fixtures().size) {
+  <div style="text-align: center; margin-top: 100px">
+    <h1>{{ 'Season Break' | uppercase }}</h1>
+    <p>View our performance from the 2024/25 season <a routerLink="/stats">here</a></p>
+  </div>
   }
 </div>
