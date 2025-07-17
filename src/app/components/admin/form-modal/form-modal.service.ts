@@ -35,7 +35,7 @@ export class FormModalService<T extends Entity> {
     this.isVisibleSbj.next({ visible: false, data: null });
   }
 
-  submitForm(form: any, update: boolean) {
+  submitForm(form: T, update: boolean) {
     this.formState.set('submit');
     const submit$ = update ? this.repositorySvc.update(form) : this.repositorySvc.create(form);
 

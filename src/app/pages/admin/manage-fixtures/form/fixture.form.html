@@ -72,7 +72,7 @@
     </nz-form-control>
   </nz-form-item>
 
-  <!-- Opponent Goals -->
+  <!-- Score -->
   <nz-form-item>
     <nz-form-label [nzSpan]="rowSpan.colOne"> Score </nz-form-label>
     <nz-form-control [nzSpan]="7">
@@ -84,6 +84,15 @@
       <nz-input-number formControlName="opponentGoals" nzMin="0" nzMax="19">
         <span nzInputAddonBefore>OPP</span>
       </nz-input-number>
+    </nz-form-control>
+  </nz-form-item>
+
+  <!-- Forfeit -->
+  <nz-form-item>
+    <nz-form-control [nzOffset]="rowSpan.colOne" [nzSpan]="rowSpan.colTwo">
+      <label nz-checkbox formControlName="forfeit">
+        <span>Forfeit</span>
+      </label>
     </nz-form-control>
   </nz-form-item>
 

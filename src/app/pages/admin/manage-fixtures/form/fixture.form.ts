@@ -23,6 +23,7 @@ import { NzIconModule } from '@nz/icon';
 import { Player } from '../../../../api/models/player.model';
 import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
 import { compareByIdFn } from '../../../../shared/utility/form.util';
+import { NzCheckboxComponent } from 'ng-zorro-antd/checkbox';
 
 // FIXME The venue, competition, and opponent fields are not being prepopulated.
 // TODO Add MotM, DoD, Match Report. Separate form?
@@ -42,6 +43,7 @@ import { compareByIdFn } from '../../../../shared/utility/form.util';
     NzSelectModule,
     NzTimePickerComponent,
     FormsModule,
+    NzCheckboxComponent,
   ],
   // Must be provided to work in the form modal component.
   providers: [{ provide: FormComponent, useExisting: FixtureFormComponent }],
@@ -121,6 +123,7 @@ export class FixtureFormComponent extends FormComponent implements OnInit, OnDes
       homeGoals: [0, [Validators.min(0), Validators.max(19), Validators.pattern(/^\d+$/)]],
       opponentGoals: [0, [Validators.min(0), Validators.max(19), Validators.pattern(/^\d+$/)]],
       goals: this.fb.array([]),
+      forfeit: [false],
 
       // Report details
       // manOfMatch: [this.data?.manOfMatch ?? ''],
@@ -129,50 +132,12 @@ export class FixtureFormComponent extends FormComponent implements OnInit, OnDes
     });
 
     this.subs.add(this.form.statusChanges.subscribe(() => this.statusChanged.emit(this.form.valid)));
-    this.subs.add(this.homeGoals?.valueChanges.subscribe(() => this.updateGoalGroup(this.homeGoals?.value)));
+    this.subs.add(this.homeGoals?.valueChanges.subscribe((value) => this.updateGoalGroup(value)));
+    this.subs.add(this.forfeit?.valueChanges.subscribe((value) => this.adaptToForfeit(value)));
   }
 
   ngOnDestroy() {
     this.subs.unsubscribe();
-  }
-
-  // TODO Signal? Type?
-  protected get goals() {
-    return this.form?.get('goals') as FormArray;
-  }
-
-  protected get homeGoals() {
-    return this.form?.get('homeGoals') as FormControl<number> | undefined;
-  }
-
-  protected get oppositionGoals() {
-    return this.form?.get('opponentGoals');
-  }
-
-  protected updateGoalGroup(length: number | undefined) {
-    if (length === void 0) {
-      return;
-    }
-
-    const controls = Array.from({ length }).map(() =>
-      this.fb.group({
-        scored: [null, Validators.required],
-        assisted: [null],
-      }),
-    );
-    this.setGoalControls(controls);
-  }
-
-  // protected onRemoveGoalGroup(index: number, e: MouseEvent) {
-  //   if (this.goals.length !== 1) {
-  //     this.goals.removeAt(index);
-  //   }
-  // }
-
-  protected onTimePickerKeydown(e: KeyboardEvent) {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-    }
   }
 
   override reset(fixture?: Fixture) {
@@ -186,6 +151,7 @@ export class FixtureFormComponent extends FormComponent implements OnInit, OnDes
       opponent: fixture?.opponent ?? null,
       homeGoals: fixture?.homeGoals ?? 0,
       opponentGoals: fixture?.opponentGoals ?? 0,
+      forfeit: fixture?.forfeit ?? false,
     });
 
     const goalControlGroups = fixture?.goals?.map((g) =>
@@ -197,7 +163,44 @@ export class FixtureFormComponent extends FormComponent implements OnInit, OnDes
     this.setGoalControls(goalControlGroups ?? []);
   }
 
+  // TODO Signal? Type?
+  protected get goals() {
+    return this.form?.get('goals') as FormArray;
+  }
+
+  protected onTimePickerKeydown(e: KeyboardEvent) {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+    }
+  }
+
+  private get homeGoals() {
+    return this.form?.get('homeGoals') as FormControl<number> | undefined;
+  }
+
+  private get forfeit() {
+    return this.form?.get('forfeit') as FormControl<boolean>;
+  }
+
+  private updateGoalGroup(length: number | undefined) {
+    if (length === void 0) {
+      return;
+    }
+
+    const controls = Array.from({ length }).map(() =>
+      this.fb.group({
+        scored: [null, Validators.required],
+        assisted: [null],
+      }),
+    );
+    this.setGoalControls(controls);
+  }
+
   private setGoalControls(controls: FormGroup[]) {
     this.form?.setControl('goals', this.fb.array(controls));
+  }
+
+  private adaptToForfeit(forfeit: boolean) {
+    this.updateGoalGroup(forfeit ? 0 : this.homeGoals?.value);
   }
 }

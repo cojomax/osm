@@ -7,8 +7,6 @@ import { NzIconModule } from '@nz/icon';
   selector: 'app-legend-renderer',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `<nz-icon [nzType]="value()" nzTheme="outline" />`,
-  // TODO Fix color
-  styles: ['nz-icon { color: red; }'],
   imports: [NzIconModule],
 })
 export class LegendRenderer implements ICellRendererAngularComp {

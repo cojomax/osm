@@ -28,6 +28,8 @@ export class Fixture implements Entity {
 
   opponentGoals = 0;
 
+  forfeit = false;
+
   goals: Goal[] = [];
 
   /** The ID of the player voted man of the match. */

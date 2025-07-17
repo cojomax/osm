@@ -153,10 +153,13 @@ export class ManageFixturesPageComponent implements OnInit, AfterViewInit, OnDes
       colId: 'score',
       headerName: 'Score',
       sortable: false,
-      valueFormatter: (params) =>
-        params.data?.date! > new Date()
-          ? ''
-          : `${params.data?.goals?.length ?? 0} - ${params.data?.opponentGoals ?? 0}`,
+      valueFormatter: (params) => {
+        if (params.data?.date! > new Date()) {
+          return '';
+        }
+        const score = `${params.data?.homeGoals ?? 0} - ${params.data?.opponentGoals ?? 0}`;
+        return params.data?.forfeit ? `${score} (Forfeit)` : score;
+      },
     },
     {
       colId: 'edit',
