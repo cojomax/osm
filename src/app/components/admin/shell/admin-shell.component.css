@@ -1,0 +1,44 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
+a {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+
+  img {
+    width: 100px;
+    margin-top: -28px;
+  }
+}
+
+main {
+  display: flex;
+  align-items: flex-end;
+  height: calc(100% - var(--banner-height-desktop));
+  //width: 100%;
+
+  ul, section {
+    height: 100%;
+  }
+
+  ul {
+    background-color: var(--color-light);
+    //border: none;
+    padding-right: 32px;
+    position: relative;
+    top: 80px;
+  }
+
+  section {
+    flex: 1;
+  }
+}
+
+.desktop-banner {
+  color: var(--color-secondary);
+  background-color: var(--color-primary);
+  height: var(--banner-height-desktop);
+}

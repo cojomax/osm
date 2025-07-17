@@ -1,0 +1,14 @@
+<div class="desktop-banner"></div>
+<a routerLink="/">
+  <img src="assets/osm-transparent.png" alt="app-logo" />
+</a>
+
+<main class="osm-container">
+  <ul nz-menu nzMode="vertical">
+    <li nz-menu-item nzMatchRouter routerLink="/admin/players" (click)="onNavigate('players')">Players</li>
+    <li nz-menu-item nzMatchRouter routerLink="/admin/fixtures" (click)="onNavigate('fixtures')">Fixtures</li>
+  </ul>
+  <section>
+    <router-outlet />
+  </section>
+</main>
