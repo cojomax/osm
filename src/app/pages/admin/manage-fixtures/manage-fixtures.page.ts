@@ -63,16 +63,16 @@ export class ManageFixturesPageComponent implements OnInit, AfterViewInit, OnDes
 
   @ViewChild(FixtureFormComponent) form!: FixtureFormComponent;
 
-  private readonly seasonSvc = inject(SeasonService);
+  protected readonly modalSvc = inject(FormModalService<Fixture>);
 
-  constructor(
-    protected modalSvc: FormModalService<Fixture>,
-    private competitionSvc: CompetitionService,
-    private fixtureSvc: FixtureService,
-    private playerSvc: PlayerService,
-    private teamSvc: TeamService,
-    private venuesSvc: VenueService,
-  ) {
+  private readonly seasonSvc = inject(SeasonService);
+  private readonly competitionSvc = inject(CompetitionService);
+  private readonly fixtureSvc = inject(FixtureService);
+  private readonly playerSvc = inject(PlayerService);
+  private readonly teamSvc = inject(TeamService);
+  private readonly venuesSvc = inject(VenueService);
+
+  constructor() {
     this.datePipe = new DatePipe(inject(LOCALE_ID));
   }
 
