@@ -25,6 +25,7 @@ import { Season } from '../../../api/models/season.model';
 import { SeasonService } from '../../../services/season.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { compareByIdFn } from '../../../shared/utility/form.util';
+import { State } from '../../../services/state';
 
 @Component({
   selector: 'osm-manage-fixtures',
@@ -64,6 +65,7 @@ export class ManageFixturesPageComponent implements OnInit, AfterViewInit, OnDes
   @ViewChild(FixtureFormComponent) form!: FixtureFormComponent;
 
   protected readonly modalSvc = inject(FormModalService<Fixture>);
+  protected readonly state = inject(State);
 
   private readonly seasonSvc = inject(SeasonService);
   private readonly competitionSvc = inject(CompetitionService);
@@ -110,7 +112,6 @@ export class ManageFixturesPageComponent implements OnInit, AfterViewInit, OnDes
         .fetch()
         .pipe(
           tap((res) => {
-            this.seasons.set(res);
             this.setSeason(res[0]);
           }),
           mergeMap(() => this.updateTableData(this.selectedSeason!.id)),

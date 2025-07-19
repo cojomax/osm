@@ -6,7 +6,7 @@
     (ngModelChange)="onSeasonSelected($event)"
     [ngModel]="selectedSeason"
   >
-    @for(season of seasons(); track season.id) {
+    @for(season of state.seasons(); track season.id) {
     <nz-option [nzValue]="season" [nzLabel]="season.name"></nz-option>
     }
   </nz-select>
