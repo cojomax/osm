@@ -1,5 +1,5 @@
 import { CommonModule, DatePipe } from '@angular/common';
-import { AfterViewInit, Component, inject, LOCALE_ID, OnDestroy, OnInit, signal, ViewChild } from '@angular/core';
+import { Component, inject, LOCALE_ID, OnDestroy, OnInit, signal, ViewChild } from '@angular/core';
 import { NzButtonModule } from '@nz/button';
 import { NzIconModule } from '@nz/icon';
 import { NzModalModule } from '@nz/modal';
@@ -46,7 +46,7 @@ import { State } from '../../../services/state';
   styleUrl: './manage-fixtures.page.css',
   providers: [FormModalService, { provide: REPOSITORY_SERVICE, useExisting: FixtureService }],
 })
-export class ManageFixturesPageComponent implements OnInit, AfterViewInit, OnDestroy {
+export class ManageFixturesPageComponent implements OnInit, OnDestroy {
   protected readonly fixtures = signal<Fixture[]>([]);
   protected readonly venues = signal<Name[]>([]);
   protected readonly teams = signal<Name[]>([]);
@@ -119,8 +119,6 @@ export class ManageFixturesPageComponent implements OnInit, AfterViewInit, OnDes
         .subscribe(),
     );
   }
-
-  ngAfterViewInit() {}
 
   ngOnDestroy() {
     this.subs.unsubscribe();
