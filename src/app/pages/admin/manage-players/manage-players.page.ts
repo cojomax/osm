@@ -16,12 +16,12 @@ import { LegendRenderer } from './renderers/legend-renderer.component';
 
 @Component({
   selector: 'osm-manage-manage-players',
-  templateUrl: './players.page.html',
-  styleUrl: './players.page.css',
+  templateUrl: './manage-players.page.html',
+  styleUrl: './manage-players.page.css',
   providers: [FormModalService, { provide: REPOSITORY_SERVICE, useExisting: PlayerService }],
   imports: [FormModalComponent, GridComponent, NzButtonModule, NzIconModule, PlayerFormComponent],
 })
-export class PlayersPageComponent implements OnInit, AfterViewInit, OnDestroy {
+export class ManagePlayersPageComponent implements OnInit, AfterViewInit, OnDestroy {
   protected players = signal<Player[]>([]);
   protected selectedPlayer = signal<Player | null>(null);
 

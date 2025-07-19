@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { PlayersPageComponent } from './pages/admin/manage-players/players.page';
+import { ManagePlayersPageComponent } from './pages/admin/manage-players/manage-players.page';
 import { HomePageComponent } from './pages/home/home.page';
 import { LoginPageComponent } from './pages/login/login.page';
 import { PageNotFoundPageComponent } from './pages/not-found/not-found.page';
@@ -45,7 +45,7 @@ export const ROUTES: Routes = [
     canActivate: [AuthGuard],
     data: { authGuardPipe: () => redirectUnauthorizedTo(['/login']) },
     children: [
-      { path: 'players', component: PlayersPageComponent },
+      { path: 'players', component: ManagePlayersPageComponent },
       { path: 'fixtures', component: ManageFixturesPageComponent },
     ],
   },
