@@ -15,7 +15,7 @@ import { FormModalService } from '../../../components/admin/form-modal/form-moda
 import { LegendRenderer } from './renderers/legend-renderer.component';
 
 @Component({
-  selector: 'osm-manage-players',
+  selector: 'osm-manage-manage-players',
   templateUrl: './players.page.html',
   styleUrl: './players.page.css',
   providers: [FormModalService, { provide: REPOSITORY_SERVICE, useExisting: PlayerService }],

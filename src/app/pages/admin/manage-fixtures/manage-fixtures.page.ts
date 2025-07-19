@@ -10,7 +10,7 @@ import { Fixture } from '../../../api/models/fixture.model';
 import { FixtureService } from '../../../services/fixture.service';
 import { FormModalComponent } from '../../../components/admin/form-modal/form-modal.component';
 import { GridComponent } from '../../../components/grid/grid.component';
-import { EditButtonComponent } from '../players/renderers/edit-btn.component';
+import { EditButtonComponent } from '../manage-players/renderers/edit-btn.component';
 import { FormModalService } from '../../../components/admin/form-modal/form-modal.service';
 import { REPOSITORY_SERVICE } from '../../../components/admin/form-modal/form-modal.token';
 import { VenueService } from '../../../services/venue.service';
