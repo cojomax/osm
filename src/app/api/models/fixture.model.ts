@@ -30,7 +30,13 @@ export class Fixture implements Entity {
 
   forfeit = false;
 
+  penalties = false;
+
   goals: Goal[] = [];
+
+  penaltiesHome: number | null = null;
+
+  penaltiesOpponent: number | null = null;
 
   /** The ID of the player voted man of the match. */
   manOfMatch: string | null = null;

@@ -87,9 +87,29 @@
     </nz-form-control>
   </nz-form-item>
 
-  <!-- Forfeit -->
+  <!-- Penalties -->
+  @if(penalties.value) {
+  <nz-form-item>
+    <nz-form-label [nzSpan]="rowSpan.colOne"> Penalties </nz-form-label>
+    <nz-form-control [nzSpan]="7">
+      <nz-input-number formControlName="penaltiesHome" nzMin="0" nzMax="19">
+        <span nzInputAddonBefore>OSM</span>
+      </nz-input-number>
+    </nz-form-control>
+    <nz-form-control [nzSpan]="8">
+      <nz-input-number formControlName="penaltiesOpponent" nzMin="0" nzMax="19">
+        <span nzInputAddonBefore>OPP</span>
+      </nz-input-number>
+    </nz-form-control>
+  </nz-form-item>
+  }
+
+  <!-- Pens / Forfeit -->
   <nz-form-item>
     <nz-form-control [nzOffset]="rowSpan.colOne" [nzSpan]="rowSpan.colTwo">
+      <label nz-checkbox formControlName="penalties">
+        <span>Penalties</span>
+      </label>
       <label nz-checkbox formControlName="forfeit">
         <span>Forfeit</span>
       </label>

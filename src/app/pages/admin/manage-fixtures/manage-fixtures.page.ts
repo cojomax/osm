@@ -156,7 +156,16 @@ export class ManageFixturesPageComponent implements OnInit, OnDestroy {
           return '';
         }
         const score = `${params.data?.homeGoals ?? 0} - ${params.data?.opponentGoals ?? 0}`;
-        return params.data?.forfeit ? `${score} (Forfeit)` : score;
+
+        if (params.data?.forfeit) {
+          return `${score} (Forfeit)`;
+        }
+
+        if (params.data?.penalties) {
+          return `${score} (${params.data?.penaltiesHome} - ${params.data?.penaltiesOpponent})`;
+        }
+
+        return score;
       },
     },
     {

@@ -16,6 +16,9 @@ export class FixtureConverter implements StoreConverter<Fixture> {
       opponentGoals: fixture.opponentGoals,
       goals: this.mapToGoals(fixture.goals),
       forfeit: fixture.forfeit,
+      penalties: fixture.penalties,
+      penaltiesHome: fixture.penaltiesHome,
+      penaltiesOpponent: fixture.penaltiesOpponent,
     };
   }
 
@@ -33,6 +36,9 @@ export class FixtureConverter implements StoreConverter<Fixture> {
       opponentGoals: fixture['opponentGoals'],
       goals: fixture['goals'],
       forfeit: fixture['forfeit'],
+      penalties: fixture['penalties'],
+      penaltiesHome: fixture['penaltiesHome'],
+      penaltiesOpponent: fixture['penaltiesOpponent'],
     });
   }
 

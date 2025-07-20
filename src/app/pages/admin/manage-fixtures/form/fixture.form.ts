@@ -123,6 +123,9 @@ export class FixtureFormComponent extends FormComponent implements OnInit, OnDes
       homeGoals: [0, [Validators.min(0), Validators.max(19), Validators.pattern(/^\d+$/)]],
       opponentGoals: [0, [Validators.min(0), Validators.max(19), Validators.pattern(/^\d+$/)]],
       goals: this.fb.array([]),
+      penalties: [false],
+      penaltiesHome: [0, [Validators.min(0), Validators.max(19), Validators.pattern(/^\d+$/)]],
+      penaltiesOpponent: [0, [Validators.min(0), Validators.max(19), Validators.pattern(/^\d+$/)]],
       forfeit: [false],
 
       // Report details
@@ -134,6 +137,7 @@ export class FixtureFormComponent extends FormComponent implements OnInit, OnDes
     this.subs.add(this.form.statusChanges.subscribe(() => this.statusChanged.emit(this.form.valid)));
     this.subs.add(this.homeGoals?.valueChanges.subscribe((value) => this.updateGoalGroup(value)));
     this.subs.add(this.forfeit?.valueChanges.subscribe((value) => this.adaptToForfeit(value)));
+    this.subs.add(this.penalties?.valueChanges.subscribe((value) => this.updatePenaltiesControl(value)));
   }
 
   ngOnDestroy() {
@@ -152,6 +156,9 @@ export class FixtureFormComponent extends FormComponent implements OnInit, OnDes
       homeGoals: fixture?.homeGoals ?? 0,
       opponentGoals: fixture?.opponentGoals ?? 0,
       forfeit: fixture?.forfeit ?? false,
+      penalties: fixture?.penalties ?? false,
+      penaltiesHome: fixture?.penaltiesHome ?? 0,
+      penaltiesOpponent: fixture?.penaltiesOpponent ?? 0,
     });
 
     const goalControlGroups = fixture?.goals?.map((g) =>
@@ -168,6 +175,10 @@ export class FixtureFormComponent extends FormComponent implements OnInit, OnDes
     return this.form?.get('goals') as FormArray;
   }
 
+  protected get penalties() {
+    return this.form?.get('penalties') as FormControl<boolean>;
+  }
+
   protected onTimePickerKeydown(e: KeyboardEvent) {
     if (e.key === 'Enter') {
       e.preventDefault();
@@ -180,6 +191,14 @@ export class FixtureFormComponent extends FormComponent implements OnInit, OnDes
 
   private get forfeit() {
     return this.form?.get('forfeit') as FormControl<boolean>;
+  }
+
+  private get penaltiesHome() {
+    return this.form?.get('penaltiesHome') as FormControl<number | undefined>;
+  }
+
+  private get penaltiesOpponent() {
+    return this.form?.get('penaltiesOpponent') as FormControl<number | undefined>;
   }
 
   private updateGoalGroup(length: number | undefined) {
@@ -202,5 +221,10 @@ export class FixtureFormComponent extends FormComponent implements OnInit, OnDes
 
   private adaptToForfeit(forfeit: boolean) {
     this.updateGoalGroup(forfeit ? 0 : this.homeGoals?.value);
+  }
+
+  private updatePenaltiesControl(show: boolean) {
+    this.penaltiesHome.setValue(show ? 0 : void 0);
+    this.penaltiesOpponent.setValue(show ? 0 : void 0);
   }
 }
