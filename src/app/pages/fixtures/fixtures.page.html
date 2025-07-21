@@ -97,8 +97,15 @@
         <p>{{ !fixture.time ? 'TBC' : fixture.time | date: 'HH:mm' }}</p>
       </nz-tag>
       } @else {
-      <nz-tag [nzColor]="getScoreColor(fixture.homeGoals, fixture.opponentGoals)" class="time-display">
+      <nz-tag [nzColor]="getScoreColor(fixture.homeGoals, fixture.opponentGoals, fixture.penaltiesHome, fixture.penaltiesOpponent)" class="time-display">
+        @if(fixture.penalties) {
+        <p>
+          {{ fixture.homeGoals }} ({{ fixture.penaltiesHome }}) - {{ fixture.opponentGoals }} ({{
+          fixture.penaltiesOpponent }})
+        </p>
+        } @else {
         <p>{{ fixture.homeGoals }} - {{ fixture.opponentGoals }}</p>
+        }
       </nz-tag>
       }
     </ng-template>

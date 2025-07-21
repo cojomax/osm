@@ -136,8 +136,8 @@ export class FixtureFormComponent extends FormComponent implements OnInit, OnDes
 
     this.subs.add(this.form.statusChanges.subscribe(() => this.statusChanged.emit(this.form.valid)));
     this.subs.add(this.homeGoals?.valueChanges.subscribe((value) => this.updateGoalGroup(value)));
-    this.subs.add(this.forfeit?.valueChanges.subscribe((value) => this.adaptToForfeit(value)));
-    this.subs.add(this.penalties?.valueChanges.subscribe((value) => this.updatePenaltiesControl(value)));
+    this.subs.add(this.forfeit?.valueChanges.subscribe((value) => this.onForfeitChange(value)));
+    this.subs.add(this.penalties?.valueChanges.subscribe((value) => this.onPenaltiesChange(value)));
   }
 
   ngOnDestroy() {
@@ -175,6 +175,10 @@ export class FixtureFormComponent extends FormComponent implements OnInit, OnDes
     return this.form?.get('goals') as FormArray;
   }
 
+  protected get forfeit() {
+    return this.form?.get('forfeit') as FormControl<boolean>;
+  }
+
   protected get penalties() {
     return this.form?.get('penalties') as FormControl<boolean>;
   }
@@ -189,10 +193,6 @@ export class FixtureFormComponent extends FormComponent implements OnInit, OnDes
     return this.form?.get('homeGoals') as FormControl<number> | undefined;
   }
 
-  private get forfeit() {
-    return this.form?.get('forfeit') as FormControl<boolean>;
-  }
-
   private get penaltiesHome() {
     return this.form?.get('penaltiesHome') as FormControl<number | undefined>;
   }
@@ -202,7 +202,7 @@ export class FixtureFormComponent extends FormComponent implements OnInit, OnDes
   }
 
   private updateGoalGroup(length: number | undefined) {
-    if (length === void 0) {
+    if (length === void 0 || this.forfeit.value) {
       return;
     }
 
@@ -219,11 +219,15 @@ export class FixtureFormComponent extends FormComponent implements OnInit, OnDes
     this.form?.setControl('goals', this.fb.array(controls));
   }
 
-  private adaptToForfeit(forfeit: boolean) {
-    this.updateGoalGroup(forfeit ? 0 : this.homeGoals?.value);
+  private onForfeitChange(forfeit: boolean) {
+    if (forfeit) {
+      this.setGoalControls([]);
+    } else {
+      this.updateGoalGroup(this.homeGoals?.value);
+    }
   }
 
-  private updatePenaltiesControl(show: boolean) {
+  private onPenaltiesChange(show: boolean) {
     this.penaltiesHome.setValue(show ? 0 : void 0);
     this.penaltiesOpponent.setValue(show ? 0 : void 0);
   }

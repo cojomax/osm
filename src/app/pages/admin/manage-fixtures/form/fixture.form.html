@@ -107,7 +107,7 @@
   <!-- Pens / Forfeit -->
   <nz-form-item>
     <nz-form-control [nzOffset]="rowSpan.colOne" [nzSpan]="rowSpan.colTwo">
-      <label nz-checkbox formControlName="penalties">
+      <label nz-checkbox formControlName="penalties" [nzDisabled]="forfeit.value">
         <span>Penalties</span>
       </label>
       <label nz-checkbox formControlName="forfeit">

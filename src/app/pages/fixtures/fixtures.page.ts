@@ -1,7 +1,7 @@
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { FixtureService } from '../../services/fixture.service';
 import { Fixture } from '../../api/models/fixture.model';
-import { mergeMap, Subscription, take, tap } from 'rxjs';
+import { first, mergeMap, Subscription, tap } from 'rxjs';
 import { NzCardModule } from '@nz/card';
 import {
   AsyncPipe,
@@ -95,8 +95,15 @@ export class FixturesPageComponent implements OnInit {
     );
   }
 
-  protected getScoreColor(home: number, opponent: number) {
-    return home === opponent ? '' : home > opponent ? 'green' : 'red';
+  protected getScoreColor(home: number, opponent: number, homePens: number | null, oppPens: number | null) {
+    let result: 'w' | 'l' | 'd';
+    if (homePens || oppPens) {
+      result = (homePens ?? 0) > (oppPens ?? 0) ? 'w' : 'l';
+    } else {
+      result = home === opponent ? 'd' : home > opponent ? 'w' : 'l';
+    }
+
+    return result === 'd' ? '' : result === 'w' ? 'green' : 'red';
   }
 
   protected readonly compareByIdFn = compareByIdFn;
@@ -110,8 +117,7 @@ export class FixturesPageComponent implements OnInit {
 
   private fetchFixtures() {
     return this.fixtureSvc.query('season.id', this.selectedSeason?.id!).pipe(
-      // TODO Isn't there a takeFirst?
-      take(1),
+      first(),
       tap((data) => {
         // TODO Make into FireStore query.
 
