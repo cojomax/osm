@@ -7,6 +7,7 @@
       <input nz-input id="id-first-name" formControlName="firstName" type="text" />
     </nz-form-control>
   </nz-form-item>
+
   <!-- Last name -->
   <nz-form-item>
     <nz-form-label [nzSpan]="rowSpan.colOne" nzFor="id-last-name"> Last Name </nz-form-label>
@@ -14,17 +15,19 @@
       <input nz-input id="id-last-name" formControlName="lastName" type="text" />
     </nz-form-control>
   </nz-form-item>
+
   <!-- Position -->
   <nz-form-item>
     <nz-form-label [nzSpan]="rowSpan.colOne" nzFor="id-position"> Position </nz-form-label>
     <nz-form-control [nzSpan]="rowSpan.colTwo" nzErrorTip="Position is required">
-      <nz-select nzPlaceHolder="" formControlName="position">
+      <nz-select nzShowSearch nzPlaceHolder="" formControlName="position">
         @for(position of positionOptions; track position.value) {
         <nz-option [nzValue]="position.value" [nzLabel]="position.label"></nz-option>
         }
       </nz-select>
     </nz-form-control>
   </nz-form-item>
+
   <!-- Squad Number -->
   <nz-form-item>
     <nz-form-label [nzSpan]="rowSpan.colOne" nzFor="id-squad-number"> Squad Number </nz-form-label>
@@ -32,6 +35,7 @@
       <input nz-input id="id-squad-number" formControlName="squadNumber" type="number" />
     </nz-form-control>
   </nz-form-item>
+
   <!-- Country -->
   <nz-form-item>
     <nz-form-label [nzSpan]="rowSpan.colOne" nzFor="id-country"> Country </nz-form-label>
@@ -39,6 +43,7 @@
       <input nz-input id="id-country" formControlName="country" type="text" />
     </nz-form-control>
   </nz-form-item>
+
   <!-- D.O.B. -->
   <nz-form-item>
     <nz-form-label [nzSpan]="rowSpan.colOne" nzFor="id-dob"> Date of Birth </nz-form-label>
@@ -46,6 +51,7 @@
       <nz-date-picker id="id-dob" formControlName="dob"></nz-date-picker>
     </nz-form-control>
   </nz-form-item>
+
   <!-- Height -->
   <nz-form-item>
     <nz-form-label [nzSpan]="rowSpan.colOne" nzFor="id-height"> Height </nz-form-label>
@@ -55,6 +61,7 @@
       </nz-input-group>
     </nz-form-control>
   </nz-form-item>
+
   <!-- Legend -->
   <nz-form-item>
     <nz-form-label [nzSpan]="rowSpan.colOne" nzFor="id-legend"> Legend Status </nz-form-label>

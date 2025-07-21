@@ -5,6 +5,7 @@ import { Fixture } from '../api/models/fixture.model';
 import { StoreConverter } from '../api/firebase/converter.interface';
 import { Repository } from './repository.interface';
 import { FixtureConverter } from '../api/firebase/converters/fixture.converter';
+import { throwError } from 'rxjs';
 
 const COLLECTION = FireStoreCollection.Fixtures;
 
@@ -31,6 +32,10 @@ export class FixtureService implements Repository<Fixture> {
   }
 
   create(fixture: Fixture) {
+    if (!fixture.season) {
+      return throwError(() => 'No season for fixture operation');
+    }
+
     return this._dbSvc.createDocument(COLLECTION, fixture, this.converter);
   }
 

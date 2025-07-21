@@ -3,7 +3,7 @@ import { Component, inject, LOCALE_ID, OnDestroy, OnInit, signal, ViewChild } fr
 import { NzButtonModule } from '@nz/button';
 import { NzIconModule } from '@nz/icon';
 import { NzModalModule } from '@nz/modal';
-import { first, mergeMap, Subscription, tap } from 'rxjs';
+import { first, Subscription, tap } from 'rxjs';
 import { ColDef, ICellRendererParams } from 'ag-grid-community';
 import { FixtureFormComponent } from './form/fixture.form';
 import { Fixture } from '../../../api/models/fixture.model';
@@ -20,12 +20,11 @@ import { Competition } from '../../../api/models/competition.model';
 import { CompetitionService } from '../../../services/competition.service';
 import { Player } from '../../../api/models/player.model';
 import { PlayerService } from '../../../services/player.service';
-import { NzSelectComponent, NzSelectModule } from 'ng-zorro-antd/select';
+import { NzSelectModule } from 'ng-zorro-antd/select';
 import { Season } from '../../../api/models/season.model';
-import { SeasonService } from '../../../services/season.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { compareByIdFn } from '../../../shared/utility/form.util';
 import { State } from '../../../services/state';
+import { SeasonSelectorComponent } from '../../../components/season-selector/season-selector.component';
 
 @Component({
   selector: 'osm-manage-fixtures',
@@ -37,10 +36,10 @@ import { State } from '../../../services/state';
     NzButtonModule,
     NzIconModule,
     NzModalModule,
-    NzSelectComponent,
     NzSelectModule,
     FormsModule,
     ReactiveFormsModule,
+    SeasonSelectorComponent,
   ],
   templateUrl: './manage-fixtures.page.html',
   styleUrl: './manage-fixtures.page.css',
@@ -50,14 +49,12 @@ export class ManageFixturesPageComponent implements OnInit, OnDestroy {
   protected readonly fixtures = signal<Fixture[]>([]);
   protected readonly venues = signal<Name[]>([]);
   protected readonly teams = signal<Name[]>([]);
+  // FIXME Enhance this to be appropriate for the selected season.
   protected readonly competitions = signal<Competition[]>([]);
   protected readonly players = signal<Player[]>([]);
   protected readonly seasons = signal<Season[]>([]);
   protected readonly selectedFixture = signal<Fixture | null>(null);
-
-  protected selectedSeason: Name | null = null;
-
-  protected readonly compareByIdFn = compareByIdFn;
+  protected readonly season = signal<Season | null>(null);
 
   private readonly datePipe: DatePipe;
   private readonly subs = new Subscription();
@@ -67,7 +64,6 @@ export class ManageFixturesPageComponent implements OnInit, OnDestroy {
   protected readonly modalSvc = inject(FormModalService<Fixture>);
   protected readonly state = inject(State);
 
-  private readonly seasonSvc = inject(SeasonService);
   private readonly competitionSvc = inject(CompetitionService);
   private readonly fixtureSvc = inject(FixtureService);
   private readonly playerSvc = inject(PlayerService);
@@ -106,27 +102,15 @@ export class ManageFixturesPageComponent implements OnInit, OnDestroy {
         .pipe(tap((res) => this.players.set(res)))
         .subscribe(),
     );
-
-    this.subs.add(
-      this.seasonSvc
-        .fetch()
-        .pipe(
-          tap((res) => {
-            this.setSeason(res[0]);
-          }),
-          mergeMap(() => this.updateTableData(this.selectedSeason!.id)),
-        )
-        .subscribe(),
-    );
   }
 
   ngOnDestroy() {
     this.subs.unsubscribe();
   }
 
-  protected onSeasonSelected(season: Season) {
-    this.setSeason(season);
-    this.subs.add(this.updateTableData(this.selectedSeason!.id).subscribe());
+  protected onSeasonSelected(seasonId: string) {
+    this.season.set(this.state.seasons().find((s) => s.id === seasonId) ?? null);
+    this.updateTableData(seasonId).pipe(first()).subscribe();
   }
 
   protected colDefs: ColDef<Fixture>[] = [
@@ -232,11 +216,7 @@ export class ManageFixturesPageComponent implements OnInit, OnDestroy {
   }
 
   protected onModified() {
-    // TODO Try add this to where updates are made
-    this.subs.add(this.updateTableData(this.selectedSeason!.id).subscribe());
-  }
-
-  private setSeason(season: Season) {
-    this.selectedSeason = new Name({ id: season.id, name: season.name });
+    // TODO Try add this to where updates are made and do a GRID TRANSACTION
+    this.subs.add(this.updateTableData(this.season()!.id).subscribe());
   }
 }
