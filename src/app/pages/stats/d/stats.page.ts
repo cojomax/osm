@@ -1,6 +1,6 @@
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { StatsService } from '../../../services/stats.service';
-import { finalize, forkJoin, tap } from 'rxjs';
+import { finalize, first, forkJoin, tap } from 'rxjs';
 import { NzStatisticComponent } from 'ng-zorro-antd/statistic';
 import { PlayerService } from '../../../services/player.service';
 import { FixtureService } from '../../../services/fixture.service';
@@ -10,10 +10,12 @@ import { AgGridAngular } from 'ag-grid-angular';
 import { ColDef, GridReadyEvent, SizeColumnsToContentStrategy, SizeColumnsToFitGridStrategy } from 'ag-grid-community';
 import { IS_MOBILE } from '../../../services/tokens/is-mobile.token';
 import { DashIfEmptyPipe } from '../../../shared/pipes/dash-if-empty.pipe';
+import { SeasonSelectorComponent } from '../../../components/season-selector/season-selector.component';
+import { State } from '../../../services/state';
 
 @Component({
   selector: 'osm-stats',
-  imports: [NzStatisticComponent, AgGridAngular, DecimalPipe, DashIfEmptyPipe],
+  imports: [NzStatisticComponent, AgGridAngular, DecimalPipe, DashIfEmptyPipe, SeasonSelectorComponent],
   templateUrl: './stats.page.html',
   styleUrl: './stats.page.css',
 })
@@ -31,36 +33,37 @@ export class StatsPageComponent implements OnInit {
   private statsSvc = inject(StatsService);
   private playerSvc = inject(PlayerService);
   private fixtureSvc = inject(FixtureService);
+  private state = inject(State);
 
   // TODO Season object is supposed to contain an aggregation of the season stats.
 
   ngOnInit() {
-    forkJoin([this.fixtureSvc.fetch(), this.playerSvc.fetch()])
-      .pipe(
-        tap((res) => {
-          const seasonResults = res[0].filter((f) => f.competition?.id === 'tXLXUh6I1K9FyXaPpUmm');
-          this.seasonStats.set(this.statsSvc.generateSeasonStats(seasonResults));
+    // forkJoin([this.fixtureSvc.fetch(), this.playerSvc.fetch()])
+    //   .pipe(
+    //     tap((res) => {
+    //       const seasonResults = res[0].filter((f) => f.competition?.id === 'tXLXUh6I1K9FyXaPpUmm');
+    //       this.seasonStats.set(this.statsSvc.generateSeasonStats(seasonResults));
 
-          const playerStats = this.statsSvc.generatePlayerStats(seasonResults);
-          this.playerData.set(
-            res[1]
-              .filter((p) => !p.isLegend && p.squadNumber)
-              .map((p) => ({
-                id: p.id,
-                name: p.fullName,
-                position: p.position,
-                squadNumber: p.squadNumber,
-                goals: playerStats.goals.get(p.id) ?? 0,
-                assists: playerStats.assists.get(p.id) ?? 0,
-                contributions: playerStats.contributions.get(p.id) ?? 0,
-              })),
-          );
-        }),
-        finalize(() => {
-          this.isLoading.set(false);
-        }),
-      )
-      .subscribe();
+    //       const playerStats = this.statsSvc.generatePlayerStats(seasonResults);
+    //       this.playerData.set(
+    //         res[1]
+    //           .filter((p) => !p.isLegend && p.squadNumber)
+    //           .map((p) => ({
+    //             id: p.id,
+    //             name: p.fullName,
+    //             position: p.position,
+    //             squadNumber: p.squadNumber,
+    //             goals: playerStats.goals.get(p.id) ?? 0,
+    //             assists: playerStats.assists.get(p.id) ?? 0,
+    //             contributions: playerStats.contributions.get(p.id) ?? 0,
+    //           })),
+    //       );
+    //     }),
+    //     finalize(() => {
+    //       this.isLoading.set(false);
+    //     }),
+    //   )
+    //   .subscribe();
 
     this.isMobile.subscribe((mobile) => {
       this.autoSizeStrategy = mobile ? { type: 'fitCellContents' } : { type: 'fitGridWidth' };
@@ -89,5 +92,22 @@ export class StatsPageComponent implements OnInit {
   protected onGridReady(ev: GridReadyEvent) {
     // ev.api.sizeColumnsToFit();
     // ev.api.autoSizeAllColumns();
+  }
+
+  protected onSeasonSelected(seasonId: string) {
+    this.getSeasonStats(seasonId);
+  }
+
+  private getSeasonStats(seasonId: string) {
+    const leagueId = this.state.seasons().find((s) => s.id === seasonId)?.league?.competitionId ?? '';
+    return this.fixtureSvc
+      .query([{ field: 'season.id', query: seasonId }, { field: 'competition.id', query: leagueId }])
+      .pipe(
+        first(),
+        tap((fixtures) => {
+          this.seasonStats.set(this.statsSvc.generateSeasonStats(fixtures));
+        }),
+      )
+      .subscribe();
   }
 }

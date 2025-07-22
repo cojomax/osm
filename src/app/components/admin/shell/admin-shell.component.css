@@ -18,7 +18,7 @@ main {
   display: flex;
   align-items: flex-end;
   height: calc(100% - var(--banner-height-desktop));
-  //width: 100%;
+  /* width: 100%; */
 
   ul, section {
     height: 100%;
@@ -26,7 +26,7 @@ main {
 
   ul {
     background-color: var(--color-light);
-    //border: none;
+    /* border: none; */
     padding-right: 32px;
     position: relative;
     top: 80px;

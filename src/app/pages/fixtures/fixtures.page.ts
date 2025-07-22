@@ -116,7 +116,7 @@ export class FixturesPageComponent implements OnInit {
   }
 
   private fetchFixtures() {
-    return this.fixtureSvc.query('season.id', this.selectedSeason?.id!).pipe(
+    return this.fixtureSvc.query([{ field: 'season.id', query: this.selectedSeason?.id! }]).pipe(
       first(),
       tap((data) => {
         // TODO Make into FireStore query.
