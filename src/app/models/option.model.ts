@@ -1,4 +1,6 @@
-export interface SelectOption<T = string> {
-  label: string;
-  value: T;
+export class Option<T = string> {
+  constructor(
+    public label: string,
+    public value: T,
+  ) {}
 }

@@ -1,39 +1,33 @@
-import { Component, computed, inject, OnInit, signal } from '@angular/core';
-import { StatsService } from '../../../services/stats.service';
-import { finalize, first, forkJoin, tap } from 'rxjs';
-import { NzStatisticComponent } from 'ng-zorro-antd/statistic';
-import { PlayerService } from '../../../services/player.service';
-import { FixtureService } from '../../../services/fixture.service';
-import { SeasonStats } from '../../../models/season-stats.model';
-import { DecimalPipe } from '@angular/common';
+import { CommonModule, DecimalPipe } from '@angular/common';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { AgGridAngular } from 'ag-grid-angular';
 import { ColDef, GridReadyEvent, SizeColumnsToContentStrategy, SizeColumnsToFitGridStrategy } from 'ag-grid-community';
+import { NzStatisticComponent } from 'ng-zorro-antd/statistic';
+import { SeasonSelectorComponent } from '../../../components/selectors/season-selector.component';
 import { IS_MOBILE } from '../../../services/tokens/is-mobile.token';
 import { DashIfEmptyPipe } from '../../../shared/pipes/dash-if-empty.pipe';
-import { SeasonSelectorComponent } from '../../../components/season-selector/season-selector.component';
-import { State } from '../../../services/state';
+import { StatsPageService } from '../stats-page.service';
+import { StatsPageState } from '../stats-page.state';
 
 @Component({
   selector: 'osm-stats',
-  imports: [NzStatisticComponent, AgGridAngular, DecimalPipe, DashIfEmptyPipe, SeasonSelectorComponent],
+  imports: [AgGridAngular, CommonModule, DashIfEmptyPipe, DecimalPipe, NzStatisticComponent, SeasonSelectorComponent],
   templateUrl: './stats.page.html',
   styleUrl: './stats.page.css',
 })
 export class StatsPageComponent implements OnInit {
   protected isLoading = signal(true);
-  protected seasonStats = signal<SeasonStats | null>(null);
+
   protected playerData = signal<any>(null);
-  protected seasonPoints = computed(
-    () => (this.seasonStats()?.gamesWon ?? 0) * 3 + (this.seasonStats()?.gamesDrawn ?? 0),
-  );
+  // protected seasonPoints = computed(
+  //   () => (this.seasonStats()?.gamesWon ?? 0) * 3 + (this.seasonStats()?.gamesDrawn ?? 0),
+  // );
 
   protected isMobile = inject(IS_MOBILE);
   protected autoSizeStrategy: SizeColumnsToFitGridStrategy | SizeColumnsToContentStrategy = { type: 'fitGridWidth' };
+  protected page = inject(StatsPageState);
 
-  private statsSvc = inject(StatsService);
-  private playerSvc = inject(PlayerService);
-  private fixtureSvc = inject(FixtureService);
-  private state = inject(State);
+  private readonly svc = inject(StatsPageService);
 
   // TODO Season object is supposed to contain an aggregation of the season stats.
 
@@ -94,20 +88,7 @@ export class StatsPageComponent implements OnInit {
     // ev.api.autoSizeAllColumns();
   }
 
-  protected onSeasonSelected(seasonId: string) {
-    this.getSeasonStats(seasonId);
-  }
-
-  private getSeasonStats(seasonId: string) {
-    const leagueId = this.state.seasons().find((s) => s.id === seasonId)?.league?.competitionId ?? '';
-    return this.fixtureSvc
-      .query([{ field: 'season.id', query: seasonId }, { field: 'competition.id', query: leagueId }])
-      .pipe(
-        first(),
-        tap((fixtures) => {
-          this.seasonStats.set(this.statsSvc.generateSeasonStats(fixtures));
-        }),
-      )
-      .subscribe();
+  protected onSeasonSelected(value: { seasonId: string; competitionId: string }) {
+    this.svc.setActiveSeason(value);
   }
 }

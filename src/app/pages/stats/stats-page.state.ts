@@ -1,4 +1,7 @@
 import { computed, Injectable, signal } from '@angular/core';
+import { Competition } from 'src/app/api/models/competition.model';
+import { Season } from 'src/app/api/models/season.model';
+import { SeasonStats } from 'src/app/models/season-stats.model';
 
 export type Stat = { stat: string; value: string | number | undefined };
 
@@ -6,6 +9,11 @@ export type Stat = { stat: string; value: string | number | undefined };
   providedIn: 'root',
 })
 export class StatsPageState {
+  selectedSeason = signal<Season | null>(null);
+  selectedCompetition = signal<Competition | null>(null);
+  seasonStats = signal<SeasonStats | null>(null);
+  seasonPoints = computed(() => (this.seasonStats()?.gamesWon ?? 0) * 3 + (this.seasonStats()?.gamesDrawn ?? 0));
+
   playerData = signal<any>([]);
 
   /** Top 3 scorers */

@@ -1,12 +1,12 @@
 import { inject, Injectable } from '@angular/core';
-import { FirebaseDbService } from '../api/firebase/services/firebase.db.service';
-import { FireStoreCollection } from '../api/firebase/db-collection.enum';
-import { StoreConverter } from '../api/firebase/converter.interface';
-import { Repository } from './repository.interface';
-import { Season } from '../api/models/season.model';
-import { SeasonConverter } from '../api/firebase/converters/season.converter';
 import { map, of, tap } from 'rxjs';
-import { State } from './state';
+import { StoreConverter } from '../api/firebase/converter.interface';
+import { SeasonConverter } from '../api/firebase/converters/season.converter';
+import { FireStoreCollection } from '../api/firebase/db-collection.enum';
+import { FirebaseDbService } from '../api/firebase/services/firebase.db.service';
+import { Season } from '../api/models/season.model';
+import { AppCache } from './app-cache';
+import { Repository } from './repository.interface';
 
 const COLLECTION = FireStoreCollection.Seasons;
 
@@ -16,7 +16,7 @@ const COLLECTION = FireStoreCollection.Seasons;
 export class SeasonService implements Repository<Season> {
   private readonly converter: StoreConverter<Season>;
 
-  private readonly state = inject(State);
+  private readonly state = inject(AppCache);
   private readonly dbSvc = inject(FirebaseDbService);
 
   constructor() {

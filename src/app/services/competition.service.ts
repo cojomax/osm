@@ -1,10 +1,12 @@
-import { Injectable } from '@angular/core';
-import { FirebaseDbService } from '../api/firebase/services/firebase.db.service';
-import { FireStoreCollection } from '../api/firebase/db-collection.enum';
+import { inject, Injectable } from '@angular/core';
+import { of, tap } from 'rxjs';
 import { StoreConverter } from '../api/firebase/converter.interface';
-import { Repository } from './repository.interface';
-import { Competition } from '../api/models/competition.model';
 import { CompetitionConverter } from '../api/firebase/converters/competition.converter';
+import { FireStoreCollection } from '../api/firebase/db-collection.enum';
+import { FirebaseDbService } from '../api/firebase/services/firebase.db.service';
+import { Competition } from '../api/models/competition.model';
+import { AppCache } from './app-cache';
+import { Repository } from './repository.interface';
 
 const COLLECTION = FireStoreCollection.Competitions;
 
@@ -14,27 +16,36 @@ const COLLECTION = FireStoreCollection.Competitions;
 export class CompetitionService implements Repository<Competition> {
   private readonly converter: StoreConverter<Competition>;
 
-  constructor(private _dbSvc: FirebaseDbService) {
+  private readonly cache = inject(AppCache);
+  private readonly dbSvc = inject(FirebaseDbService);
+
+  constructor() {
     this.converter = new CompetitionConverter();
   }
 
   fetch() {
-    return this._dbSvc.getCollection<Competition>(COLLECTION, this.converter);
+    return this.cache.competitions().length
+      ? of(this.cache.competitions())
+      : this.dbSvc.getCollection<Competition>(COLLECTION, this.converter).pipe(
+          tap((competitions) => {
+            this.cache.competitions.set(competitions);
+          }),
+        );
   }
 
   find(matchId: string) {
-    return this._dbSvc.getDocuments<Competition>(COLLECTION, matchId, this.converter);
+    return this.dbSvc.getDocuments<Competition>(COLLECTION, matchId, this.converter);
   }
 
   create(match: Competition) {
-    return this._dbSvc.createDocument(COLLECTION, match, this.converter);
+    return this.dbSvc.createDocument(COLLECTION, match, this.converter);
   }
 
   update(match: Competition) {
-    return this._dbSvc.updateDocument(COLLECTION, match.id, match, this.converter);
+    return this.dbSvc.updateDocument(COLLECTION, match.id, match, this.converter);
   }
 
   delete(matchId: string) {
-    return this._dbSvc.deleteDocument(COLLECTION, matchId);
+    return this.dbSvc.deleteDocument(COLLECTION, matchId);
   }
 }

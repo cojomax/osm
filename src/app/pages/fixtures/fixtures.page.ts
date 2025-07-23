@@ -1,8 +1,3 @@
-import { Component, computed, inject, OnInit, signal } from '@angular/core';
-import { FixtureService } from '../../services/fixture.service';
-import { Fixture } from '../../api/models/fixture.model';
-import { first, mergeMap, Subscription, tap } from 'rxjs';
-import { NzCardModule } from '@nz/card';
 import {
   AsyncPipe,
   CommonModule,
@@ -12,16 +7,21 @@ import {
   NgTemplateOutlet,
   UpperCasePipe,
 } from '@angular/common';
-import { NzTagModule } from 'ng-zorro-antd/tag';
-import { ActivatedRoute, RouterLink } from '@angular/router';
-import { NzDividerComponent } from 'ng-zorro-antd/divider';
-import { IS_MOBILE } from '../../services/tokens/is-mobile.token';
-import { NzOptionComponent, NzSelectComponent } from 'ng-zorro-antd/select';
-import { compareByIdFn } from '../../shared/utility/form.util';
-import { Season } from '../../api/models/season.model';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { State } from '../../services/state';
+import { ActivatedRoute, RouterLink } from '@angular/router';
+import { NzCardModule } from '@nz/card';
+import { NzDividerComponent } from 'ng-zorro-antd/divider';
+import { NzOptionComponent, NzSelectComponent } from 'ng-zorro-antd/select';
+import { NzTagModule } from 'ng-zorro-antd/tag';
+import { first, mergeMap, Subscription, tap } from 'rxjs';
+import { Fixture } from '../../api/models/fixture.model';
+import { Season } from '../../api/models/season.model';
+import { AppCache } from '../../services/app-cache';
+import { FixtureService } from '../../services/fixture.service';
 import { SeasonService } from '../../services/season.service';
+import { IS_MOBILE } from '../../services/tokens/is-mobile.token';
+import { compareByIdFn } from '../../shared/utility/form.util';
 
 const MONTHS = new Map<number, string>([
   [0, 'January'],
@@ -71,7 +71,7 @@ export class FixturesPageComponent implements OnInit {
   });
 
   protected isMobile = inject(IS_MOBILE);
-  protected readonly state = inject(State);
+  protected readonly state = inject(AppCache);
 
   private subs = new Subscription();
   private readonly fixtureSvc = inject(FixtureService);

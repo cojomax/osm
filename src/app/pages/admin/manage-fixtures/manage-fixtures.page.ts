@@ -1,30 +1,30 @@
 import { CommonModule, DatePipe } from '@angular/common';
 import { Component, inject, LOCALE_ID, OnDestroy, OnInit, signal, ViewChild } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NzButtonModule } from '@nz/button';
 import { NzIconModule } from '@nz/icon';
 import { NzModalModule } from '@nz/modal';
-import { first, Subscription, tap } from 'rxjs';
 import { ColDef, ICellRendererParams } from 'ag-grid-community';
-import { FixtureFormComponent } from './form/fixture.form';
+import { NzSelectModule } from 'ng-zorro-antd/select';
+import { first, Subscription, tap } from 'rxjs';
+import { Competition } from '../../../api/models/competition.model';
 import { Fixture } from '../../../api/models/fixture.model';
-import { FixtureService } from '../../../services/fixture.service';
+import { Name } from '../../../api/models/name.model';
+import { Player } from '../../../api/models/player.model';
+import { Season } from '../../../api/models/season.model';
 import { FormModalComponent } from '../../../components/admin/form-modal/form-modal.component';
-import { GridComponent } from '../../../components/grid/grid.component';
-import { EditButtonComponent } from '../manage-players/renderers/edit-btn.component';
 import { FormModalService } from '../../../components/admin/form-modal/form-modal.service';
 import { REPOSITORY_SERVICE } from '../../../components/admin/form-modal/form-modal.token';
-import { VenueService } from '../../../services/venue.service';
-import { TeamService } from '../../../services/team.service';
-import { Name } from '../../../api/models/name.model';
-import { Competition } from '../../../api/models/competition.model';
+import { GridComponent } from '../../../components/grid/grid.component';
+import { SeasonSelectorComponent } from '../../../components/selectors/season-selector.component';
+import { AppCache } from '../../../services/app-cache';
 import { CompetitionService } from '../../../services/competition.service';
-import { Player } from '../../../api/models/player.model';
+import { FixtureService } from '../../../services/fixture.service';
 import { PlayerService } from '../../../services/player.service';
-import { NzSelectModule } from 'ng-zorro-antd/select';
-import { Season } from '../../../api/models/season.model';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { State } from '../../../services/state';
-import { SeasonSelectorComponent } from '../../../components/season-selector/season-selector.component';
+import { TeamService } from '../../../services/team.service';
+import { VenueService } from '../../../services/venue.service';
+import { EditButtonComponent } from '../manage-players/renderers/edit-btn.component';
+import { FixtureFormComponent } from './form/fixture.form';
 
 @Component({
   selector: 'osm-manage-fixtures',
@@ -62,7 +62,7 @@ export class ManageFixturesPageComponent implements OnInit, OnDestroy {
   @ViewChild(FixtureFormComponent) form!: FixtureFormComponent;
 
   protected readonly modalSvc = inject(FormModalService<Fixture>);
-  protected readonly state = inject(State);
+  protected readonly state = inject(AppCache);
 
   private readonly competitionSvc = inject(CompetitionService);
   private readonly fixtureSvc = inject(FixtureService);
