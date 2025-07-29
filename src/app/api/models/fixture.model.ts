@@ -1,6 +1,6 @@
-import { Goal } from './goal.model';
-import { Entity } from './entity.interface';
 import { Competition } from './competition.model';
+import { Entity } from './entity.interface';
+import { Goal } from './goal.model';
 import { Name } from './name.model';
 
 export class Fixture implements Entity {
@@ -46,4 +46,20 @@ export class Fixture implements Entity {
 
   /** The ID of the match report. */
   matchReport: string | null = null;
+
+  get won() {
+    return this.penalties ? this.penaltiesHome! > this.penaltiesOpponent! : this.homeGoals > this.opponentGoals;
+  }
+
+  get lost() {
+    return this.penalties ? this.penaltiesOpponent! > this.penaltiesHome! : this.opponentGoals > this.homeGoals;
+  }
+
+  get drawn() {
+    return !this.penalties && this.homeGoals === this.opponentGoals;
+  }
+
+  get cleanSheet() {
+    return !this.opponentGoals;
+  }
 }

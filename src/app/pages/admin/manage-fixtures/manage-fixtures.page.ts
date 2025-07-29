@@ -4,7 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NzButtonModule } from '@nz/button';
 import { NzIconModule } from '@nz/icon';
 import { NzModalModule } from '@nz/modal';
-import { ColDef, ICellRendererParams } from 'ag-grid-community';
+import { ColDef } from 'ag-grid-community';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { first, Subscription, tap } from 'rxjs';
 import { Competition } from '../../../api/models/competition.model';
@@ -16,7 +16,7 @@ import { FormModalComponent } from '../../../components/admin/form-modal/form-mo
 import { FormModalService } from '../../../components/admin/form-modal/form-modal.service';
 import { REPOSITORY_SERVICE } from '../../../components/admin/form-modal/form-modal.token';
 import { GridComponent } from '../../../components/grid/grid.component';
-import { SeasonSelectorComponent } from '../../../components/selectors/season-selector.component';
+import { SeasonSelectorComponent, SelectedSeason } from '../../../components/selectors/season-selector.component';
 import { AppCache } from '../../../services/app-cache';
 import { CompetitionService } from '../../../services/competition.service';
 import { FixtureService } from '../../../services/fixture.service';
@@ -108,9 +108,9 @@ export class ManageFixturesPageComponent implements OnInit, OnDestroy {
     this.subs.unsubscribe();
   }
 
-  protected onSeasonSelected(seasonId: string) {
-    this.season.set(this.state.seasons().find((s) => s.id === seasonId) ?? null);
-    this.updateTableData(seasonId).pipe(first()).subscribe();
+  protected onSeasonSelected(value: SelectedSeason) {
+    this.season.set(this.state.seasons().find((s) => s.id === value.seasonId) ?? null);
+    this.updateTableData(value.seasonId).pipe(first()).subscribe();
   }
 
   protected colDefs: ColDef<Fixture>[] = [
@@ -127,8 +127,9 @@ export class ManageFixturesPageComponent implements OnInit, OnDestroy {
     },
     { field: 'venue.name' },
     {
-      field: 'competition',
-      cellRenderer: (params: ICellRendererParams<Competition>) => `${params.value?.name} ${params.value?.tier}`,
+      field: 'competition.tier',
+      headerName: 'Competition',
+      // cellRenderer: (params: ICellRendererParams<Competition>) => `${params.value?.name} ${params.value?.tier}`,
     },
     { field: 'opponent.name' },
     {
@@ -146,7 +147,7 @@ export class ManageFixturesPageComponent implements OnInit, OnDestroy {
         }
 
         if (params.data?.penalties) {
-          return `${score} (${params.data?.penaltiesHome} - ${params.data?.penaltiesOpponent})`;
+          return `${params.data?.homeGoals ?? 0} (${params.data?.penaltiesHome}) - ${params.data?.opponentGoals ?? 0} (${params.data?.penaltiesOpponent})`;
         }
 
         return score;

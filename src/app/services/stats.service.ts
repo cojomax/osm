@@ -3,6 +3,7 @@ import { Fixture } from '../api/models/fixture.model';
 import { Goal } from '../api/models/goal.model';
 import { Player } from '../api/models/player.model';
 import { SeasonStats } from '../models/season-stats.model';
+import { toFixed } from '../shared/utility/number.util';
 
 export enum SeasonStat {
   GamesPlayed = 'Games Played',
@@ -41,11 +42,11 @@ export class StatsService {
   private calcSeasonStats(fixtures: Fixture[]): SeasonStats {
     const gamesPlayed = fixtures.length;
 
-    const gamesWon = fixtures.filter((f) => f.homeGoals > f.opponentGoals).length;
-    const gamesLost = fixtures.filter((f) => f.opponentGoals > f.homeGoals).length;
-    const gamesDrawn = fixtures.filter((f) => f.homeGoals === f.opponentGoals).length;
-    const cleanSheets = fixtures.filter((f) => f.opponentGoals === 0).length;
-    const winPercentage = gamesWon / gamesPlayed;
+    const gamesWon = fixtures.filter((f) => f.won).length;
+    const gamesLost = fixtures.filter((f) => f.lost).length;
+    const gamesDrawn = fixtures.filter((f) => f.drawn).length;
+    const cleanSheets = fixtures.filter((f) => f.cleanSheet).length;
+    const winPercentage = toFixed(gamesWon / gamesPlayed, 2);
 
     const goals = fixtures.flatMap((f) => f.goals);
     const goalsScored = goals.length;

@@ -4,13 +4,13 @@
   <!--    <nz-option [nzValue]="season.value" [nzLabel]="season.label"></nz-option>-->
   <!--    }-->
   <!--  </nz-select>-->
-  <p>2024/25</p>
+  <osm-season-selector (selected)="onSeasonSelected($event)"></osm-season-selector>
 
   <div class="stats-container">
     <section>
       <h2>Performance</h2>
 
-      <osm-stats-table [data]="seasonStats"></osm-stats-table>
+      <osm-stats-table [data]="seasonStats()"></osm-stats-table>
     </section>
 
     <section>

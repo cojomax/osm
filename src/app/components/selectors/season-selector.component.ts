@@ -1,4 +1,4 @@
-import { Component, EventEmitter, inject, OnInit, Output, signal } from '@angular/core';
+import { Component, EventEmitter, inject, input, OnInit, Output, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NzOptionComponent, NzSelectComponent } from 'ng-zorro-antd/select';
 import { forkJoin, tap } from 'rxjs';
@@ -8,6 +8,11 @@ import { AppCache } from '../../services/app-cache';
 import { SeasonService } from '../../services/season.service';
 import { compareByIdFn } from '../../shared/utility/form.util';
 
+export type SelectedSeason = {
+  seasonId: string;
+  competitionId?: string;
+};
+
 @Component({
   selector: 'osm-season-selector',
   templateUrl: './season-selector.component.html',
@@ -15,6 +20,8 @@ import { compareByIdFn } from '../../shared/utility/form.util';
   imports: [NzSelectComponent, FormsModule, NzOptionComponent],
 })
 export class SeasonSelectorComponent implements OnInit {
+  showCompetition = input<boolean>(false);
+
   protected readonly cache = inject(AppCache);
 
   protected seasonOptions = signal<Option[]>([]);
@@ -28,7 +35,7 @@ export class SeasonSelectorComponent implements OnInit {
   private readonly seasonSvc = inject(SeasonService);
   private readonly competitionSvc = inject(CompetitionService);
 
-  @Output() selected = new EventEmitter<{ seasonId: string; competitionId: string }>();
+  @Output() selected = new EventEmitter<SelectedSeason>();
 
   ngOnInit() {
     forkJoin([this.seasonSvc.fetch(), this.competitionSvc.fetch()])

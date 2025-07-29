@@ -1,6 +1,6 @@
-import { StoreConverter } from '../converter.interface';
 import { QueryDocumentSnapshot } from 'firebase/firestore/lite';
 import { Season } from '../../models/season.model';
+import { StoreConverter } from '../converter.interface';
 
 export class SeasonConverter implements StoreConverter<Season> {
   toFirestore(comp: Season) {
@@ -17,7 +17,7 @@ export class SeasonConverter implements StoreConverter<Season> {
     return new Season({
       id: snapshot.id,
       name: comp['name'],
-      league: { competitionId: comp['league']['competitionId'] },
+      league: { competitionId: comp['league']['competitionId'], position: comp['league']['position'] },
       cup: { competitionId: comp['cup']['competitionId'] },
       startDate: new Date(comp['startDate']),
       endDate: new Date(comp['endDate']),

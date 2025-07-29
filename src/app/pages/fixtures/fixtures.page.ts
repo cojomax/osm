@@ -95,15 +95,8 @@ export class FixturesPageComponent implements OnInit {
     );
   }
 
-  protected getScoreColor(home: number, opponent: number, homePens: number | null, oppPens: number | null) {
-    let result: 'w' | 'l' | 'd';
-    if (homePens || oppPens) {
-      result = (homePens ?? 0) > (oppPens ?? 0) ? 'w' : 'l';
-    } else {
-      result = home === opponent ? 'd' : home > opponent ? 'w' : 'l';
-    }
-
-    return result === 'd' ? '' : result === 'w' ? 'green' : 'red';
+  protected getScoreColor(fixture: Fixture) {
+    return fixture.drawn ? '' : fixture.won ? 'green' : 'red';
   }
 
   protected readonly compareByIdFn = compareByIdFn;

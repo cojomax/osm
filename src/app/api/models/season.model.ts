@@ -11,7 +11,7 @@ export class Season implements Entity {
   /** The name of this season. */
   name = '';
 
-  league: { competitionId: string } | null = null;
+  league: { competitionId: string; position: number } | null = null;
 
   cup: { competitionId: string } | null = null;
 
