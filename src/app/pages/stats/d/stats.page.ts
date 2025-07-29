@@ -3,7 +3,7 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { AgGridAngular } from 'ag-grid-angular';
 import { ColDef, GridReadyEvent, SizeColumnsToContentStrategy, SizeColumnsToFitGridStrategy } from 'ag-grid-community';
 import { NzStatisticComponent } from 'ng-zorro-antd/statistic';
-import { SeasonSelectorComponent } from '../../../components/selectors/season-selector.component';
+import { SeasonSelectorComponent, SelectedSeason } from '../../../components/selectors/season-selector.component';
 import { IS_MOBILE } from '../../../services/tokens/is-mobile.token';
 import { DashIfEmptyPipe } from '../../../shared/pipes/dash-if-empty.pipe';
 import { StatsPageService } from '../stats-page.service';
@@ -88,7 +88,7 @@ export class StatsPageComponent implements OnInit {
     // ev.api.autoSizeAllColumns();
   }
 
-  protected onSeasonSelected(value: { seasonId: string; competitionId: string }) {
+  protected onSeasonSelected(value: SelectedSeason) {
     this.svc.setActiveSeason(value);
   }
 }

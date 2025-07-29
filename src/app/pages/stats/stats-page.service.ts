@@ -1,6 +1,7 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { Data } from '@angular/router';
 import { first, of, tap } from 'rxjs';
+import { SelectedSeason } from 'src/app/components/selectors/season-selector.component';
 import { AppCache } from 'src/app/services/app-cache';
 import { Option } from '../../models/option.model';
 import { FixtureService } from '../../services/fixture.service';
@@ -69,7 +70,7 @@ export class StatsPageService {
     // );
   }
 
-  setActiveSeason(value: { seasonId: string; competitionId: string }) {
+  setActiveSeason(value: SelectedSeason) {
     this.state.selectedSeason.set(this.cache.seasons().find((s) => s.id === value.seasonId)!);
     this.state.selectedCompetition.set(this.cache.competitions().find((c) => c.id === value.competitionId)!);
     this.getSeasonStats();
