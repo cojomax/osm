@@ -1,12 +1,12 @@
 import { Component, ElementRef, Inject, input, OnInit, signal, TemplateRef, ViewChild } from '@angular/core';
-import { NavigationMainComponent } from '../../../components/navigation/main/navigation-main.component';
 import { ActivatedRoute, EventType, NavigationEnd, Router, RouterLink, RouterOutlet } from '@angular/router';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
-import { NzIconDirective } from 'ng-zorro-antd/icon';
 import { NzDrawerRef, NzDrawerService } from 'ng-zorro-antd/drawer';
+import { NzIconDirective } from 'ng-zorro-antd/icon';
 import { tap } from 'rxjs';
-import { Session, SESSION } from '../../../services/tokens/session.token';
+import { NavigationMainComponent } from '../../../components/navigation/main/navigation-main.component';
 import { AuthService } from '../../../services/auth.service';
+import { Session, SESSION } from '../../../services/tokens/session.token';
 
 @Component({
   selector: 'osm-mobile-shell',
@@ -47,13 +47,7 @@ export class MobileShellComponent implements OnInit {
       )
       .subscribe();
 
-    this.route.data
-      .pipe(
-        tap((d) => {
-          console.log(d);
-        }),
-      )
-      .subscribe((event) => this.header.set(event['header']));
+    this.route.data.subscribe((event) => this.header.set(event['header']));
   }
 
   protected onMenuBtnClick() {

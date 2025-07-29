@@ -1,5 +1,5 @@
 <nz-card nzHoverable class="container">
-  <section class="g-spaced">
+  <section class="g-flex">
     <div class="details">
       <p class="number">
         {{ playerStatistic().player.squadNumber }}
@@ -21,7 +21,7 @@
 
   @for (stat of playerStatistic().statistics; track stat) {
     <span class="data-display">
-      <p class="g-spaced">
+      <p class="g-flex">
         {{ stat?.type }}
         <span class="g-spacer"></span>
         <span>{{ stat?.value }}</span>

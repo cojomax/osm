@@ -1,7 +1,7 @@
 import { Component, OnInit, signal } from '@angular/core';
-import { FixtureService } from '../../services/fixture.service';
-import { Fixture } from '../../api/models/fixture.model';
 import { RouterLink } from '@angular/router';
+import { Fixture } from '../../api/models/fixture.model';
+import { FixtureService } from '../../services/fixture.service';
 
 @Component({
   templateUrl: 'home.page.html',
@@ -18,10 +18,13 @@ export class HomePageComponent implements OnInit {
       // Find the fixture with the date in the future that's closes to today's date.
       const nextFixture = data
         .filter((fixture) => (fixture.date ?? -1) > new Date())
-        .reduce((closest, current) => ((current?.date ?? -1) < (closest?.date ?? -1) ? current : closest));
+        .reduce(
+          (closest: Fixture | null, current: Fixture | null) =>
+            (current?.date ?? -1) < (closest?.date ?? -1) ? current : closest,
+          null,
+        );
 
       this.nextFixture.set(nextFixture);
-      console.log(data);
     });
   }
 }
