@@ -23,7 +23,7 @@ export class StatsPageState {
   topScorers = computed(() => this.scorers().filter((_: any, i: number) => i <= 2));
   topScorersStats = computed(() =>
     this.topScorers().map((t: any) => ({
-      stat: t.name,
+      stat: `${t.firstName} ${t.lastName}`,
       value: t.goals,
     })),
   );
@@ -32,7 +32,7 @@ export class StatsPageState {
   topAssistants = computed(() => this.assistants().filter((_: any, i: number) => i <= 2));
   topAssistantsStats = computed(() =>
     this.topAssistants().map((t: any) => ({
-      stat: t.name,
+      stat: `${t.firstName} ${t.lastName}`,
       value: t.assists,
     })),
   );
@@ -41,7 +41,7 @@ export class StatsPageState {
   topContributions = computed(() => this.contributors().filter((_: any, i: number) => i <= 2));
   topContributionsStats = computed(() =>
     this.topContributions().map((t: any) => ({
-      stat: t.name,
+      stat: `${t.firstName} ${t.lastName}`,
       value: t.contributions,
     })),
   );
@@ -54,7 +54,7 @@ export class StatsPageState {
 
   scorerStats = computed<Stat[]>(() =>
     this.scorers().map((s: any) => ({
-      stat: s.name,
+      stat: `${s.firstName} ${s.lastName}`,
       value: s.goals,
     })),
   );
@@ -67,7 +67,7 @@ export class StatsPageState {
 
   assistantStats = computed<Stat[]>(() =>
     this.assistants().map((s: any) => ({
-      stat: s.name,
+      stat: `${s.firstName} ${s.lastName}`,
       value: s.assists,
     })),
   );
@@ -80,7 +80,7 @@ export class StatsPageState {
 
   contributorStats = computed<Stat[]>(() =>
     this.contributors().map((s: any) => ({
-      stat: s.name,
+      stat: `${s.firstName} ${s.lastName}`,
       value: s.contributions,
     })),
   );

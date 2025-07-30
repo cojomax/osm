@@ -37,7 +37,7 @@
     <ag-grid-angular
       class="ag-theme-quartz"
       [autoSizeStrategy]="autoSizeStrategy"
-      [rowData]="playerData()"
+      [rowData]="page.playerData()"
       [columnDefs]="colDefs"
       (gridReady)="onGridReady($event)"
     />
