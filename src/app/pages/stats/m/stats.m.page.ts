@@ -36,16 +36,32 @@ export class StatsMPageComponent {
   // TODO Difference stats for cup competitions.
   // TODO Some seasons have more than one cup competition.
 
-  protected seasonStats = computed(() => [
-    { stat: 'Position', value: this.page.selectedSeason()?.league?.position },
-    { stat: 'Played', value: this.page.seasonStats()?.gamesPlayed },
-    { stat: 'Won', value: this.page.seasonStats()?.gamesWon },
-    { stat: 'Lost', value: this.page.seasonStats()?.gamesLost },
-    { stat: 'Drawn', value: this.page.seasonStats()?.gamesDrawn },
-    { stat: 'Points', value: this.page.seasonPoints() },
-    { stat: 'Scored', value: this.page.seasonStats()?.goalsScored },
-    { stat: 'Conceded', value: this.page.seasonStats()?.goalsConceded },
-    { stat: 'Difference', value: this.page.seasonStats()?.goalDifference },
-    { stat: 'Clean Sheets', value: this.page.seasonStats()?.cleanSheets },
-  ]);
+  protected seasonStats = computed(() => {
+    // FIXME Share better
+
+    const leagueStats = [
+      { stat: 'Position', value: this.page.selectedSeason()?.league?.position },
+      { stat: 'Points', value: this.page.seasonPoints() },
+      { stat: 'Played', value: this.page.seasonStats()?.gamesPlayed },
+      { stat: 'Won', value: this.page.seasonStats()?.gamesWon },
+      { stat: 'Lost', value: this.page.seasonStats()?.gamesLost },
+      { stat: 'Drawn', value: this.page.seasonStats()?.gamesDrawn },
+      { stat: 'Scored', value: this.page.seasonStats()?.goalsScored },
+      { stat: 'Conceded', value: this.page.seasonStats()?.goalsConceded },
+      { stat: 'Difference', value: this.page.seasonStats()?.goalDifference },
+      { stat: 'Clean Sheets', value: this.page.seasonStats()?.cleanSheets },
+    ];
+
+    const cupStats = [
+      { stat: 'Played', value: this.page.seasonStats()?.gamesPlayed },
+      { stat: 'Won', value: this.page.seasonStats()?.gamesWon },
+      { stat: 'Lost', value: this.page.seasonStats()?.gamesLost },
+      { stat: 'Scored', value: this.page.seasonStats()?.goalsScored },
+      { stat: 'Conceded', value: this.page.seasonStats()?.goalsConceded },
+      { stat: 'Difference', value: this.page.seasonStats()?.goalDifference },
+      { stat: 'Clean Sheets', value: this.page.seasonStats()?.cleanSheets },
+    ];
+
+    return this.page.selectedCompetition()?.format === 'League' ? leagueStats : cupStats;
+  });
 }

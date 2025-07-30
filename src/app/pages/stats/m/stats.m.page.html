@@ -1,10 +1,5 @@
 <main class="g-m-container">
-  <!--  <nz-select nzPlaceHolder="Select a competition" [ngModel]="selectedSeason" >-->
-  <!--    @for (season of page.seasons(); track season.value) {-->
-  <!--    <nz-option [nzValue]="season.value" [nzLabel]="season.label"></nz-option>-->
-  <!--    }-->
-  <!--  </nz-select>-->
-  <osm-season-selector (selected)="onSeasonSelected($event)"></osm-season-selector>
+  <osm-season-selector [showCompetition]="true" (selected)="onSeasonSelected($event)"></osm-season-selector>
 
   <div class="stats-container">
     <section>

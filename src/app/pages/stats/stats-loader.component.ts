@@ -1,6 +1,6 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { NgComponentOutlet } from '@angular/common';
+import { Component, inject } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { StatsPageService } from './stats-page.service';
 
 @Component({
@@ -8,13 +8,9 @@ import { StatsPageService } from './stats-page.service';
   template: `<ng-container *ngComponentOutlet="component"></ng-container>`,
   imports: [NgComponentOutlet],
 })
-export class StatsLoaderComponent implements OnInit {
+export class StatsLoaderComponent {
   private route = inject(ActivatedRoute);
   private statsPageSvc = inject(StatsPageService);
 
   protected component = this.statsPageSvc.initComponent(this.route.snapshot.data);
-
-  ngOnInit() {
-    this.statsPageSvc.initPage().subscribe();
-  }
 }
