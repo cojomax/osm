@@ -184,17 +184,17 @@ export class StatsService {
 
     return {
       scorer: {
-        maxScorer: goals.find((g) => g.scored?.id === maxScorer)!.scored,
+        maxScorer: goals.find((g) => g.scored?.id === maxScorer)?.scored,
         maxGoalCount,
       },
       assistant: {
-        maxAssistant: goals.find((g) => g.assisted?.id === maxAssistant)!.assisted,
+        maxAssistant: goals.find((g) => g.assisted?.id === maxAssistant)?.assisted,
         maxAssistCount,
       },
       contributor: {
         maxContributor:
           goals.find((g) => g.scored?.id === maxScorer)?.scored ??
-          goals.find((g) => g.assisted?.id === maxContributor)!.assisted,
+          goals.find((g) => g.assisted?.id === maxContributor)?.assisted,
         maxContributorCount,
       },
     };
