@@ -12,14 +12,12 @@ import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { NzCardModule } from '@nz/card';
 import { NzDividerComponent } from 'ng-zorro-antd/divider';
-import { NzOptionComponent, NzSelectComponent } from 'ng-zorro-antd/select';
 import { NzTagModule } from 'ng-zorro-antd/tag';
-import { first, mergeMap, Subscription, tap } from 'rxjs';
+import { first, tap } from 'rxjs';
+import { SeasonSelectorComponent, SelectedSeason } from 'src/app/components/selectors/season-selector.component';
 import { Fixture } from '../../api/models/fixture.model';
-import { Season } from '../../api/models/season.model';
 import { AppCache } from '../../services/app-cache';
 import { FixtureService } from '../../services/fixture.service';
-import { SeasonService } from '../../services/season.service';
 import { IS_MOBILE } from '../../services/tokens/is-mobile.token';
 import { compareByIdFn } from '../../shared/utility/form.util';
 
@@ -52,11 +50,10 @@ const MONTHS = new Map<number, string>([
     NgTemplateOutlet,
     NzCardModule,
     NzDividerComponent,
-    NzOptionComponent,
-    NzSelectComponent,
     NzTagModule,
     RouterLink,
     UpperCasePipe,
+    SeasonSelectorComponent,
   ],
 })
 export class FixturesPageComponent implements OnInit {
@@ -73,26 +70,12 @@ export class FixturesPageComponent implements OnInit {
   protected isMobile = inject(IS_MOBILE);
   protected readonly state = inject(AppCache);
 
-  private subs = new Subscription();
   private readonly fixtureSvc = inject(FixtureService);
-  private readonly seasonSvc = inject(SeasonService);
   private readonly route = inject(ActivatedRoute);
 
   ngOnInit() {
     this.showFixtures.set(this.route.snapshot.routeConfig?.path === 'fixtures');
     this.showResults.set(this.route.snapshot.routeConfig?.path === 'results');
-
-    this.subs.add(
-      this.seasonSvc
-        .fetch()
-        .pipe(
-          tap((res) => {
-            this.selectedSeason = res[0];
-          }),
-          mergeMap((res) => this.fetchFixtures()),
-        )
-        .subscribe(),
-    );
   }
 
   protected getScoreColor(fixture: Fixture) {
@@ -101,15 +84,12 @@ export class FixturesPageComponent implements OnInit {
 
   protected readonly compareByIdFn = compareByIdFn;
 
-  protected selectedSeason: Season | undefined;
-
-  onSeasonSelected(season: Season) {
-    this.selectedSeason = season;
-    this.fetchFixtures().subscribe();
+  onSeasonSelected(season: SelectedSeason) {
+    this.fetchFixtures(season).subscribe();
   }
 
-  private fetchFixtures() {
-    return this.fixtureSvc.query([{ field: 'season.id', query: this.selectedSeason?.id! }]).pipe(
+  private fetchFixtures(season: SelectedSeason) {
+    return this.fixtureSvc.fetchBySeason(season.seasonId, season.competitionId).pipe(
       first(),
       tap((data) => {
         // TODO Make into FireStore query.

@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, inject, input, OnInit, Output, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -18,12 +19,13 @@ export type SelectedSeason = {
   selector: 'osm-season-selector',
   templateUrl: './season-selector.component.html',
   styleUrls: ['./season-selector.component.css'],
-  imports: [NzSelectComponent, FormsModule, NzOptionComponent],
+  imports: [CommonModule, NzSelectComponent, FormsModule, NzOptionComponent],
 })
 export class SeasonSelectorComponent implements OnInit {
   showCompetition = input<boolean>(false);
 
-  protected readonly isMobile = inject(ActivatedRoute).snapshot.data['mobile'];
+  // TODO Move this to a service.
+  protected readonly isMobile = !!inject(ActivatedRoute).snapshot.parent?.data['mobile'];
   protected readonly cache = inject(AppCache);
 
   protected seasonOptions = signal<Option[]>([]);
@@ -54,12 +56,13 @@ export class SeasonSelectorComponent implements OnInit {
     this.selectedSeason = seasonId;
 
     const season = this.cache.seasons().find((s) => s.id === seasonId);
-    const seasonCompetitions = [season?.cup?.competitionId, season?.league?.competitionId];
+    const seasonCompetitions = [season?.league?.competitionId, season?.cup?.competitionId];
 
     const competitionsOptions = this.cache
       .competitions()
       .filter((c) => seasonCompetitions.includes(c.id))
-      .map((c) => new Option(`${c.name} ${c.tier}`, c.id));
+      .map((c) => new Option(`${c.name} ${c.tier}`, c.id))
+      .sort((a, b) => (a.label.includes('Division') ? -1 : 1));
 
     this.competitionOptions.set(competitionsOptions);
     this.selectedCompetition = competitionsOptions[0].value;

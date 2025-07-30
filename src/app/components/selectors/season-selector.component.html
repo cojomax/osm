@@ -1,4 +1,4 @@
-<div class="g-flex {{ isMobile ? 'mobile' : 'desktop' }}">
+<div class="g-flex" [ngClass]="isMobile ? 'mobile' : 'desktop'">
   <nz-select [ngModel]="selectedSeason" (ngModelChange)="onSeasonSelected($event)">
     @for (season of seasonOptions(); track season.value) {
       <nz-option [nzValue]="season.value" [nzLabel]="season.label"></nz-option>

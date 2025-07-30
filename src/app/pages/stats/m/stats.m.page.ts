@@ -40,7 +40,6 @@ export class StatsMPageComponent {
     // FIXME Share better
 
     const leagueStats = [
-      { stat: 'Position', value: this.page.selectedSeason()?.league?.position },
       { stat: 'Points', value: this.page.seasonPoints() },
       { stat: 'Played', value: this.page.seasonStats()?.gamesPlayed },
       { stat: 'Won', value: this.page.seasonStats()?.gamesWon },
@@ -51,6 +50,10 @@ export class StatsMPageComponent {
       { stat: 'Difference', value: this.page.seasonStats()?.goalDifference },
       { stat: 'Clean Sheets', value: this.page.seasonStats()?.cleanSheets },
     ];
+
+    if (this.page.selectedSeason()?.league?.position) {
+      leagueStats.unshift({ stat: 'Position', value: this.page.selectedSeason()?.league?.position });
+    }
 
     const cupStats = [
       { stat: 'Played', value: this.page.seasonStats()?.gamesPlayed },

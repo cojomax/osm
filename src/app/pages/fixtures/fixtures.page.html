@@ -1,16 +1,9 @@
 <div [ngClass]="(isMobile | async) ? 'container-mobile' : 'container-desktop'" class="osm-container">
-  <nz-select
-    [ngStyle]="{ 'width': '100%'}"
-    [compareWith]="compareByIdFn"
-    (ngModelChange)="onSeasonSelected($event)"
-    [ngModel]="selectedSeason"
-  >
-    @for(season of state.seasons(); track season.id) {
-    <nz-option [nzValue]="season" [nzLabel]="season.name"></nz-option>
-    }
-  </nz-select>
-
-  @for (month of fixtures().keys(); track month) {
+  @if(showResults()) {
+  <div class="season-selector">
+    <osm-season-selector [showCompetition]="true" (selected)="onSeasonSelected($event)"></osm-season-selector>
+  </div>
+  } @for (month of fixtures().keys(); track month) {
   <nz-divider [nzText]="month" nzOrientation="left" class="g-divider-large"></nz-divider>
   <ul>
     @for (fixture of fixtures().get(month); track fixture.id) {

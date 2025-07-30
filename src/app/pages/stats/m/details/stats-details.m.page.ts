@@ -1,10 +1,10 @@
+import { TitleCasePipe } from '@angular/common';
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
-import { Stat, StatsPageState } from '../../stats-page.state';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { StatsTableComponent } from '../../../../components/stats-table/stats-table.component';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
 import { NzIconDirective } from 'ng-zorro-antd/icon';
-import { TitleCasePipe } from '@angular/common';
+import { StatsTableComponent } from '../../../../components/stats-table/stats-table.component';
+import { Stat, StatsPageState } from '../../stats-page.state';
 
 type Category = 'performance' | 'goals' | 'assists' | 'contributions';
 
@@ -14,14 +14,14 @@ type Category = 'performance' | 'goals' | 'assists' | 'contributions';
   imports: [StatsTableComponent, NzButtonComponent, NzIconDirective, RouterLink, TitleCasePipe],
 })
 export class StatsMDetailsPageComponent<T> implements OnInit {
-  private page = inject(StatsPageState);
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
+  protected page = inject(StatsPageState);
+  protected data = signal<Stat[]>([]);
+  protected pageTitle = computed(() => this.category());
 
   private category = signal<Category | null>(null);
 
-  protected data = signal<Stat[]>([]);
-  protected pageTitle = computed(() => this.category());
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
 
   ngOnInit() {
     if (!this.page.playerData().length) {
