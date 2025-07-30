@@ -1,13 +1,15 @@
-<nz-select [ngModel]="selectedSeason" (ngModelChange)="onSeasonSelected($event)">
-  @for (season of seasonOptions(); track season.value) {
-    <nz-option [nzValue]="season.value" [nzLabel]="season.label"></nz-option>
-  }
-</nz-select>
-
-@if (showCompetition()) {
-  <nz-select [ngModel]="selectedCompetition" (ngModelChange)="onCompetitionSelected($event)">
-    @for (competition of competitionOptions(); track competition.value) {
-      <nz-option [nzValue]="competition.value" [nzLabel]="competition.label"></nz-option>
+<div class="g-flex {{ isMobile ? 'mobile' : 'desktop' }}">
+  <nz-select [ngModel]="selectedSeason" (ngModelChange)="onSeasonSelected($event)">
+    @for (season of seasonOptions(); track season.value) {
+      <nz-option [nzValue]="season.value" [nzLabel]="season.label"></nz-option>
     }
   </nz-select>
-}
+
+  @if (showCompetition()) {
+    <nz-select [ngModel]="selectedCompetition" (ngModelChange)="onCompetitionSelected($event)">
+      @for (competition of competitionOptions(); track competition.value) {
+        <nz-option [nzValue]="competition.value" [nzLabel]="competition.label"></nz-option>
+      }
+    </nz-select>
+  }
+</div>

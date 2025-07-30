@@ -1,4 +1,13 @@
-:host {
-  display: flex;
+.mobile {
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.desktop {
+  flex-direction: row;
   gap: var(--space-md);
+
+  nz-select {
+    width: 300px;
+  }
 }

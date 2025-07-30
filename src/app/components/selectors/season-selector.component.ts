@@ -1,5 +1,6 @@
 import { Component, EventEmitter, inject, input, OnInit, Output, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { NzOptionComponent, NzSelectComponent } from 'ng-zorro-antd/select';
 import { forkJoin, tap } from 'rxjs';
 import { Option } from 'src/app/models/option.model';
@@ -22,6 +23,7 @@ export type SelectedSeason = {
 export class SeasonSelectorComponent implements OnInit {
   showCompetition = input<boolean>(false);
 
+  protected readonly isMobile = inject(ActivatedRoute).snapshot.data['mobile'];
   protected readonly cache = inject(AppCache);
 
   protected seasonOptions = signal<Option[]>([]);

@@ -4,8 +4,9 @@ main {
   gap: var(--space-md);
   height: var(--page-height-desktop);
 
-  h1 {
-    text-align: center;
+  .season-selection {
+    display: flex;
+    justify-content: center;
   }
 
   .summary {

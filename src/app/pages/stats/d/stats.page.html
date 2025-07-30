@@ -1,12 +1,7 @@
 <main class="osm-container">
-  <h1>{{ page.selectedSeason()?.name }}</h1>
-
-  <!--  <nz-spin nzSize="large" [nzSpinning]="isLoading()"> </nz-spin>-->
-  <osm-season-selector
-    [ngStyle]="{ 'width': '200px' }"
-    [showCompetition]="true"
-    (selected)="onSeasonSelected($event)"
-  ></osm-season-selector>
+  <div class="season-selection">
+    <osm-season-selector [showCompetition]="true" (selected)="onSeasonSelected($event)"></osm-season-selector>
+  </div>
 
   <section class="summary">
     <ul>
