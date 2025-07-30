@@ -5,12 +5,19 @@
 
   <section class="summary">
     <ul>
+      @if(page.isCupSeason()) {
+      <li><nz-statistic nzTitle="Played" [nzValue]="page.seasonStats()?.gamesPlayed | dash"></nz-statistic></li>
+      <li><nz-statistic nzTitle="Won" [nzValue]="page.seasonStats()?.gamesWon | dash"></nz-statistic></li>
+      <li><nz-statistic nzTitle="Lost" [nzValue]="page.seasonStats()?.gamesLost | dash"></nz-statistic></li>
+      <li><nz-statistic nzTitle="Drawn" [nzValue]="page.seasonStats()?.gamesDrawn | dash"></nz-statistic></li>
+      } @if(page.isLeagueSeason()) {
       <li><nz-statistic nzTitle="Played" [nzValue]="page.seasonStats()?.gamesPlayed | dash"></nz-statistic></li>
       <li><nz-statistic nzTitle="Won" [nzValue]="page.seasonStats()?.gamesWon | dash"></nz-statistic></li>
       <li><nz-statistic nzTitle="Lost" [nzValue]="page.seasonStats()?.gamesLost | dash"></nz-statistic></li>
       <li><nz-statistic nzTitle="Drawn" [nzValue]="page.seasonStats()?.gamesDrawn | dash"></nz-statistic></li>
       <li><nz-statistic nzTitle="Points" [nzValue]="page.seasonPoints() | dash"></nz-statistic></li>
       <li><nz-statistic nzTitle="Position" [nzValue]="'5th'"></nz-statistic></li>
+      }
 
       <li>
         <nz-statistic

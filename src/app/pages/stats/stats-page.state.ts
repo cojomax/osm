@@ -12,7 +12,10 @@ export class StatsPageState {
   selectedSeason = signal<Season | null>(null);
   selectedCompetition = signal<Competition | null>(null);
   seasonStats = signal<SeasonStats | null>(null);
+
   seasonPoints = computed(() => (this.seasonStats()?.gamesWon ?? 0) * 3 + (this.seasonStats()?.gamesDrawn ?? 0));
+  isCupSeason = computed(() => this.selectedCompetition()?.format === 'Cup');
+  isLeagueSeason = computed(() => this.selectedCompetition()?.format === 'League');
 
   playerData = signal<any>([]);
 
