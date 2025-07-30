@@ -17,7 +17,7 @@
     <span class="g-spacer"></span>
     <nz-avatar [nzSize]="64" nzIcon="user"></nz-avatar>
   </section>
-  <p class="season">Season 2024-25</p>
+  <p class="season">Season {{ seasonName() }}</p>
 
   @for (stat of playerStatistic().statistics; track stat) {
     <span class="data-display">

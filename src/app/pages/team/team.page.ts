@@ -1,16 +1,19 @@
-import { Component, computed, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { NzDividerModule } from '@nz/divider';
-import { finalize, forkJoin, map, Subscription, tap } from 'rxjs';
-import { Player } from '../../api/models/player.model';
-import { Position } from '../../models/position.enum';
-import { PlayerService } from '../../services/player.service';
-import { SwiperComponent } from '../../components/swiper/swiper.component';
-import { FixtureService } from '../../services/fixture.service';
-import { PlayerStatistic } from '../../models/player-statistic.model';
-import { Goal } from '../../api/models/goal.model';
-import { Statistic } from '../../models/statistic.model';
-import { StatisticType } from '../../models/statistic-type.enum';
 import { NzSpinComponent } from 'ng-zorro-antd/spin';
+import { finalize, forkJoin, map, mergeMap, Subscription, tap } from 'rxjs';
+import { Season } from 'src/app/api/models/season.model';
+import { AppCache } from 'src/app/services/app-cache';
+import { SeasonService } from 'src/app/services/season.service';
+import { Goal } from '../../api/models/goal.model';
+import { Player } from '../../api/models/player.model';
+import { SwiperComponent } from '../../components/swiper/swiper.component';
+import { PlayerStatistic } from '../../models/player-statistic.model';
+import { Position } from '../../models/position.enum';
+import { StatisticType } from '../../models/statistic-type.enum';
+import { Statistic } from '../../models/statistic.model';
+import { FixtureService } from '../../services/fixture.service';
+import { PlayerService } from '../../services/player.service';
 
 @Component({
   selector: 'osm-team',
@@ -40,21 +43,28 @@ export class TeamPageComponent implements OnInit {
   private players = signal<Player[]>([]);
   private goals = signal<Goal[]>([]);
 
-  private subs = new Subscription();
+  protected season = signal<Season | undefined>(void 0);
+  protected seasonName = computed(() => this.season()?.name ?? '');
 
-  constructor(
-    private fixtureSvc: FixtureService,
-    private playerSvc: PlayerService,
-  ) {}
+  private subs = new Subscription();
+  private readonly fixtureSvc = inject(FixtureService);
+  private readonly playerSvc = inject(PlayerService);
+  private readonly seasonSvc = inject(SeasonService);
+  private readonly cache = inject(AppCache);
 
   ngOnInit() {
     this.subs.add(
       forkJoin([
         this.playerSvc.fetch().pipe(tap((players) => this.players.set(players))),
-        this.fixtureSvc.fetch().pipe(
-          map((fixtures) => fixtures.filter((f) => f.date && f.date < new Date())),
-          map((fixtures) => fixtures.flatMap((f) => f.goals)),
-          tap((goals) => this.goals.set(goals)),
+        this.seasonSvc.fetch().pipe(
+          tap(() => this.season.set(this.cache.seasons()[0])),
+          mergeMap(() =>
+            this.fixtureSvc.fetchBySeason(this.season()?.id!).pipe(
+              map((fixtures) => fixtures.filter((f) => f.date && f.date < new Date())),
+              map((fixtures) => fixtures.flatMap((f) => f.goals)),
+              tap((goals) => this.goals.set(goals)),
+            ),
+          ),
         ),
       ])
         .pipe(finalize(() => this.isLoading.set(false)))
@@ -68,9 +78,9 @@ export class TeamPageComponent implements OnInit {
 
   private mapToPlayerStatistics(players: Player[], position: Position) {
     return players
-      .map((p) => new PlayerStatistic(p, this.getPlayerStats(p)))
-      .filter((p) => !p.player?.isLegend && p.player.position === position)
-      .sort((a, b) => (a.player.squadNumber < b.player.squadNumber ? -1 : 1));
+      .filter((p) => !p?.isLegend && p.isActive && p.position === position)
+      .sort((a, b) => (a.squadNumber < b.squadNumber ? -1 : 1))
+      .map((p) => new PlayerStatistic(p, this.getPlayerStats(p)));
   }
 
   private getPlayerStats(player: Player): Statistic[] {

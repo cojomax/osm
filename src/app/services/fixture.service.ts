@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { FirebaseDbService } from '../api/firebase/services/firebase.db.service';
-import { FireStoreCollection } from '../api/firebase/db-collection.enum';
-import { Fixture } from '../api/models/fixture.model';
-import { StoreConverter } from '../api/firebase/converter.interface';
-import { Repository } from './repository.interface';
-import { FixtureConverter } from '../api/firebase/converters/fixture.converter';
 import { throwError } from 'rxjs';
+import { StoreConverter } from '../api/firebase/converter.interface';
+import { FixtureConverter } from '../api/firebase/converters/fixture.converter';
+import { FireStoreCollection } from '../api/firebase/db-collection.enum';
+import { FirebaseDbService } from '../api/firebase/services/firebase.db.service';
+import { Fixture } from '../api/models/fixture.model';
+import { Repository } from './repository.interface';
 
 const COLLECTION = FireStoreCollection.Fixtures;
 
@@ -27,7 +27,7 @@ export class FixtureService implements Repository<Fixture> {
     return this._dbSvc.getDocuments<Fixture>(COLLECTION, fixtureId, this.converter);
   }
 
-  query(queries: {field: string, query: string}[]) {
+  query(queries: { field: string; query: string }[]) {
     return this._dbSvc.queryDocumentsByFields<Fixture>(COLLECTION, this.converter, queries);
   }
 
@@ -45,5 +45,15 @@ export class FixtureService implements Repository<Fixture> {
 
   delete(fixtureId: string) {
     return this._dbSvc.deleteDocument(COLLECTION, fixtureId);
+  }
+
+  fetchBySeason(seasonId: string, competitionId?: string) {
+    const queries = [{ field: 'season.id', query: seasonId }];
+
+    if (competitionId) {
+      queries.push({ field: 'competition.id', query: competitionId });
+    }
+
+    return this.query(queries);
   }
 }

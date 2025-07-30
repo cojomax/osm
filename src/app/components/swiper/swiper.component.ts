@@ -1,8 +1,8 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, inject, input } from '@angular/core';
-import { PlayerCardComponent } from '../player-card/player-card.component';
 import { CommonModule } from '@angular/common';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, inject, input } from '@angular/core';
 import { PlayerStatistic } from '../../models/player-statistic.model';
 import { IS_MOBILE } from '../../services/tokens/is-mobile.token';
+import { PlayerCardComponent } from '../player-card/player-card.component';
 
 @Component({
   selector: 'osm-swiper',
@@ -12,6 +12,7 @@ import { IS_MOBILE } from '../../services/tokens/is-mobile.token';
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class SwiperComponent {
+  seasonName = input.required<string>();
   data = input<PlayerStatistic[]>([]);
 
   protected isMobile = inject(IS_MOBILE);

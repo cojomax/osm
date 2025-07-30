@@ -11,7 +11,7 @@
 <ng-template #slide>
   @for (datum of data(); track datum) {
     <swiper-slide>
-      <osm-player-card [playerStatistic]="datum"></osm-player-card>
+      <osm-player-card [seasonName]="seasonName()" [playerStatistic]="datum"></osm-player-card>
     </swiper-slide>
   }
 </ng-template>

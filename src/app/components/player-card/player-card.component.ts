@@ -10,5 +10,6 @@ import { PlayerStatistic } from '../../models/player-statistic.model';
   styleUrl: './player-card.component.css',
 })
 export class PlayerCardComponent {
+  seasonName = input.required<string>();
   playerStatistic = input.required<PlayerStatistic>();
 }

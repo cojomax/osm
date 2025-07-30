@@ -38,4 +38,8 @@ export class Player implements Entity {
   get isOwnGoal() {
     return this.firstName === 'Own' && this.lastName === 'Goal';
   }
+
+  get isActive() {
+    return !this.isLegend && this.squadNumber;
+  }
 }
