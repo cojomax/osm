@@ -7,7 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "upload": "firebase deploy --only hosting"
+    "firebase:deploy": "firebase deploy --only hosting"
   },
   "private": true,
   "dependencies": {
