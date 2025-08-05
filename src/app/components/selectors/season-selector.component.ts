@@ -56,7 +56,7 @@ export class SeasonSelectorComponent implements OnInit {
     this.selectedSeason = seasonId;
 
     const season = this.cache.seasons().find((s) => s.id === seasonId);
-    const seasonCompetitions = [season?.league?.competitionId, season?.cup?.competitionId];
+    const seasonCompetitions = season?.competitions.map((c) => c.competitionId) ?? [];
 
     const competitionsOptions = this.cache
       .competitions()

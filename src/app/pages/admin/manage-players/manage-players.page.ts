@@ -2,16 +2,16 @@ import { DatePipe } from '@angular/common';
 import { AfterViewInit, Component, inject, LOCALE_ID, OnDestroy, OnInit, signal, ViewChild } from '@angular/core';
 import { NzButtonModule } from '@nz/button';
 import { NzIconModule } from '@nz/icon';
+import { ColDef } from 'ag-grid-community';
 import { Subscription, tap } from 'rxjs';
 import { Player } from '../../../api/models/player.model';
+import { FormModalComponent } from '../../../components/admin/form-modal/form-modal.component';
+import { FormModalService } from '../../../components/admin/form-modal/form-modal.service';
+import { REPOSITORY_SERVICE } from '../../../components/admin/form-modal/form-modal.token';
+import { GridComponent } from '../../../components/grid/grid.component';
 import { PlayerService } from '../../../services/player.service';
 import { PlayerFormComponent } from './form/player.form';
 import { EditButtonComponent } from './renderers/edit-btn.component';
-import { ColDef } from 'ag-grid-community';
-import { GridComponent } from '../../../components/grid/grid.component';
-import { REPOSITORY_SERVICE } from '../../../components/admin/form-modal/form-modal.token';
-import { FormModalComponent } from '../../../components/admin/form-modal/form-modal.component';
-import { FormModalService } from '../../../components/admin/form-modal/form-modal.service';
 import { LegendRenderer } from './renderers/legend-renderer.component';
 
 @Component({
@@ -53,12 +53,13 @@ export class ManagePlayersPageComponent implements OnInit, AfterViewInit, OnDest
       field: 'squadNumber',
       cellDataType: 'number',
       headerName: '#',
-      width: 50,
+      width: 75,
     },
     {
       field: 'isLegend',
       headerName: 'Legend',
       cellRenderer: LegendRenderer,
+      width: 90,
     },
     { field: 'firstName' },
     { field: 'lastName' },

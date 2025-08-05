@@ -1,4 +1,5 @@
 import { QueryDocumentSnapshot } from 'firebase/firestore/lite';
+import { CompetitionAggregate } from '../../models/competition-aggregate.model';
 import { Season } from '../../models/season.model';
 import { StoreConverter } from '../converter.interface';
 
@@ -17,8 +18,7 @@ export class SeasonConverter implements StoreConverter<Season> {
     return new Season({
       id: snapshot.id,
       name: comp['name'],
-      league: { competitionId: comp['league']['competitionId'], position: comp['league']['position'] },
-      cup: { competitionId: comp['cup']['competitionId'] },
+      competitions: comp['competitions'].map((c: any) => new CompetitionAggregate(c)),
       startDate: new Date(comp['startDate']),
       endDate: new Date(comp['endDate']),
     });
