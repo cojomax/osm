@@ -1,0 +1,10 @@
+<osm-grid [colDefs]="colDefs" [data]="seasons()">
+  <button extra-right nz-button nzType="primary" (click)="onAdd()">
+    <span nz-icon nzType="folder-add"></span>
+    Season
+  </button>
+</osm-grid>
+
+<osm-form-modal modalTitle="Season" (modified)="onModified()">
+  <!-- <app-season-form (statusChanged)="modalSvc.updateStatus($event)"></app-season-form> -->
+</osm-form-modal>
