@@ -11,15 +11,33 @@ import { SeasonService } from 'src/app/services/season.service';
 
 @Component({
   selector: 'osm-manage-seasons',
-  imports: [GridComponent, FormModalComponent, NzButtonModule, NzIconModule],
   templateUrl: './manage-seasons.component.html',
   styleUrl: './manage-seasons.component.css',
+  imports: [GridComponent, FormModalComponent, NzButtonModule, NzIconModule],
   providers: [FormModalService, { provide: REPOSITORY_SERVICE, useExisting: SeasonService }],
 })
 export class ManageSeasonsComponent {
   protected seasons = signal<Season[]>([]);
 
-  protected colDefs: ColDef<Season>[] = [{ field: 'name' }, { field: 'startDate' }, { field: 'endDate' }];
+  protected colDefs: ColDef<Season>[] = [
+    { field: 'name' },
+    { field: 'startDate' },
+    { field: 'endDate' },
+    {
+      headerName: 'League',
+      valueGetter: (params) => {
+        const league = params.data?.competitions.find((c) => c.isLeague);
+        return `${league?.name} ${league?.tier}`;
+      },
+    },
+    {
+      headerName: 'Cups',
+      valueGetter: (params) => {
+        const cups = params.data?.competitions.filter((c) => c.isCup);
+        return cups?.map((c) => `${c.name} ${c.tier}`).join(', ');
+      },
+    },
+  ];
 
   private seasonSvc = inject(SeasonService);
 
