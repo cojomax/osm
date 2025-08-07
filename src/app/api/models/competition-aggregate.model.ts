@@ -3,6 +3,7 @@ export class CompetitionAggregate {
     Object.assign(this, init);
   }
 
+  /** Change this to 'id'. */
   competitionId = '';
   format: 'League' | 'Cup' | '' = '';
   tier: 'Division 1' | 'Division 2' | 'Plate' | 'Cup' | '' = '';

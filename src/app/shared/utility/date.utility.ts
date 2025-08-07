@@ -1,6 +1,6 @@
 /** Extract just the date part of a given Date object in ISO format. */
 export function getIsoDate(date: Date | null) {
-  return date?.toISOString().split('T')[0];
+  return date?.toISOString().split('T')[0] ?? null;
 }
 
 /** Extract time (HH:mm) part of a given Date object in ISO format. */

@@ -34,19 +34,19 @@ export class SeasonService implements Repository<Season> {
         );
   }
 
-  find(matchId: string) {
-    return this.dbSvc.getDocuments<Season>(COLLECTION, matchId, this.converter);
+  find(seasonId: string) {
+    return this.dbSvc.getDocuments<Season>(COLLECTION, seasonId, this.converter);
   }
 
-  create(match: Season) {
-    return this.dbSvc.createDocument(COLLECTION, match, this.converter);
+  create(season: Season) {
+    return this.dbSvc.createDocument(COLLECTION, season, this.converter);
   }
 
-  update(match: Season) {
-    return this.dbSvc.updateDocument(COLLECTION, match.id, match, this.converter);
+  update(season: Season) {
+    return this.dbSvc.updateDocument(COLLECTION, season.id, season, this.converter);
   }
 
-  delete(matchId: string) {
-    return this.dbSvc.deleteDocument(COLLECTION, matchId);
+  delete(seasonId: string) {
+    return this.dbSvc.deleteDocument(COLLECTION, seasonId);
   }
 }

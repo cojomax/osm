@@ -9,21 +9,21 @@ import {
   Validators,
 } from '@angular/forms';
 import { NzButtonModule } from '@nz/button';
+import { NzDatePickerModule } from '@nz/date-picker';
 import { NzFormModule } from '@nz/form';
+import { NzIconModule } from '@nz/icon';
 import { NzInputModule } from '@nz/input';
 import { NzSelectModule } from '@nz/select';
 import { NzTimePickerComponent } from '@nz/time-picker';
+import { NzCheckboxComponent } from 'ng-zorro-antd/checkbox';
+import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
 import { Subscription } from 'rxjs';
-import { FormComponent } from '../../../../components/form/form.component';
-import { NzDatePickerModule } from '@nz/date-picker';
-import { Name } from '../../../../api/models/name.model';
 import { Competition } from '../../../../api/models/competition.model';
 import { Fixture } from '../../../../api/models/fixture.model';
-import { NzIconModule } from '@nz/icon';
+import { Name } from '../../../../api/models/name.model';
 import { Player } from '../../../../api/models/player.model';
-import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
+import { FormComponent } from '../../../../components/form/form.component';
 import { compareByIdFn } from '../../../../shared/utility/form.util';
-import { NzCheckboxComponent } from 'ng-zorro-antd/checkbox';
 
 // FIXME The venue, competition, and opponent fields are not being prepopulated.
 // TODO Add MotM, DoD, Match Report. Separate form?
@@ -167,7 +167,6 @@ export class FixtureFormComponent extends FormComponent implements OnInit, OnDes
         assisted: [g.assisted],
       }),
     );
-    this.setGoalControls(goalControlGroups ?? []);
   }
 
   // TODO Signal? Type?

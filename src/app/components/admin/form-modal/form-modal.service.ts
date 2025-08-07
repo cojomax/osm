@@ -1,8 +1,8 @@
 import { Inject, Injectable, signal } from '@angular/core';
-import { REPOSITORY_SERVICE } from './form-modal.token';
-import { Repository } from '../../../services/repository.interface';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { Entity } from '../../../api/models/entity.interface';
+import { Repository } from '../../../services/repository.interface';
+import { REPOSITORY_SERVICE } from './form-modal.token';
 
 interface ModalState<T> {
   visible: boolean;
