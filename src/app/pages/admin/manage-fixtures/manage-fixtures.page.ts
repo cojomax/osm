@@ -202,7 +202,7 @@ export class ManageFixturesPageComponent implements OnInit, OnDestroy {
     this.openModal(this.fixtures().find((f) => f.id === id)!);
   }
 
-  protected openModal(fixture: Fixture | null = null) {
+  private openModal(fixture: Fixture | null = null) {
     this.selectedFixture.set(fixture);
     this.modalSvc.openModal(this.selectedFixture());
   }

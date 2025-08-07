@@ -1,19 +1,33 @@
+import { AuthGuard, redirectUnauthorizedTo } from '@angular/fire/auth-guard';
 import { Routes } from '@angular/router';
+import { ManageFixturesPageComponent } from './pages/admin/manage-fixtures/manage-fixtures.page';
 import { ManagePlayersPageComponent } from './pages/admin/manage-players/manage-players.page';
+import { ManageSeasonsComponent } from './pages/admin/manage-seasons/manage-seasons.component';
+import { FixturesPageComponent } from './pages/fixtures/fixtures.page';
 import { HomePageComponent } from './pages/home/home.page';
 import { LoginPageComponent } from './pages/login/login.page';
-import { PageNotFoundPageComponent } from './pages/not-found/not-found.page';
-import { TeamPageComponent } from './pages/team/team.page';
-import { ManageFixturesPageComponent } from './pages/admin/manage-fixtures/manage-fixtures.page';
-import { FixturesPageComponent } from './pages/fixtures/fixtures.page';
 import { MatchReportPage } from './pages/match-report/match-report.page';
-import { StatsLoaderComponent } from './pages/stats/stats-loader.component';
-import { mobileResolver } from './services/mobile.resolver';
+import { PageNotFoundPageComponent } from './pages/not-found/not-found.page';
 import { StatsMDetailsPageComponent } from './pages/stats/m/details/stats-details.m.page';
-import { AuthGuard, redirectUnauthorizedTo } from '@angular/fire/auth-guard';
+import { StatsLoaderComponent } from './pages/stats/stats-loader.component';
+import { TeamPageComponent } from './pages/team/team.page';
+import { mobileResolver } from './services/mobile.resolver';
 
 export const ROUTES: Routes = [
   { path: 'login', component: LoginPageComponent, title: 'Login' },
+  {
+    path: 'admin',
+    title: 'Admin',
+    loadComponent: () => import('./components/admin/shell/admin-shell.component').then((m) => m.AdminShellComponent),
+    // see https://github.com/angular/angularfire/blob/main/site/src/auth/route-guards.md
+    canActivate: [AuthGuard],
+    data: { authGuardPipe: () => redirectUnauthorizedTo(['/login']) },
+    children: [
+      { path: 'players', component: ManagePlayersPageComponent },
+      { path: 'fixtures', component: ManageFixturesPageComponent },
+      { path: 'seasons', component: ManageSeasonsComponent },
+    ],
+  },
   {
     path: '',
     resolve: { mobile: mobileResolver },
@@ -35,18 +49,6 @@ export const ROUTES: Routes = [
           { path: '', component: StatsLoaderComponent },
         ],
       },
-    ],
-  },
-  {
-    path: 'admin',
-    title: 'Admin',
-    loadComponent: () => import('./components/admin/shell/admin-shell.component').then((m) => m.AdminShellComponent),
-    // see https://github.com/angular/angularfire/blob/main/site/src/auth/route-guards.md
-    canActivate: [AuthGuard],
-    data: { authGuardPipe: () => redirectUnauthorizedTo(['/login']) },
-    children: [
-      { path: 'players', component: ManagePlayersPageComponent },
-      { path: 'fixtures', component: ManageFixturesPageComponent },
     ],
   },
   { path: '**', component: PageNotFoundPageComponent },

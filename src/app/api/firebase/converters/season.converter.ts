@@ -1,15 +1,28 @@
 import { QueryDocumentSnapshot } from 'firebase/firestore/lite';
+import { getIsoDate } from 'src/app/shared/utility/date.utility';
+import { CompetitionAggregate } from '../../models/competition-aggregate.model';
+import { Competition } from '../../models/competition.model';
 import { Season } from '../../models/season.model';
 import { StoreConverter } from '../converter.interface';
 
 export class SeasonConverter implements StoreConverter<Season> {
-  toFirestore(comp: Season) {
-    return {};
-    // return {
-    //   name: comp.name,
-    //   tier: comp.tier,
-    //   format: comp.format,
-    // };
+  toFirestore(season: Season) {
+    const data = {
+      name: season.name,
+      startDate: getIsoDate(season.startDate),
+      endDate: getIsoDate(season.endDate),
+      // FIXME This is a hack to get the competitions to save.
+      competitions: (season.competitions as unknown as Competition[]).map((c) => ({
+        competitionId: c.id,
+        name: c.name,
+        tier: c.tier,
+        format: c.format,
+      })),
+    };
+
+    console.log(data);
+
+    return data;
   }
 
   fromFirestore(snapshot: QueryDocumentSnapshot) {
@@ -17,10 +30,9 @@ export class SeasonConverter implements StoreConverter<Season> {
     return new Season({
       id: snapshot.id,
       name: comp['name'],
-      league: { competitionId: comp['league']['competitionId'], position: comp['league']['position'] },
-      cup: { competitionId: comp['cup']['competitionId'] },
+      competitions: comp['competitions'].map((c: any) => new CompetitionAggregate(c)),
       startDate: new Date(comp['startDate']),
-      endDate: new Date(comp['endDate']),
+      endDate: comp['endDate'] ? new Date(comp['endDate']) : null,
     });
   }
 }

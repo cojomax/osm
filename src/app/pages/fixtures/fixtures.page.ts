@@ -13,8 +13,9 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { NzCardModule } from '@nz/card';
 import { NzDividerComponent } from 'ng-zorro-antd/divider';
 import { NzTagModule } from 'ng-zorro-antd/tag';
-import { first, tap } from 'rxjs';
+import { first, mergeMap, tap } from 'rxjs';
 import { SeasonSelectorComponent, SelectedSeason } from 'src/app/components/selectors/season-selector.component';
+import { SeasonService } from 'src/app/services/season.service';
 import { Fixture } from '../../api/models/fixture.model';
 import { AppCache } from '../../services/app-cache';
 import { FixtureService } from '../../services/fixture.service';
@@ -71,11 +72,21 @@ export class FixturesPageComponent implements OnInit {
   protected readonly state = inject(AppCache);
 
   private readonly fixtureSvc = inject(FixtureService);
+  private readonly seasonSvc = inject(SeasonService);
   private readonly route = inject(ActivatedRoute);
 
   ngOnInit() {
     this.showFixtures.set(this.route.snapshot.routeConfig?.path === 'fixtures');
     this.showResults.set(this.route.snapshot.routeConfig?.path === 'results');
+    if (this.showFixtures()) {
+      this.seasonSvc
+        .fetch()
+        .pipe(
+          first(),
+          mergeMap(() => this.fetchFixtures({ seasonId: this.state.seasons()[0].id })),
+        )
+        .subscribe();
+    }
   }
 
   protected getScoreColor(fixture: Fixture) {

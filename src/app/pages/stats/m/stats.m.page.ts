@@ -39,7 +39,7 @@ export class StatsMPageComponent {
   protected seasonStats = computed(() => {
     // FIXME Share better
 
-    const leagueStats = [
+    const leagueStats: { stat: string; value: number | string | undefined }[] = [
       { stat: 'Points', value: this.page.seasonPoints() },
       { stat: 'Played', value: this.page.seasonStats()?.gamesPlayed },
       { stat: 'Won', value: this.page.seasonStats()?.gamesWon },

@@ -45,7 +45,7 @@ export class SeasonSelectorComponent implements OnInit {
     forkJoin([this.seasonSvc.fetch(), this.competitionSvc.fetch()])
       .pipe(
         tap(([seasons]) => {
-          this.seasonOptions.set(seasons.map((s) => new Option(s.name, s.id)));
+          this.seasonOptions.set(seasons.map((s) => new Option(s.id, s.name)));
           this.onSeasonSelected(seasons[0].id);
         }),
       )
@@ -56,12 +56,12 @@ export class SeasonSelectorComponent implements OnInit {
     this.selectedSeason = seasonId;
 
     const season = this.cache.seasons().find((s) => s.id === seasonId);
-    const seasonCompetitions = [season?.league?.competitionId, season?.cup?.competitionId];
+    const seasonCompetitions = season?.competitions.map((c) => c.competitionId) ?? [];
 
     const competitionsOptions = this.cache
       .competitions()
       .filter((c) => seasonCompetitions.includes(c.id))
-      .map((c) => new Option(`${c.name} ${c.tier}`, c.id))
+      .map((c) => new Option(c.id, `${c.name} ${c.tier}`))
       .sort((a, b) => (a.label.includes('Division') ? -1 : 1));
 
     this.competitionOptions.set(competitionsOptions);

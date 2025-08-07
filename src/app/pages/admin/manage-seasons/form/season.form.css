@@ -1,0 +1,17 @@
+.delete-button {
+  cursor: pointer;
+  font-size: 24px;
+  color: #999;
+  transition: all 0.3s;
+  flex-shrink: 0;
+  margin-left: var(--space-sm);
+}
+
+.delete-button:hover {
+  /* TODO Theme */
+  color: #ff4d4f;
+}
+
+nz-date-picker {
+  width: 100%;
+}
