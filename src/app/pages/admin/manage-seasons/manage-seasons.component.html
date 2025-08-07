@@ -6,5 +6,9 @@
 </osm-grid>
 
 <osm-form-modal modalTitle="Season" (modified)="onModified()">
-  <!-- <app-season-form (statusChanged)="modalSvc.updateStatus($event)"></app-season-form> -->
+  <osm-season-form
+    [seasons]="seasons()"
+    [competitions]="competitions()"
+    (statusChanged)="modalSvc.updateStatus($event)"
+  ></osm-season-form>
 </osm-form-modal>

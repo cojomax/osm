@@ -1,0 +1,59 @@
+<form nz-form [formGroup]="form">
+  <nz-form-item>
+    <nz-form-label [nzSpan]="rowSpan.colOne" nzFor="name"> Name </nz-form-label>
+    <nz-form-control [nzSpan]="rowSpan.colTwo">
+      <p>{{ name?.value ?? '' }}</p>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="rowSpan.colOne" nzFor="start-date"> Start Date </nz-form-label>
+    <nz-form-control [nzSpan]="rowSpan.colTwo">
+      <nz-date-picker id="start-date" formControlName="startDate" nzPlaceHolder="YYYY-MM-DD"></nz-date-picker>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="rowSpan.colOne" nzFor="end-date"> End Date </nz-form-label>
+    <nz-form-control [nzSpan]="rowSpan.colTwo">
+      <nz-date-picker id="end-date" formControlName="endDate" nzPlaceHolder="YYYY-MM-DD"></nz-date-picker>
+    </nz-form-control>
+  </nz-form-item>
+
+  <!--  Competitions -->
+  <div formArrayName="competitions">
+    @for (comp of formCompetitions.controls; track comp; let i = $index) {
+    <nz-form-item>
+      @if (i === 0) {
+      <nz-form-label [nzSpan]="rowSpan.colOne" nzFor="comps"> Competitions </nz-form-label>
+      }
+      <nz-form-control [nzSpan]="rowSpan.colTwo" [nzOffset]="i === 0 ? 0 : rowSpan.colOne">
+        <div class="g-flex center">
+          <nz-select
+            nzShowSearch
+            nzAllowClear
+            nzPlaceHolder="Competition"
+            [compareWith]="compareByIdFn"
+            [formControl]="$any(comp)"
+          >
+            @for(compOption of competitionOptions(); track compOption.value.id) {
+            <nz-option [nzValue]="compOption.value" [nzLabel]="compOption.label"></nz-option>
+            }
+          </nz-select>
+          @if (formCompetitions.controls.length > 1) {
+          <nz-icon nzType="minus-circle-o" class="delete-button" (click)="onRemoveCompetition(i, $event)" />
+          }
+        </div>
+      </nz-form-control>
+    </nz-form-item>
+    }
+  </div>
+  <nz-form-item>
+    <nz-form-control [nzSpan]="rowSpan.colTwo" [nzOffset]="rowSpan.colOne">
+      <button nz-button nzType="dashed" class="add-button" (click)="onAddCompetition($event)">
+        <nz-icon nzType="plus" />
+        Add Competition
+      </button>
+    </nz-form-control>
+  </nz-form-item>
+</form>
