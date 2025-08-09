@@ -1,5 +1,5 @@
 import { QueryDocumentSnapshot } from 'firebase/firestore/lite';
-import { getIsoDate } from 'src/app/shared/utility/date.utility';
+import { getIsoDate } from 'src/app/shared/utility/date.util';
 import { CompetitionAggregate } from '../../models/competition-aggregate.model';
 import { Competition } from '../../models/competition.model';
 import { Season } from '../../models/season.model';

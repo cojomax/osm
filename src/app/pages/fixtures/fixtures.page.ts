@@ -1,15 +1,7 @@
-import {
-  AsyncPipe,
-  CommonModule,
-  DatePipe,
-  NgClass,
-  NgOptimizedImage,
-  NgTemplateOutlet,
-  UpperCasePipe,
-} from '@angular/common';
+import { AsyncPipe, CommonModule, DatePipe, NgClass, NgOptimizedImage, NgTemplateOutlet } from '@angular/common';
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { NzCardModule } from '@nz/card';
 import { NzDividerComponent } from 'ng-zorro-antd/divider';
 import { NzTagModule } from 'ng-zorro-antd/tag';
@@ -52,8 +44,6 @@ const MONTHS = new Map<number, string>([
     NzCardModule,
     NzDividerComponent,
     NzTagModule,
-    RouterLink,
-    UpperCasePipe,
     SeasonSelectorComponent,
   ],
 })

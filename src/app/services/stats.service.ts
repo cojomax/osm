@@ -40,7 +40,7 @@ export class StatsService {
 
   /** Generate stats for a particular season. */
   private calcSeasonStats(fixtures: Fixture[]): SeasonStats {
-    const gamesPlayed = fixtures.length;
+    const gamesPlayed = fixtures.filter((f) => f.played).length;
 
     const gamesWon = fixtures.filter((f) => f.won).length;
     const gamesLost = fixtures.filter((f) => f.lost).length;

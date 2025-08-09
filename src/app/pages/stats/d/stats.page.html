@@ -16,8 +16,11 @@
       <li><nz-statistic nzTitle="Lost" [nzValue]="page.seasonStats()?.gamesLost | dash"></nz-statistic></li>
       <li><nz-statistic nzTitle="Drawn" [nzValue]="page.seasonStats()?.gamesDrawn | dash"></nz-statistic></li>
       <li><nz-statistic nzTitle="Points" [nzValue]="page.seasonPoints() | dash"></nz-statistic></li>
-      <li><nz-statistic nzTitle="Position" [nzValue]="'5th'"></nz-statistic></li>
-      }
+      @if(page.selectedSeason()?.league?.position) {
+      <li>
+        <nz-statistic nzTitle="Position" [nzValue]="page.selectedSeason()?.league?.position | dash"></nz-statistic>
+      </li>
+      } }
 
       <li>
         <nz-statistic

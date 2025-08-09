@@ -1,7 +1,7 @@
-import { StoreConverter } from '../converter.interface';
+import { getIsoDate, getIsoTime } from '../../../shared/utility/date.util';
 import { Fixture } from '../../models/fixture.model';
-import { getIsoDate, getIsoTime } from '../../../shared/utility/date.utility';
 import { Goal } from '../../models/goal.model';
+import { StoreConverter } from '../converter.interface';
 
 export class FixtureConverter implements StoreConverter<Fixture> {
   toFirestore(fixture: Fixture) {

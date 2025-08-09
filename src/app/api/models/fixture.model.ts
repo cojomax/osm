@@ -48,18 +48,30 @@ export class Fixture implements Entity {
   matchReport: string | null = null;
 
   get won() {
-    return this.penalties ? this.penaltiesHome! > this.penaltiesOpponent! : this.homeGoals > this.opponentGoals;
+    return this.played
+      ? this.penalties
+        ? this.penaltiesHome! > this.penaltiesOpponent!
+        : this.homeGoals > this.opponentGoals
+      : false;
   }
 
   get lost() {
-    return this.penalties ? this.penaltiesOpponent! > this.penaltiesHome! : this.opponentGoals > this.homeGoals;
+    return this.played
+      ? this.penalties
+        ? this.penaltiesOpponent! > this.penaltiesHome!
+        : this.opponentGoals > this.homeGoals
+      : false;
   }
 
   get drawn() {
-    return !this.penalties && this.homeGoals === this.opponentGoals;
+    return this.played ? !this.penalties && this.homeGoals === this.opponentGoals : false;
   }
 
   get cleanSheet() {
-    return !this.opponentGoals;
+    return this.played ? !this.opponentGoals : false;
+  }
+
+  get played() {
+    return this.date && this.date < new Date();
   }
 }
