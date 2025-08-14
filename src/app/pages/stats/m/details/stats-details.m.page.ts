@@ -35,9 +35,6 @@ export class StatsMDetailsPageComponent<T> implements OnInit {
 
   private setDetailsData() {
     switch (this.category()) {
-      // case 'performance':
-      //   this.data.set([]);
-      //   break;
       case 'goals':
         this.data.set(this.page.scorerStats());
         break;

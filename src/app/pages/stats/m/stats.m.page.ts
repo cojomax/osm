@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
 import { NzIconDirective } from 'ng-zorro-antd/icon';
-import { SeasonSelectorComponent, SelectedSeason } from 'src/app/components/selectors/season-selector.component';
+import { SeasonSelection, SeasonSelectorComponent } from 'src/app/components/selectors/season-selector.component';
 import { StatsTableComponent } from '../../../components/stats-table/stats-table.component';
 import { StatsPageService } from '../stats-page.service';
 import { StatsPageState } from '../stats-page.state';
@@ -29,7 +29,7 @@ export class StatsMPageComponent {
 
   // TODO Season object is supposed to contain an aggregation of the season stats.
 
-  onSeasonSelected(value: SelectedSeason) {
+  onSeasonSelected(value: SeasonSelection) {
     this.svc.setActiveSeason(value);
   }
 

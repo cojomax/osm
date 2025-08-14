@@ -23,8 +23,8 @@ export class SeasonService implements Repository<Season> {
     this.converter = new SeasonConverter();
   }
 
-  fetch() {
-    return this.state.seasons().length
+  fetch(force = false) {
+    return !force && this.state.seasons().length
       ? of(this.state.seasons())
       : this.dbSvc.getCollection<Season>(COLLECTION, this.converter).pipe(
           map((res) => res.toSorted((a, b) => (a.startDate!.getTime() < b.startDate!.getTime() ? 1 : -1))),

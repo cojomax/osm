@@ -6,7 +6,7 @@ import { NzCardModule } from '@nz/card';
 import { NzDividerComponent } from 'ng-zorro-antd/divider';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { first, mergeMap, tap } from 'rxjs';
-import { SeasonSelectorComponent, SelectedSeason } from 'src/app/components/selectors/season-selector.component';
+import { SeasonSelection, SeasonSelectorComponent } from 'src/app/components/selectors/season-selector.component';
 import { SeasonService } from 'src/app/services/season.service';
 import { Fixture } from '../../api/models/fixture.model';
 import { AppCache } from '../../services/app-cache';
@@ -85,11 +85,11 @@ export class FixturesPageComponent implements OnInit {
 
   protected readonly compareByIdFn = compareByIdFn;
 
-  onSeasonSelected(season: SelectedSeason) {
+  onSeasonSelected(season: SeasonSelection) {
     this.fetchFixtures(season).subscribe();
   }
 
-  private fetchFixtures(season: SelectedSeason) {
+  private fetchFixtures(season: SeasonSelection) {
     return this.fixtureSvc.fetchBySeason(season.seasonId, season.competitionId).pipe(
       first(),
       tap((data) => {

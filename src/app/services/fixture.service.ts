@@ -4,6 +4,7 @@ import { StoreConverter } from '../api/firebase/converter.interface';
 import { FixtureConverter } from '../api/firebase/converters/fixture.converter';
 import { FireStoreCollection } from '../api/firebase/db-collection.enum';
 import { FirebaseDbService } from '../api/firebase/services/firebase.db.service';
+import { Query } from '../api/firebase/types/query.interface';
 import { Fixture } from '../api/models/fixture.model';
 import { Repository } from './repository.interface';
 
@@ -27,7 +28,7 @@ export class FixtureService implements Repository<Fixture> {
     return this._dbSvc.getDocuments<Fixture>(COLLECTION, fixtureId, this.converter);
   }
 
-  query(queries: { field: string; query: string }[]) {
+  query(queries: Query[]) {
     return this._dbSvc.queryDocumentsByFields<Fixture>(COLLECTION, this.converter, queries);
   }
 
@@ -47,8 +48,11 @@ export class FixtureService implements Repository<Fixture> {
     return this._dbSvc.deleteDocument(COLLECTION, fixtureId);
   }
 
-  fetchBySeason(seasonId: string, competitionId?: string) {
-    const queries = [{ field: 'season.id', query: seasonId }];
+  fetchBySeason(seasonId?: string, competitionId?: string) {
+    const queries: Query[] = [];
+    if (seasonId) {
+      queries.push({ field: 'season.id', query: seasonId });
+    }
 
     if (competitionId) {
       queries.push({ field: 'competition.id', query: competitionId });

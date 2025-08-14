@@ -16,7 +16,7 @@ import { FormModalComponent } from '../../../components/admin/form-modal/form-mo
 import { FormModalService } from '../../../components/admin/form-modal/form-modal.service';
 import { REPOSITORY_SERVICE } from '../../../components/admin/form-modal/form-modal.token';
 import { GridComponent } from '../../../components/grid/grid.component';
-import { SeasonSelectorComponent, SelectedSeason } from '../../../components/selectors/season-selector.component';
+import { SeasonSelection, SeasonSelectorComponent } from '../../../components/selectors/season-selector.component';
 import { AppCache } from '../../../services/app-cache';
 import { CompetitionService } from '../../../services/competition.service';
 import { FixtureService } from '../../../services/fixture.service';
@@ -108,7 +108,7 @@ export class ManageFixturesPageComponent implements OnInit, OnDestroy {
     this.subs.unsubscribe();
   }
 
-  protected onSeasonSelected(value: SelectedSeason) {
+  protected onSeasonSelected(value: SeasonSelection) {
     this.season.set(this.state.seasons().find((s) => s.id === value.seasonId) ?? null);
     this.updateTableData(value.seasonId).pipe(first()).subscribe();
   }

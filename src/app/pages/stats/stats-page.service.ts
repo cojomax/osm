@@ -1,7 +1,8 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { Data } from '@angular/router';
 import { first, forkJoin, of, tap } from 'rxjs';
-import { SelectedSeason } from 'src/app/components/selectors/season-selector.component';
+import { Season } from 'src/app/api/models/season.model';
+import { SeasonSelection } from 'src/app/components/selectors/season-selector.component';
 import { AppCache } from 'src/app/services/app-cache';
 import { PlayerService } from 'src/app/services/player.service';
 import { Option } from '../../models/option.model';
@@ -34,8 +35,17 @@ export class StatsPageService {
 
   seasons = signal<Option[]>([]);
 
-  setActiveSeason(value: SelectedSeason) {
-    this.state.selectedSeason.set(this.cache.seasons().find((s) => s.id === value.seasonId)!);
+  setActiveSeason(value: SeasonSelection) {
+    if (value.seasonId === 'all') {
+      this.state.selectedSeason.set(
+        new Season({ id: 'all', name: 'All Seasons', competitions: [], startDate: new Date(), endDate: new Date() }),
+      );
+    } else {
+      this.state.selectedSeason.set(this.cache.seasons().find((s) => s.id === value.seasonId)!);
+    }
+
+    if (value.competitionId === 'all') {
+    }
     this.state.selectedCompetition.set(this.cache.competitions().find((c) => c.id === value.competitionId)!);
     this.setStats();
   }
@@ -67,8 +77,14 @@ export class StatsPageService {
   }
 
   private fetchFixtures() {
-    return !this.state.selectedSeason() || !this.state.selectedCompetition()
-      ? of([])
-      : this.fixtureSvc.fetchBySeason(this.state.selectedSeason()!.id, this.state.selectedCompetition()!.id);
+    if (!this.state.selectedSeason()) {
+      return of([]);
+    }
+
+    const seasonId = this.state.selectedSeason()?.id === 'all' ? undefined : this.state.selectedSeason()?.id;
+    const competitionId =
+      this.state.selectedCompetition()?.id === 'all' ? undefined : this.state.selectedCompetition()?.id;
+
+    return this.fixtureSvc.fetchBySeason(seasonId, competitionId);
   }
 }

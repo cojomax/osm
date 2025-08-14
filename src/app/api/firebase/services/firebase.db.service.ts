@@ -1,10 +1,20 @@
 import { inject, Injectable } from '@angular/core';
-
+import {
+  collection,
+  deleteDoc,
+  doc,
+  Firestore,
+  FirestoreDataConverter,
+  getDoc,
+  getDocs,
+  query,
+  setDoc,
+  where,
+} from '@angular/fire/firestore';
 import { from, map, Observable } from 'rxjs';
 import { StoreConverter } from '../converter.interface';
 import { FireStoreCollection } from '../db-collection.enum';
-import { collection, deleteDoc, doc, Firestore, getDoc, getDocs, query, setDoc, where } from '@angular/fire/firestore';
-import { FirestoreDataConverter } from '@angular/fire/firestore';
+import { Query } from '../types/query.interface';
 
 @Injectable({ providedIn: 'root' })
 export class FirebaseDbService {
@@ -53,10 +63,10 @@ export class FirebaseDbService {
   queryDocumentsByFields<T>(
     collectionName: string,
     converter: FirestoreDataConverter<T>,
-    searches: Array<{ field: string; query: string }>
+    searches: Array<Query>,
   ): Observable<T[]> {
     const collectionRef = collection(this.firestore, collectionName).withConverter(converter);
-    const whereClauses = searches.map(search => where(search.field, '==', search.query));
+    const whereClauses = searches.map((search) => where(search.field, '==', search.query));
     const q = query(collectionRef, ...whereClauses);
     return from(getDocs(q)).pipe(map((querySnapshot) => querySnapshot.docs.map((doc) => doc.data() as T)));
   }
