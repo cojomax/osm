@@ -155,7 +155,6 @@ export class ManageFixturesPageComponent implements OnInit, OnDestroy {
     },
     {
       colId: 'edit',
-      maxWidth: 150,
       sortable: false,
       width: 100,
       cellRenderer: EditButtonComponent,

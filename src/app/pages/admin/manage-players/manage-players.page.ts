@@ -3,7 +3,7 @@ import { AfterViewInit, Component, inject, LOCALE_ID, OnDestroy, OnInit, signal,
 import { NzButtonModule } from '@nz/button';
 import { NzIconModule } from '@nz/icon';
 import { ColDef } from 'ag-grid-community';
-import { Subscription, tap } from 'rxjs';
+import { first, Subscription, tap } from 'rxjs';
 import { Player } from '../../../api/models/player.model';
 import { FormModalComponent } from '../../../components/admin/form-modal/form-modal.component';
 import { FormModalService } from '../../../components/admin/form-modal/form-modal.service';
@@ -80,7 +80,7 @@ export class ManagePlayersPageComponent implements OnInit, AfterViewInit, OnDest
     },
     {
       colId: 'action',
-      maxWidth: 150,
+      width: 100,
       cellRenderer: EditButtonComponent,
       cellRendererParams: { onEdit: this.onEditClick.bind(this) },
     },
@@ -110,6 +110,6 @@ export class ManagePlayersPageComponent implements OnInit, AfterViewInit, OnDest
 
   protected onModified() {
     // TODO Try add this to where updates are made
-    this.subs.add(this.updateTableData().subscribe());
+    this.updateTableData().pipe(first()).subscribe();
   }
 }

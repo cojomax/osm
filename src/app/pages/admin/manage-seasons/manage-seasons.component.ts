@@ -2,6 +2,7 @@ import { Component, inject, signal } from '@angular/core';
 import { NzButtonModule } from '@nz/button';
 import { NzIconModule } from '@nz/icon';
 import { ColDef } from 'ag-grid-community';
+import { first, forkJoin, tap } from 'rxjs';
 import { Competition } from 'src/app/api/models/competition.model';
 import { Season } from 'src/app/api/models/season.model';
 import { FormModalComponent } from 'src/app/components/admin/form-modal/form-modal.component';
@@ -10,6 +11,7 @@ import { REPOSITORY_SERVICE } from 'src/app/components/admin/form-modal/form-mod
 import { GridComponent } from 'src/app/components/grid/grid.component';
 import { CompetitionService } from 'src/app/services/competition.service';
 import { SeasonService } from 'src/app/services/season.service';
+import { EditButtonComponent } from '../manage-players/renderers/edit-btn.component';
 import { SeasonFormComponent } from './form/season.form';
 
 @Component({
@@ -41,6 +43,15 @@ export class ManageSeasonsComponent {
         return cups?.map((c) => `${c.name} ${c.tier}`).join(', ');
       },
     },
+    {
+      colId: 'edit',
+      sortable: false,
+      width: 100,
+      cellRenderer: EditButtonComponent,
+      cellRendererParams: {
+        onEdit: this.onEditClick.bind(this),
+      },
+    },
   ];
 
   protected modalSvc = inject(FormModalService<Season>);
@@ -50,26 +61,33 @@ export class ManageSeasonsComponent {
   private competitionSvc = inject(CompetitionService);
 
   ngOnInit() {
-    // TODO Force API call?
-    this.seasonSvc.fetch().subscribe((seasons) => {
-      this.seasons.set(seasons);
-    });
-
-    this.competitionSvc.fetch().subscribe((competitions) => {
-      this.competitions.set(competitions);
-    });
+    this.updateTableData().pipe(first()).subscribe();
   }
 
   protected onAdd() {
     this.openModal();
   }
 
+  protected onEditClick(seasonId: string) {
+    this.openModal(this.seasons().find((s) => s.id === seasonId) ?? null);
+  }
+
   protected onModified() {
-    console.log('modified');
+    this.updateTableData().pipe(first()).subscribe();
   }
 
   private openModal(season: Season | null = null) {
     this.selectedSeason.set(season);
     this.modalSvc.openModal(this.selectedSeason());
+  }
+
+  private updateTableData() {
+    // TODO Force API call?
+    return forkJoin([this.seasonSvc.fetch(), this.competitionSvc.fetch()]).pipe(
+      tap(([seasons, competitions]) => {
+        this.seasons.set(seasons);
+        this.competitions.set(competitions);
+      }),
+    );
   }
 }

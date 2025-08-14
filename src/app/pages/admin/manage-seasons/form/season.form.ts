@@ -18,8 +18,8 @@ import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
 import { Subscription } from 'rxjs';
 import { Competition } from 'src/app/api/models/competition.model';
 import { Season } from 'src/app/api/models/season.model';
+import { compareByIdFn } from 'src/app/shared/utility/form.util';
 import { FormComponent } from '../../../../components/form/form.component';
-import { compareByIdFn } from '../../../../shared/utility/form.util';
 
 // FIXME The venue, competition, and opponent fields are not being prepopulated.
 // TODO Add MotM, DoD, Match Report. Separate form?
@@ -80,7 +80,7 @@ export class SeasonFormComponent extends FormComponent implements OnInit, OnDest
 
     this.subs.add(this.form.statusChanges.subscribe(() => this.statusChanged.emit(this.form.valid)));
 
-    this.form.get('name')?.setValue(this.getNextSeasonName());
+    this.name?.setValue(this.getNextSeasonName());
   }
 
   ngOnDestroy() {
@@ -107,18 +107,25 @@ export class SeasonFormComponent extends FormComponent implements OnInit, OnDest
 
   override reset(season?: Season) {
     // Create FormArray with appropriate controls
+    // Map CompetitionAggregate objects to Competition objects for the form
     const competitionControls = season?.competitions?.length
-      ? season.competitions.map((comp) => this.fb.control(comp))
+      ? season.competitions.map((compAggregate) => {
+          // Find the matching Competition object from the competitionOptions to ensure same reference
+          const matchingOption = this.competitionOptions().find(
+            (option) => option.value.id === compAggregate.competitionId,
+          );
+          return this.fb.control(matchingOption?.value || null);
+        })
       : [this.fb.control(null)];
-
-    this.form?.setControl('competitions', this.fb.array(competitionControls));
 
     this.form?.reset({
       id: season?.id ?? '',
-      name: this.getNextSeasonName(),
+      name: season?.name ?? this.getNextSeasonName(),
       startDate: season?.startDate ?? null,
       endDate: season?.endDate ?? null,
     });
+
+    this.form?.setControl('competitions', this.fb.array(competitionControls));
   }
 
   private getNextSeasonName() {

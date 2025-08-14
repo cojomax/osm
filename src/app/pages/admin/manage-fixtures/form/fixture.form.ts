@@ -167,6 +167,7 @@ export class FixtureFormComponent extends FormComponent implements OnInit, OnDes
         assisted: [g.assisted],
       }),
     );
+    this.setGoalControls(goalControlGroups ?? []);
   }
 
   // TODO Signal? Type?

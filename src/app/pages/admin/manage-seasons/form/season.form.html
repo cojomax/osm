@@ -22,7 +22,7 @@
 
   <!--  Competitions -->
   <div formArrayName="competitions">
-    @for (comp of formCompetitions.controls; track comp; let i = $index) {
+    @for (comp of formCompetitions.controls; track $index; let i = $index) {
     <nz-form-item>
       @if (i === 0) {
       <nz-form-label [nzSpan]="rowSpan.colOne" nzFor="comps"> Competitions </nz-form-label>
