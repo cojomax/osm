@@ -46,7 +46,6 @@ export class StatsMPageComponent implements OnInit, OnDestroy {
       });
 
     queueMicrotask(() =>
-      // , behavior: 'instant'
       document.querySelector('#main-container')?.scrollTo({ top: this.page.mobileScrollPosition() }),
     );
   }

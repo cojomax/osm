@@ -29,6 +29,8 @@ export class StatsMDetailsPageComponent<T> implements OnInit {
       this.router.navigateByUrl('/stats');
     }
 
+    queueMicrotask(() => document.querySelector('#main-container')?.scrollTo({ top: 0 }));
+
     this.category.set((this.route.snapshot.paramMap.get('category') ?? null) as Category | null);
     this.setDetailsData();
   }

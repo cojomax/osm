@@ -50,11 +50,11 @@ export class FixtureService implements Repository<Fixture> {
 
   fetchBySeason(seasonId?: string, competitionId?: string) {
     const queries: Query[] = [];
-    if (seasonId) {
+    if (seasonId && seasonId !== 'all') {
       queries.push({ field: 'season.id', query: seasonId });
     }
 
-    if (competitionId) {
+    if (competitionId && competitionId !== 'all') {
       queries.push({ field: 'competition.id', query: competitionId });
     }
 

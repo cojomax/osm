@@ -1,11 +1,10 @@
-import { Component, ElementRef, Inject, input, OnInit, signal, TemplateRef, ViewChild } from '@angular/core';
-import { ActivatedRoute, EventType, NavigationEnd, Router, RouterLink, RouterOutlet } from '@angular/router';
+import { Component, Inject, input, OnInit, signal, TemplateRef, ViewChild } from '@angular/core';
+import { ActivatedRoute, EventType, Router, RouterLink, RouterOutlet } from '@angular/router';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
 import { NzDrawerRef, NzDrawerService } from 'ng-zorro-antd/drawer';
 import { NzIconDirective } from 'ng-zorro-antd/icon';
 import { tap } from 'rxjs';
 import { NavigationMainComponent } from '../../../components/navigation/main/navigation-main.component';
-import { AuthService } from '../../../services/auth.service';
 import { Session, SESSION } from '../../../services/tokens/session.token';
 
 @Component({
@@ -21,14 +20,12 @@ export class MobileShellComponent implements OnInit {
   protected header = signal('');
 
   @ViewChild('drawerTmpl') drawerTmpl!: TemplateRef<any>;
-  @ViewChild('main') main!: ElementRef<HTMLElement>;
 
   private drawerRef = signal<NzDrawerRef | undefined>(void 0);
 
   constructor(
     protected route: ActivatedRoute,
     @Inject(SESSION) protected session: Session,
-    private authSvc: AuthService,
     private drawerSvc: NzDrawerService,
     private router: Router,
   ) {}
@@ -39,9 +36,6 @@ export class MobileShellComponent implements OnInit {
         tap((event) => {
           if (event.type === EventType.NavigationStart) {
             this.drawerRef()?.close();
-          }
-          if (event instanceof NavigationEnd) {
-            this.main.nativeElement.scrollTo({ top: 0, behavior: 'instant' });
           }
         }),
       )
