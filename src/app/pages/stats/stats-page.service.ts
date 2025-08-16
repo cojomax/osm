@@ -18,6 +18,8 @@ import { StatsPageState } from './stats-page.state';
 export class StatsPageService {
   headerTxt = signal('');
 
+  seasons = signal<Option[]>([]);
+
   protected isMobile = signal(false);
   protected isLoading = signal(true);
 
@@ -33,7 +35,9 @@ export class StatsPageService {
     return this.isMobile() ? StatsMPageComponent : StatsPageComponent;
   }
 
-  seasons = signal<Option[]>([]);
+  saveScrollPosition(position: number) {
+    this.state.mobileScrollPosition.set(position);
+  }
 
   setActiveSeason(value: SeasonSelection) {
     if (value.seasonId === 'all') {

@@ -13,7 +13,7 @@ import { compareByIdFn } from '../../shared/utility/form.util';
 
 export type SeasonSelection = {
   seasonId: string;
-  competitionId?: string;
+  competitionId: string;
 };
 
 @Component({
@@ -24,17 +24,18 @@ export type SeasonSelection = {
 })
 export class SeasonSelectorComponent implements OnInit {
   showCompetition = input<boolean>(false);
-
-  // TODO Move this to a service.
-  protected readonly isMobile = !!inject(ActivatedRoute).snapshot.parent?.data['mobile'];
-  protected readonly cache = inject(AppCache);
+  seasonId = input<string>();
+  competitionId = input<string>();
 
   protected seasonOptions = signal<Option[]>([]);
   protected competitionOptions = signal<Option[]>([]);
 
-  protected selectedSeasonId: string | undefined;
-  protected selectedCompetitionId: string | undefined;
+  protected selectedSeasonId = 'all';
+  protected selectedCompetitionId = 'all';
 
+  // TODO Move this to a service.
+  protected readonly isMobile = !!inject(ActivatedRoute).snapshot.parent?.data['mobile'];
+  protected readonly cache = inject(AppCache);
   protected readonly compareByIdFn = compareByIdFn;
 
   private readonly allSeasonOption = new Option('all', 'All Seasons');
@@ -50,7 +51,14 @@ export class SeasonSelectorComponent implements OnInit {
       .pipe(
         tap(([seasons]) => {
           this.seasonOptions.set([this.allSeasonOption, ...seasons.map((s) => new Option(s.id, s.name))]);
-          this.onSeasonSelected(this.seasonOptions()[0].value);
+          if (this.seasonId() || this.competitionId()) {
+            this.onSeasonSelected(this.seasonId() ?? 'all');
+            this.setCompetitionOptions(this.selectedSeasonId);
+            this.selectedCompetitionId = this.competitionId() ?? 'all';
+            this.emit();
+          } else {
+            this.onSeasonSelected(this.seasonOptions()[0].value);
+          }
         }),
       )
       .subscribe();
@@ -62,12 +70,12 @@ export class SeasonSelectorComponent implements OnInit {
     this.setCompetitionOptions(this.selectedSeasonId);
     this.selectedCompetitionId = this.competitionOptions()[0]?.value;
 
-    this.selected.emit({ seasonId: this.selectedSeasonId, competitionId: this.selectedCompetitionId });
+    this.emit();
   }
 
   protected onCompetitionSelected(competitionId: string) {
     this.selectedCompetitionId = competitionId;
-    this.selected.emit({ seasonId: this.selectedSeasonId!, competitionId: this.selectedCompetitionId });
+    this.emit();
   }
 
   private setCompetitionOptions(seasonId: string) {
@@ -85,5 +93,9 @@ export class SeasonSelectorComponent implements OnInit {
     }
 
     this.competitionOptions.set([this.allCompetitionOption, ...seasonOptions]);
+  }
+
+  private emit() {
+    this.selected.emit({ seasonId: this.selectedSeasonId, competitionId: this.selectedCompetitionId });
   }
 }

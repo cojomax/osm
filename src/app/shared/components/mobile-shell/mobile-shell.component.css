@@ -27,7 +27,6 @@ header {
   margin-top: var(--banner-height-mobile);
   height: calc(100dvh - var(--banner-height-mobile));
   overflow: auto;
-
 }
 
 main {
@@ -40,4 +39,3 @@ footer {
   margin-top: var(--space-lg);
   padding: var(--space-sm) 0;
 }
-

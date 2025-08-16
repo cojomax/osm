@@ -1,6 +1,11 @@
 <main class="osm-container">
   <div class="season-selection">
-    <osm-season-selector [showCompetition]="true" (selected)="onSeasonSelected($event)"></osm-season-selector>
+    <osm-season-selector
+      [seasonId]="page.selectedSeason()?.id"
+      [competitionId]="page.selectedCompetition()?.id"
+      [showCompetition]="true"
+      (selected)="onSeasonSelected($event)"
+    ></osm-season-selector>
   </div>
 
   <section class="summary">

@@ -68,12 +68,13 @@ export class FixturesPageComponent implements OnInit {
   ngOnInit() {
     this.showFixtures.set(this.route.snapshot.routeConfig?.path === 'fixtures');
     this.showResults.set(this.route.snapshot.routeConfig?.path === 'results');
+
     if (this.showFixtures()) {
       this.seasonSvc
         .fetch()
         .pipe(
           first(),
-          mergeMap(() => this.fetchFixtures({ seasonId: this.state.seasons()[0].id })),
+          mergeMap(() => this.fetchFixtures({ seasonId: this.state.seasons()[0].id, competitionId: 'all' })),
         )
         .subscribe();
     }

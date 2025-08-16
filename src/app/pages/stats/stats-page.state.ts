@@ -9,6 +9,8 @@ export type Stat = { stat: string; value: string | number | undefined };
   providedIn: 'root',
 })
 export class StatsPageState {
+  mobileScrollPosition = signal<number>(0);
+
   selectedSeason = signal<Season | null>(null);
   selectedCompetition = signal<Competition | null>(null);
   seasonStats = signal<SeasonStats | null>(null);
