@@ -11,6 +11,10 @@
   display: flex;
 }
 
+.g-flex.between {
+  justify-content: space-between;
+}
+
 .g-flex.center {
   align-items: center;
 }

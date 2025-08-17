@@ -1,23 +1,37 @@
 @if (ordered()) {
-  <ol>
-    <ng-container *ngTemplateOutlet="list"></ng-container>
+  <ol class="list">
+    @for (rankValue of dataRankValues(); track rankValue; let idx = $index) {
+      <li class="rank">
+        <div class="g-flex">
+          <span class="rank-item">
+            {{ idx + 1 }}
+          </span>
+
+          <ul>
+            @for (stat of dataMap().get(rankValue); track stat) {
+              <li class="rank-item">
+                <span>
+                  {{ stat }}
+                </span>
+                {{ rankValue | dash }}
+              </li>
+            }
+          </ul>
+        </div>
+      </li>
+    }
   </ol>
 } @else {
-  <ul>
-    <ng-container *ngTemplateOutlet="list"></ng-container>
+  <ul class="list">
+    @for (datum of data(); track $index; let idx = $index) {
+      <li>
+        <span>
+          {{ datum.stat }}
+        </span>
+        <span class="gold">
+          {{ datum.value | dash }}
+        </span>
+      </li>
+    }
   </ul>
 }
-
-<ng-template #list>
-  @for (datum of data(); track datum.stat; let idx = $index) {
-    <li>
-      <span>
-        @if (ordered()) {
-          {{ idx + 1 }}
-        }
-        {{ datum.stat }}
-      </span>
-      {{ datum.value | dash }}
-    </li>
-  }
-</ng-template>

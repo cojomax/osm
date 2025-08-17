@@ -14,7 +14,7 @@ export class CompetitionAggregate {
   lost = 0;
   played = 0;
   points: number | undefined;
-  position: number | string | undefined;
+  position: number | undefined;
   won = 0;
 
   get isLeague() {

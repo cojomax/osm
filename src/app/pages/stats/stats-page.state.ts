@@ -22,7 +22,11 @@ export class StatsPageState {
   playerData = signal<any>([]);
 
   /** Top 3 scorers */
-  topScorers = computed(() => this.scorers().filter((_: any, i: number) => i <= 2));
+  topScorers = computed(() => {
+    const topGoals = [...new Set(this.scorers().map((s: any) => s.goals))].filter((_, i) => i <= 2);
+    return this.scorers().filter((s: any) => topGoals.includes(s.goals));
+  });
+
   topScorersStats = computed(() =>
     this.topScorers().map((t: any) => ({
       stat: `${t.firstName} ${t.lastName}`,
@@ -31,7 +35,11 @@ export class StatsPageState {
   );
 
   /** Top 3 assistants */
-  topAssistants = computed(() => this.assistants().filter((_: any, i: number) => i <= 2));
+  topAssistants = computed(() => {
+    const topAssistants = [...new Set(this.assistants().map((s: any) => s.assists))].filter((_, i) => i <= 2);
+    return this.assistants().filter((s: any) => topAssistants.includes(s.assists));
+  });
+
   topAssistantsStats = computed(() =>
     this.topAssistants().map((t: any) => ({
       stat: `${t.firstName} ${t.lastName}`,
@@ -40,7 +48,13 @@ export class StatsPageState {
   );
 
   /** Top 3 contributors */
-  topContributions = computed(() => this.contributors().filter((_: any, i: number) => i <= 2));
+  topContributions = computed(() => {
+    const topContributions = [...new Set(this.contributors().map((s: any) => s.contributions))].filter(
+      (_, i) => i <= 2,
+    );
+    return this.contributors().filter((s: any) => topContributions.includes(s.contributions));
+  });
+
   topContributionsStats = computed(() =>
     this.topContributions().map((t: any) => ({
       stat: `${t.firstName} ${t.lastName}`,

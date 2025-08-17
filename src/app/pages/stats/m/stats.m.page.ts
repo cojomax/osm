@@ -6,6 +6,8 @@ import { NzButtonComponent } from 'ng-zorro-antd/button';
 import { NzIconDirective } from 'ng-zorro-antd/icon';
 import { filter, Subscription } from 'rxjs';
 import { SeasonSelection, SeasonSelectorComponent } from 'src/app/components/selectors/season-selector.component';
+import { toPercentage } from 'src/app/shared/utility/number.util';
+import { toPlacement } from 'src/app/shared/utility/stats.util';
 import { StatsTableComponent } from '../../../components/stats-table/stats-table.component';
 import { StatsPageService } from '../stats-page.service';
 import { StatsPageState } from '../stats-page.state';
@@ -60,38 +62,48 @@ export class StatsMPageComponent implements OnInit, OnDestroy {
     this.svc.setActiveSeason(value);
   }
 
-  // TODO Difference stats for cup competitions.
-  // TODO Some seasons have more than one cup competition.
-
   protected seasonStats = computed(() => {
     // FIXME Share better
-
-    const leagueStats: { stat: string; value: number | string | undefined }[] = [
-      { stat: 'Points', value: this.page.seasonPoints() },
+    const allStats = [
       { stat: 'Played', value: this.page.seasonStats()?.gamesPlayed },
       { stat: 'Won', value: this.page.seasonStats()?.gamesWon },
       { stat: 'Lost', value: this.page.seasonStats()?.gamesLost },
       { stat: 'Drawn', value: this.page.seasonStats()?.gamesDrawn },
+      { stat: 'Win %', value: `${toPercentage(this.page.seasonStats()?.winPercentage ?? 0)}%` },
       { stat: 'Scored', value: this.page.seasonStats()?.goalsScored },
       { stat: 'Conceded', value: this.page.seasonStats()?.goalsConceded },
       { stat: 'Difference', value: this.page.seasonStats()?.goalDifference },
       { stat: 'Clean Sheets', value: this.page.seasonStats()?.cleanSheets },
     ];
 
-    if (this.page.selectedSeason()?.league?.position) {
-      leagueStats.unshift({ stat: 'Position', value: this.page.selectedSeason()?.league?.position });
+    const leagueStats: { stat: string; value: number | string | undefined }[] = [
+      { stat: 'Points', value: this.page.seasonPoints() },
+      ...allStats,
+    ];
+
+    if (this.page.isLeagueSeason() && this.page.selectedSeason()?.league?.position) {
+      leagueStats.unshift({ stat: 'Position', value: toPlacement(this.page.selectedSeason()?.league?.position) });
     }
 
     const cupStats = [
       { stat: 'Played', value: this.page.seasonStats()?.gamesPlayed },
       { stat: 'Won', value: this.page.seasonStats()?.gamesWon },
       { stat: 'Lost', value: this.page.seasonStats()?.gamesLost },
+      { stat: 'Win %', value: `${toPercentage(this.page.seasonStats()?.winPercentage ?? 0)}%` },
       { stat: 'Scored', value: this.page.seasonStats()?.goalsScored },
       { stat: 'Conceded', value: this.page.seasonStats()?.goalsConceded },
       { stat: 'Difference', value: this.page.seasonStats()?.goalDifference },
       { stat: 'Clean Sheets', value: this.page.seasonStats()?.cleanSheets },
     ];
 
-    return this.page.selectedCompetition()?.format === 'League' ? leagueStats : cupStats;
+    if (this.page.isCupSeason()) {
+      return cupStats;
+    }
+
+    if (this.page.isLeagueSeason()) {
+      return leagueStats;
+    }
+
+    return allStats;
   });
 }

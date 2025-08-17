@@ -9,7 +9,7 @@
       <h2>{{ pageTitle() | titlecase }}</h2>
       <p>{{ page.selectedSeason()?.name }} {{ page.selectedCompetition()?.tier }}</p>
 
-      <osm-stats-table [data]="data()"></osm-stats-table>
+      <osm-stats-table [data]="data()" [ordered]="true"></osm-stats-table>
     </section>
   </div>
 </div>
