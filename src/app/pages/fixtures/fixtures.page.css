@@ -39,18 +39,14 @@ nz-card {
 
 .card-mobile {
   section.team-names {
+    position: relative;
+    left: -13px;
     display: flex;
     align-items: center;
-    /*justify-content: space-between;*/
     padding: var(--space-md) 0 var(--space-lg);
-    font-size: 20px;
 
     svg {
       margin: 0 var(--space-sm);
-    }
-
-    p {
-      font-size: var(--font-size-lg);
     }
 
     img:first-of-type {
@@ -106,7 +102,7 @@ img {
 }
 
 p.team-names {
-  font-size: var(--font-size-xlg);
+  font-size: 22px;
   font-weight: 500;
   text-wrap: nowrap;
 }

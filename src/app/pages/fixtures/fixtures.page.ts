@@ -4,8 +4,9 @@ import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { NzCardModule } from '@nz/card';
 import { NzDividerComponent } from 'ng-zorro-antd/divider';
+import { NzEmptyModule } from 'ng-zorro-antd/empty';
 import { NzTagModule } from 'ng-zorro-antd/tag';
-import { first, mergeMap, tap } from 'rxjs';
+import { EMPTY, first, mergeMap, tap } from 'rxjs';
 import { SeasonSelection, SeasonSelectorComponent } from 'src/app/components/selectors/season-selector.component';
 import { SeasonService } from 'src/app/services/season.service';
 import { Fixture } from '../../api/models/fixture.model';
@@ -43,6 +44,7 @@ const MONTHS = new Map<number, string>([
     NgTemplateOutlet,
     NzCardModule,
     NzDividerComponent,
+    NzEmptyModule,
     NzTagModule,
     SeasonSelectorComponent,
   ],
@@ -52,11 +54,9 @@ export class FixturesPageComponent implements OnInit {
 
   protected showFixtures = signal(false);
   protected showResults = signal(false);
+  protected currentSeasonId = signal<string>('');
 
-  protected icon = computed(() => {
-    const fileName = this.showFixtures() ? 'pitch-primary' : 'football-primary';
-    return `/assets/icons/${fileName}.svg`;
-  });
+  protected icon = computed(() => `/assets/icons/${this.showFixtures() ? 'pitch-primary' : 'football-primary'}.svg`);
 
   protected isMobile = inject(IS_MOBILE);
   protected readonly state = inject(AppCache);
@@ -69,25 +69,27 @@ export class FixturesPageComponent implements OnInit {
     this.showFixtures.set(this.route.snapshot.routeConfig?.path === 'fixtures');
     this.showResults.set(this.route.snapshot.routeConfig?.path === 'results');
 
-    if (this.showFixtures()) {
-      this.seasonSvc
-        .fetch()
-        .pipe(
-          first(),
-          mergeMap(() => this.fetchFixtures({ seasonId: this.state.seasons()[0].id, competitionId: 'all' })),
-        )
-        .subscribe();
-    }
-  }
-
-  protected getScoreColor(fixture: Fixture) {
-    return fixture.drawn ? '' : fixture.won ? 'green' : 'red';
+    this.seasonSvc
+      .fetch()
+      .pipe(
+        tap(() => {
+          this.currentSeasonId.set(this.state.seasons()[0].id);
+        }),
+        mergeMap(() =>
+          this.showFixtures() ? this.fetchFixtures({ seasonId: this.currentSeasonId(), competitionId: 'all' }) : EMPTY,
+        ),
+      )
+      .subscribe();
   }
 
   protected readonly compareByIdFn = compareByIdFn;
 
-  onSeasonSelected(season: SeasonSelection) {
+  protected onSeasonSelected(season: SeasonSelection) {
     this.fetchFixtures(season).subscribe();
+  }
+
+  protected getScoreColor(fixture: Fixture) {
+    return fixture.drawn ? '' : fixture.won ? 'green' : 'red';
   }
 
   private fetchFixtures(season: SeasonSelection) {

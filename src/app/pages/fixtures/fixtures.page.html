@@ -1,9 +1,22 @@
 <div [ngClass]="(isMobile | async) ? 'container-mobile' : 'container-desktop'" class="osm-container">
   @if(showResults()) {
   <div class="season-selector">
-    <osm-season-selector [showCompetition]="true" (selected)="onSeasonSelected($event)"></osm-season-selector>
+    <osm-season-selector
+      [seasonId]="currentSeasonId()"
+      [showCompetition]="true"
+      (selected)="onSeasonSelected($event)"
+    ></osm-season-selector>
   </div>
-  } @for (month of fixtures().keys(); track month) {
+  }
+
+  <!-- No results -->
+  @if(!fixtures().size) {
+  <nz-divider nzOrientation="left" class="g-divider-large"></nz-divider>
+  <nz-empty nzNotFoundContent="No results yet."></nz-empty>
+  }
+
+  <!-- List fixtures by month  -->
+  @for (month of fixtures().keys(); track month) {
   <nz-divider [nzText]="month" nzOrientation="left" class="g-divider-large"></nz-divider>
   <ul>
     @for (fixture of fixtures().get(month); track fixture.id) {
