@@ -28,7 +28,7 @@ export class FixtureConverter implements StoreConverter<Fixture> {
       id: snapshot.id,
       season: fixture.season,
       date: new Date(fixture['date']),
-      time: fixture['time'] === null ? null : new Date(`${fixture['date']},${fixture['time']}`),
+      time: this.parseTime(fixture['date'], fixture['time']),
       venue: fixture['venue'],
       competition: fixture['competition'],
       opponent: fixture['opponent'],
@@ -76,5 +76,19 @@ export class FixtureConverter implements StoreConverter<Fixture> {
               lastName: goal.assisted.lastName,
             },
       }));
+  }
+
+  private parseTime(dateStr: string, timeStr: string | null): Date | null {
+    if (!timeStr || !dateStr) {
+      return null;
+    }
+
+    // Create a more reliable date string that works across all devices
+    // Use ISO format which is more consistent across browsers and devices
+    const [hours, minutes] = timeStr.split(':');
+    const date = new Date(dateStr);
+    date.setHours(parseInt(hours, 10), parseInt(minutes, 10), 0, 0);
+
+    return date;
   }
 }
