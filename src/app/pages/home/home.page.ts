@@ -1,7 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { first, mergeMap, tap } from 'rxjs';
-import { AppCache } from 'src/app/services/app-cache';
+import { EMPTY, mergeMap, tap } from 'rxjs';
 import { SeasonService } from 'src/app/services/season.service';
 import { Fixture } from '../../api/models/fixture.model';
 import { FixtureService } from '../../services/fixture.service';
@@ -16,26 +15,26 @@ export class HomePageComponent implements OnInit {
 
   private readonly fixtureSvc = inject(FixtureService);
   private readonly seasonSvc = inject(SeasonService);
-  private readonly state = inject(AppCache);
 
   ngOnInit() {
     this.seasonSvc
-      .fetch()
+      .query([{ field: 'active', operator: '==', value: true }])
       .pipe(
-        first(),
-        mergeMap(() => this.fixtureSvc.query([{ field: 'season.id', query: this.state.seasons()[0].id }])),
+        mergeMap((seasons) =>
+          !seasons.length
+            ? EMPTY
+            : this.fixtureSvc.query([{ field: 'season.id', operator: '==', value: seasons[0].id }]),
+        ),
         tap((data) => {
-          // Find the fixture with the date in the future that's closes to today's date.
-
-          // FIXME Make this smarter!!!
-          const nextFixture = data.filter((fixture) => (fixture.date ?? -1) > new Date())[0];
-
-          // .reduce(
-          //   (closest: Fixture | null, current: Fixture | null) =>
-          //     !current?.date ? closest : current.date < (closest?.date ?? -1) ? current : closest,
-          //   null,
-          // );
-
+          const nextFixture = data.reduce((closest: Fixture | null, current: Fixture | null) => {
+            if (!closest?.date && current?.date) {
+              return current;
+            }
+            if (current?.date && current.date > new Date() && current.date < (closest?.date ?? -1)) {
+              return current;
+            }
+            return closest;
+          }, null);
           this.nextFixture.set(nextFixture);
         }),
       )

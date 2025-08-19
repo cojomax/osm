@@ -9,6 +9,7 @@ export class SeasonConverter implements StoreConverter<Season> {
   toFirestore(season: Season) {
     const data = {
       name: season.name,
+      active: season.active,
       startDate: getIsoDate(season.startDate),
       endDate: getIsoDate(season.endDate),
       // FIXME This is a hack to get the competitions to save.
@@ -30,6 +31,7 @@ export class SeasonConverter implements StoreConverter<Season> {
     return new Season({
       id: snapshot.id,
       name: comp['name'],
+      active: comp['active'],
       competitions: comp['competitions'].map((c: any) => new CompetitionAggregate(c)),
       startDate: new Date(comp['startDate']),
       endDate: comp['endDate'] ? new Date(comp['endDate']) : null,

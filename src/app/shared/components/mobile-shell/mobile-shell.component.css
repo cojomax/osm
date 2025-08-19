@@ -32,6 +32,7 @@ header {
 main {
   display: flex;
   flex-direction: column;
+  min-height: calc(100dvh - var(--banner-height-mobile) - 70px);
 }
 
 footer {

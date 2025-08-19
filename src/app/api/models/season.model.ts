@@ -2,7 +2,7 @@ import { CompetitionAggregate } from './competition-aggregate.model';
 import { Entity } from './entity.interface';
 
 export class Season implements Entity {
-  constructor(init: Pick<Season, 'id' | 'name' | 'competitions' | 'startDate' | 'endDate'>) {
+  constructor(init: Pick<Season, 'id' | 'name' | 'competitions' | 'startDate' | 'endDate' | 'active'>) {
     Object.assign(this, init);
   }
 
@@ -17,6 +17,8 @@ export class Season implements Entity {
   startDate: Date | null = null;
 
   endDate: Date | null = null;
+
+  active = false;
 
   get league() {
     return this.competitions.find((c) => c.isLeague);

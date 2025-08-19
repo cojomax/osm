@@ -42,7 +42,14 @@ export class StatsPageService {
   setActiveSeason(value: SeasonSelection) {
     if (value.seasonId === 'all') {
       this.state.selectedSeason.set(
-        new Season({ id: 'all', name: 'All Seasons', competitions: [], startDate: new Date(), endDate: new Date() }),
+        new Season({
+          id: 'all',
+          name: 'All Seasons',
+          competitions: [],
+          startDate: new Date(),
+          endDate: new Date(),
+          active: false,
+        }),
       );
     } else {
       this.state.selectedSeason.set(this.cache.seasons().find((s) => s.id === value.seasonId)!);

@@ -58,7 +58,7 @@ export class FirebaseDbService {
    * Query documents by multiple fields.
    * @param collectionName The Firestore collection name
    * @param converter The Firestore data converter
-   * @param searches Array of { field, query } objects
+   * @param searches Array of Query objects
    */
   queryDocumentsByFields<T>(
     collectionName: string,
@@ -66,7 +66,7 @@ export class FirebaseDbService {
     searches: Array<Query>,
   ): Observable<T[]> {
     const collectionRef = collection(this.firestore, collectionName).withConverter(converter);
-    const whereClauses = searches.map((search) => where(search.field, '==', search.query));
+    const whereClauses = searches.map((search) => where(search.field, search.operator, search.value));
     const q = query(collectionRef, ...whereClauses);
     return from(getDocs(q)).pipe(map((querySnapshot) => querySnapshot.docs.map((doc) => doc.data() as T)));
   }

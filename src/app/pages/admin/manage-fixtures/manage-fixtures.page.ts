@@ -207,7 +207,7 @@ export class ManageFixturesPageComponent implements OnInit, OnDestroy {
   }
 
   private updateTableData(seasonId: string) {
-    return this.fixtureSvc.query([{ field: 'season.id', query: seasonId }]).pipe(
+    return this.fixtureSvc.query([{ field: 'season.id', operator: '==', value: seasonId }]).pipe(
       first(),
       tap((fixtures) => {
         this.fixtures.set(fixtures);

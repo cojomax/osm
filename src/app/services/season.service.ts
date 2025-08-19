@@ -4,6 +4,7 @@ import { StoreConverter } from '../api/firebase/converter.interface';
 import { SeasonConverter } from '../api/firebase/converters/season.converter';
 import { FireStoreCollection } from '../api/firebase/db-collection.enum';
 import { FirebaseDbService } from '../api/firebase/services/firebase.db.service';
+import { Query } from '../api/firebase/types/query.interface';
 import { Season } from '../api/models/season.model';
 import { AppCache } from './app-cache';
 import { Repository } from './repository.interface';
@@ -36,6 +37,10 @@ export class SeasonService implements Repository<Season> {
 
   find(seasonId: string) {
     return this.dbSvc.getDocuments<Season>(COLLECTION, seasonId, this.converter);
+  }
+
+  query(queries: Query[]) {
+    return this.dbSvc.queryDocumentsByFields<Season>(COLLECTION, this.converter, queries);
   }
 
   create(season: Season) {
