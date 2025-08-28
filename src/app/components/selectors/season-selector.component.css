@@ -1,13 +1,14 @@
-.mobile {
+:host > div {
   flex-direction: column;
   gap: var(--space-xs);
-}
 
-.desktop {
-  flex-direction: row;
-  gap: var(--space-md);
+  @media (min-width: 786px) {
+    flex-direction: row;
+    justify-content: center;
+    gap: var(--space-md);
 
-  nz-select {
-    width: 300px;
+    nz-select {
+      width: 300px;
+    }
   }
 }

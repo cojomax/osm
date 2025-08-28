@@ -1,0 +1,16 @@
+<div class="osm-container">
+  <!-- List fixtures by month  -->
+  @for (month of state.fixtures().keys(); track month) {
+  <nz-divider [nzText]="month" nzOrientation="left" class="g-divider-large"></nz-divider>
+
+  <ul class="card-list">
+    @for (fixture of state.fixtures().get(month); track fixture.id) {
+    <li>
+      <a [routerLink]="['/fixtures', fixture.id]">
+        <osm-fixture-card [fixture]="fixture"></osm-fixture-card>
+      </a>
+    </li>
+    }
+  </ul>
+  }
+</div>

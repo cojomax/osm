@@ -1,0 +1,46 @@
+<nz-card>
+  <div class="card-mobile">
+    <section>
+      <div class="date-division">
+        <p class="g-uppercase">{{ fixture().date | date: 'MMM d, y' }}</p>
+        <span class="g-uppercase competition"> {{ fixture().competition?.tier }} </span>
+      </div>
+      <p class="g-uppercase">{{ fixture().venue?.name || 'TBC' }}</p>
+    </section>
+
+    <section class="team-names">
+      <img ngSrc="/assets/icons/football-primary.svg" width="64" height="64" alt="fixture-icon" />
+      <img
+        ngSrc="/assets/icons/football-primary.svg"
+        class="icon-transform"
+        width="64"
+        height="64"
+        alt="fixture-icon"
+      />
+      <section>
+        <p class="team-names">Old Speckled Men</p>
+        <p class="team-names">{{ fixture().opponent?.name }}</p>
+      </section>
+    </section>
+
+    <section class="time-score">
+      @if (fixture().played) {
+        <nz-tag [nzColor]="matchSvc.getScoreColor(fixture())" class="time-display">
+          @if (fixture().penalties) {
+            <p>
+              {{ fixture().homeGoals }} ({{ fixture().penaltiesHome }}) - {{ fixture().opponentGoals }} ({{
+                fixture().penaltiesOpponent
+              }})
+            </p>
+          } @else {
+            <p>{{ fixture().homeGoals }} - {{ fixture().opponentGoals }}</p>
+          }
+        </nz-tag>
+      } @else {
+        <nz-tag [nzColor]="'#7bbeed'" class="time-display">
+          <p>{{ !fixture().time ? 'TBC' : (fixture().time | date: 'HH:mm') }}</p>
+        </nz-tag>
+      }
+    </section>
+  </div>
+</nz-card>

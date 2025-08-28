@@ -1,0 +1,25 @@
+<div class="osm-container">
+  <div class="season-selector">
+    <osm-season-selector [seasonId]="currentSeasonId()" [showCompetition]="true" (selected)="onSeasonSelected($event)">
+    </osm-season-selector>
+  </div>
+
+  <!-- No results -->
+  @if(!state.results().size) {
+  <nz-divider nzOrientation="left" class="g-divider-large" nzText="No results yet."></nz-divider>
+  <nz-empty nzNotFoundContent=""></nz-empty>
+  }
+  <!-- List fixtures by month  -->
+  @else { @for (month of state.results().keys(); track month) {
+  <nz-divider [nzText]="month" nzOrientation="left" class="g-divider-large"></nz-divider>
+  <ul class="card-list">
+    @for (fixture of state.results().get(month); track fixture.id) {
+    <li>
+      <a [routerLink]="['/fixtures', fixture.id]">
+        <osm-fixture-card [fixture]="fixture"></osm-fixture-card>
+      </a>
+    </li>
+    }
+  </ul>
+  } }
+</div>

@@ -3,10 +3,11 @@ import { Routes } from '@angular/router';
 import { ManageFixturesPageComponent } from './pages/admin/manage-fixtures/manage-fixtures.page';
 import { ManagePlayersPageComponent } from './pages/admin/manage-players/manage-players.page';
 import { ManageSeasonsComponent } from './pages/admin/manage-seasons/manage-seasons.component';
-import { FixturesPageComponent } from './pages/fixtures/fixtures.page';
 import { HomePageComponent } from './pages/home/home.page';
 import { LoginPageComponent } from './pages/login/login.page';
-import { MatchReportPage } from './pages/match-report/match-report.page';
+import { FixturesPageComponent } from './pages/matches/fixtures/fixtures.page';
+import { MatchReportPage } from './pages/matches/match-report/match-report.page';
+import { ResultsPageComponent } from './pages/matches/results/results.page';
 import { PageNotFoundPageComponent } from './pages/not-found/not-found.page';
 import { StatsMDetailsPageComponent } from './pages/stats/m/details/stats-details.m.page';
 import { StatsLoaderComponent } from './pages/stats/stats-loader.component';
@@ -37,7 +38,7 @@ export const ROUTES: Routes = [
       { path: 'team', component: TeamPageComponent, title: 'Team', data: { header: 'Team' } },
       { path: 'fixtures', component: FixturesPageComponent, title: 'Fixtures', data: { header: 'Fixtures' } },
       { path: 'results/:id', component: MatchReportPage, title: 'Match Report' },
-      { path: 'results', component: FixturesPageComponent, title: 'Results', data: { header: 'Results' } },
+      { path: 'results', component: ResultsPageComponent, title: 'Results', data: { header: 'Results' } },
       {
         path: 'stats',
         title: 'Stats',

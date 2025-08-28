@@ -1,0 +1,44 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  > div {
+    @media (min-width: 786px) {
+      width: 90%;
+    }
+
+    @media (min-width: 1024px) {
+      width: 80%;
+    }
+
+    @media (min-width: 1280px) {
+      width: 70%;
+    }
+  }
+}
+
+ul.card-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
+
+  @media (min-width: 786px) {
+    gap: var(--space-xxl);
+  }
+
+  > li {
+    width: 100%;
+  }
+}
+
+nz-card {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+  transition: transform 0.3s ease;
+
+  /*&:hover {*/
+  /*  cursor: pointer;*/
+  /*  transform: scale(1.01);*/
+  /*}*/
+}
