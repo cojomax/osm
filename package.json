@@ -8,7 +8,8 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "firebase:build": "ng build --configuration production",
-    "firebase:deploy": "firebase deploy --only hosting"
+    "firebase:deploy": "firebase deploy --only hosting",
+    "firebase:build-deploy": "pnpm firebase:build && pnpm firebase:deploy"
   },
   "private": true,
   "dependencies": {

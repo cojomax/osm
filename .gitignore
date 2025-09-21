@@ -3,9 +3,11 @@
 .angular
 .firebase
 .github
+mgmt.md
 
-# Data Seeding
-/data-seeding
+# For now ... 
+/functions
+/src/environments
 
 # Compiled output
 /dist
